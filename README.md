@@ -37,7 +37,7 @@ CronProps {
     | Dispatch<SetStateAction<string>> 
   className?: string
   clearButton?: boolean
-  clearButtonProps?: ButtonProps // Extends antd button props Without onClick
+  clearButtonProps?: ButtonProps // Extends antd button props without onClick
   displayError?: boolean
   setError?: 
     | (error: {
