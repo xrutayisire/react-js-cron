@@ -6,7 +6,7 @@
 
 Live **demo** and **usage** at https://xrutayisire.github.io/react-js-cron/
 
-![react-js-cron example](https://github.com/xrutayisire/react-js-cron/blob/master/react-js-cron-example.png)
+![react-js-cron example](https://raw.githubusercontent.com/xrutayisire/react-js-cron/master/react-js-cron-example.png)
 
 ## Install
 
