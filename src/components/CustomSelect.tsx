@@ -1,0 +1,228 @@
+import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react'
+import { Select } from 'antd'
+
+import { CustomSelectProps } from '../types'
+import {
+  getCronValueFromNumbers,
+  getTotalItem,
+  itemStartAt,
+  classNames,
+} from '../utils'
+import { DEFAULT_LOCALE_EN } from '../locale'
+
+export default function CustomSelect(props: CustomSelectProps) {
+  const {
+    value,
+    nbOptions,
+    grid = true,
+    startAtZero = true,
+    type,
+    optionsList,
+    setValue,
+    locale,
+    className,
+    ...otherProps
+  } = props
+
+  const [open, setOpen] = useState(false)
+
+  const stringValue = useMemo(() => {
+    if (value && Array.isArray(value)) {
+      return value.map((value: number) => value.toString())
+    }
+  }, [value])
+
+  useEffect(() => {
+    Array.from(
+      document.getElementsByClassName('ant-select-selection-search-input')
+    ).forEach((element: Element) => {
+      element.setAttribute('readonly', 'readonly')
+    })
+  }, [])
+
+  const options = useMemo(() => {
+    if (optionsList) {
+      return optionsList.map((option, index) => {
+        const number = startAtZero ? index : index + 1
+
+        return {
+          value: number.toString(),
+          label: option,
+        }
+      })
+    }
+
+    return [...Array(nbOptions)].map((e, index) => {
+      const number = startAtZero ? index : index + 1
+
+      return {
+        value: number.toString(),
+        label: number.toString(),
+      }
+    })
+  }, [optionsList, nbOptions, startAtZero])
+
+  const renderTag = useCallback(
+    (props) => {
+      const { value: itemValue } = props
+
+      if (!value || value[0] !== Number(itemValue)) {
+        return <></>
+      }
+
+      const cronValue = getCronValueFromNumbers(value, type)
+      const testEveryValue = cronValue.match(/^\*\/([0-9]+),?/) || []
+
+      return (
+        <div>
+          {testEveryValue[1]
+            ? `${locale.everyText || DEFAULT_LOCALE_EN.everyText} ${
+                testEveryValue[1]
+              }`
+            : cronValue}
+        </div>
+      )
+    },
+    [value, type, locale]
+  )
+
+  const onClick = useCallback(() => {
+    setOpen(true)
+  }, [])
+
+  const onBlur = useCallback(() => {
+    setOpen(false)
+  }, [])
+
+  const clicksRef = useRef<number[]>([])
+  const timeoutRef = useRef<number | undefined>()
+
+  const simpleClick = useCallback(
+    (newValueOption: string) => {
+      setValue((prevValue) => {
+        const newValueOptionNumber = Number(newValueOption)
+
+        if (prevValue) {
+          if (prevValue.some((v) => v === newValueOptionNumber)) {
+            return prevValue.filter((v) => v !== newValueOptionNumber)
+          }
+
+          return [...prevValue, newValueOptionNumber].sort(
+            (a: number, b: number) => a - b
+          )
+        } else {
+          return [newValueOptionNumber]
+        }
+      })
+    },
+    [setValue]
+  )
+
+  const doubleClick = useCallback(
+    (newValueOption: string) => {
+      const startAt = itemStartAt(type)
+      const total = getTotalItem(0, type) + startAt * 2
+      const multiple = +newValueOption
+      const newValue: number[] = []
+
+      for (let i = startAt; i < total; i++) {
+        if (i % multiple === 0) {
+          newValue.push(i)
+        }
+      }
+
+      const oldValueEqualNewValue =
+        value &&
+        newValue &&
+        value.length === newValue.length &&
+        value.every((v: number, i: number) => v === newValue[i])
+
+      const allValuesSelected = newValue.length === options.length
+
+      if (allValuesSelected) {
+        setValue([])
+      } else if (oldValueEqualNewValue) {
+        setValue([])
+      } else {
+        setValue(newValue)
+      }
+    },
+    [type, value, options, setValue]
+  )
+
+  const onOptionClick = (newValueOption: string) => {
+    const doubleClickTimeout = 300
+    const clicks = clicksRef.current
+    clicks.push(new Date().getTime())
+    window.clearTimeout(timeoutRef.current)
+
+    timeoutRef.current = window.setTimeout(() => {
+      if (
+        clicks.length > 1 &&
+        clicks[clicks.length - 1] - clicks[clicks.length - 2] <
+          doubleClickTimeout
+      ) {
+        doubleClick(newValueOption)
+      } else {
+        simpleClick(newValueOption)
+      }
+    }, doubleClickTimeout)
+  }
+
+  const onChange = useCallback(
+    (newValue: any) => {
+      if (newValue && newValue.length === 0) {
+        setValue([])
+      }
+    },
+    [setValue]
+  )
+
+  const internalClassName = useMemo(
+    () =>
+      classNames({
+        'react-js-cron-select': true,
+        'react-js-cron-custom-select': true,
+        [`${className}-select`]: !!className,
+      }),
+    [className]
+  )
+
+  const dropdownClassNames = useMemo(
+    () =>
+      classNames({
+        'react-js-cron-select-dropdown': true,
+        [`react-js-cron-select-dropdown-${type}`]: true,
+        'react-js-cron-custom-select-dropdown': true,
+        [`react-js-cron-custom-select-dropdown-${type}`]: true,
+        'react-js-cron-custom-select-dropdown-grid': !!grid,
+        [`${className}-select-dropdown`]: !!className,
+        [`${className}-select-dropdown-${type}`]: !!className,
+      }),
+    [className, type, grid]
+  )
+
+  return (
+    <Select
+      mode='tags'
+      allowClear
+      virtual={false}
+      open={open}
+      value={stringValue}
+      onChange={onChange}
+      onClick={onClick}
+      onBlur={onBlur}
+      tagRender={renderTag}
+      className={internalClassName}
+      dropdownClassName={dropdownClassNames}
+      options={options}
+      showSearch={false}
+      showArrow={true}
+      menuItemSelectedIcon={null}
+      dropdownMatchSelectWidth={false}
+      onSelect={onOptionClick}
+      onDeselect={onOptionClick}
+      {...otherProps}
+    />
+  )
+}
