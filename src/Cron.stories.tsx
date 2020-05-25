@@ -283,13 +283,13 @@ export function FrenchLocale() {
           suffixMinutesWhenHoursPeriod: 'minute(s)',
           errorInvalidCron: 'Expression cron invalide',
           weekDays: [
+            'dimanche',
             'lundi',
             'mardi',
             'mercredi',
             'jeudi',
             'vendredi',
             'samedi',
-            'dimanche',
           ],
           months: [
             'janvier',
@@ -312,6 +312,22 @@ export function FrenchLocale() {
       />
 
       <p>Erreur: &quot;{error ? error.description : 'undefined'}&quot;</p>
+
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          The order of the &quot;locale&quot; properties &quot;weekDays&quot;
+          and &quot;months&quot; is important! The index will be used as value
+        </span>
+      </div>
+
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          Sunday must always be the first value of &quot;weekDays&quot; property
+          because it&apos;s &quot;0&quot;
+        </span>
+      </div>
     </div>
   )
 }

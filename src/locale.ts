@@ -24,15 +24,17 @@ export const DEFAULT_LOCALE_EN: DefaultLocale = {
   suffixMinutesWhenHoursPeriod: 'minute(s)',
   errorInvalidCron: 'Invalid cron expression',
   weekDays: [
+    // Order is important, the index will be used as value
+    'Sunday', // Sunday must always be first, it's "0"
     'Monday',
     'Tuesday',
     'Wednesday',
     'Thursday',
     'Friday',
     'Saturday',
-    'Sunday',
   ],
   months: [
+    // Order is important, the index will be used as value
     'January',
     'February',
     'March',

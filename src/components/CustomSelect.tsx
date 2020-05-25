@@ -4,7 +4,7 @@ import { Select } from 'antd'
 import { CustomSelectProps } from '../types'
 import {
   getCronValueFromNumbers,
-  getTotalItem,
+  itemMaxNumber,
   itemStartAt,
   classNames,
 } from '../utils'
@@ -118,12 +118,12 @@ export default function CustomSelect(props: CustomSelectProps) {
 
   const doubleClick = useCallback(
     (newValueOption: string) => {
-      const startAt = itemStartAt(type)
-      const total = getTotalItem(0, type) + startAt * 2
+      const startValue = itemStartAt(type)
+      const limit = itemMaxNumber(type) + startValue
       const multiple = +newValueOption
       const newValue: number[] = []
 
-      for (let i = startAt; i < total; i++) {
+      for (let i = startValue; i < limit; i++) {
         if (i % multiple === 0) {
           newValue.push(i)
         }

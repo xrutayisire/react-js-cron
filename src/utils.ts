@@ -45,7 +45,10 @@ export function setCron(
   }
 
   const assignValueOrError = (item: string, type: CronType) => {
-    if (item !== '*/1') {
+    // Convert "*/1" to "*"
+    if (item === '*/1') {
+      values[type] = '*'
+    } else {
       const cronValue = getCronValueFromString(item, type)
 
       if (cronValue !== undefined) {
@@ -53,8 +56,6 @@ export function setCron(
       } else {
         error = true
       }
-    } else {
-      values[type] = '*'
     }
   }
 
@@ -116,7 +117,20 @@ export function setCron(
   if (!error) {
     Object.entries(values).forEach(([key, value]) => {
       if (value !== undefined) {
-        const newValue = value === '*' ? undefined : value
+        let newValue = value === '*' ? undefined : value
+
+        if (Array.isArray(newValue)) {
+          if ((key as CronType) === 'week-days') {
+            // Convert "7" to "0" because "7" also means Sunday
+            // Remove duplicates in case of "0-7" string input
+            newValue = newValue
+              .map((v) => (v === 7 ? 0 : v))
+              .filter((v, i, a) => a.indexOf(v) === i)
+          }
+
+          // Sort to handle string like "4,1-3"
+          newValue = newValue.sort((a: number, b: number) => a - b)
+        }
 
         switch (key as CronType) {
           case 'period':
@@ -162,73 +176,90 @@ export function setCron(
 
 // Get a cron value array from a string, ex: "2-5" => "[2,3,4,5]"
 function getCronValueFromString(string: string, type: CronType) {
-  const value: any[] = []
-  let m: any
   let stringValue = string
+  const value: number[] = []
 
   if (stringValue !== '*') {
+    // A "return" means that the expression is not valid
     while (stringValue !== '') {
+      let m: RegExpMatchArray | null
       const startValue = itemStartAt(type)
-      const limit = itemMaxNumber(type)
+      const limit = itemMaxNumber(type) + startValue
 
       // Test "*/n" expression
       m = stringValue.match(/^\*\/([0-9]+),?/)
       if (m && m.length === 2) {
-        if (Number(m[1]) > limit) {
+        const matchNumbers = m.map((v: string) => Number(v))
+
+        if (matchNumbers[1] >= limit) {
           return
         }
 
-        for (let i = 0; i < limit + startValue; i += m[1] | 0) {
+        for (let i = 0; i < limit; i += matchNumbers[1] | 0) {
+          // Used to always start multiple from 0 and add matchNumbers[1]
           if (i >= startValue) {
             value.push(i)
           }
         }
+
         stringValue = stringValue.replace(m[0], '')
         continue
       }
       // Test "a-b/n" expression
       m = stringValue.match(/^([0-9]+)-([0-9]+)\/([0-9]+),?/)
       if (m && m.length === 4) {
+        const matchNumbers = m.map((v: string) => Number(v))
+
         if (
-          Number(m[1]) < startValue ||
-          Number(m[2]) > limit ||
-          Number(m[3]) > limit
+          matchNumbers[1] < startValue ||
+          matchNumbers[2] >= limit ||
+          matchNumbers[3] >= limit
         ) {
           return
         }
 
-        for (let i = m[1] | 0; i <= (m[2] | 0); i += m[3] | 0) {
+        for (
+          let i = matchNumbers[1] | 0;
+          i <= (matchNumbers[2] | 0);
+          i += matchNumbers[3] | 0
+        ) {
           value.push(i)
         }
+
         stringValue = stringValue.replace(m[0], '')
         continue
       }
       // Test "a-b" expression
       m = stringValue.match(/^([0-9]+)-([0-9]+),?/)
       if (m && m.length === 3) {
-        if (Number(m[1]) < startValue || Number(m[2]) > limit) {
+        const matchNumbers = m.map((v: string) => Number(v))
+
+        if (matchNumbers[1] < startValue || matchNumbers[2] >= limit) {
           return
         }
 
-        for (let i = m[1] | 0; i <= (m[2] | 0); i++) {
+        for (let i = matchNumbers[1] | 0; i <= (matchNumbers[2] | 0); i++) {
           value.push(i)
         }
+
         stringValue = stringValue.replace(m[0], '')
         continue
       }
       // Test "c" expression
       m = stringValue.match(/^([0-9]+),?/)
       if (m && m.length === 2) {
-        if (Number(m[1]) > limit || Number(m[1]) < startValue) {
+        const matchNumbers = m.map((v: string) => Number(v))
+
+        if (matchNumbers[1] >= limit || matchNumbers[1] < startValue) {
           return
         }
 
-        value.push(m[1] | 0)
+        value.push(matchNumbers[1] | 0)
+
         stringValue = stringValue.replace(m[0], '')
         continue
       }
 
-      // Something goes wrong in the expression
       return
     }
   }
@@ -325,7 +356,7 @@ export function getCron(
   return items.join(' ')
 }
 
-function itemMaxNumber(type: CronType) {
+export function itemMaxNumber(type: CronType) {
   switch (type) {
     case 'minutes':
       return 60
@@ -336,8 +367,8 @@ function itemMaxNumber(type: CronType) {
     case 'months':
       return 12
     default:
-      // weekDays
-      return 7
+      // 8 week days because Sunday can be 0 or 7
+      return 8
   }
 }
 
@@ -351,12 +382,12 @@ export function itemStartAt(type: CronType) {
     case 'months':
       return 1
     default:
-      // weekDays
-      return 1
+      // week-days
+      return 0
   }
 }
 
-export function getTotalItem(multiple: number, type: CronType) {
+function getTotalItem(multiple: number, type: CronType) {
   let total = 0
 
   switch (type) {

@@ -31,7 +31,6 @@ export default function WeekDays(props: FieldProps) {
         value={value}
         type='week-days'
         setValue={setValue}
-        startAtZero={false}
         locale={locale}
         className={className}
       />
