@@ -93,7 +93,7 @@ export function Input() {
 
 export function InputWithOnEnter() {
   const inputRef = useRef<AntdInput>(null)
-  const defaultValue = ''
+  const defaultValue = '* * */2 * *'
   const [value, setValue] = useState(defaultValue)
   const customSetValue = useCallback(
     (newValue: string) => {
@@ -129,7 +129,7 @@ export function InputWithOnEnter() {
 }
 
 export function ReadOnlyInput() {
-  const defaultValue = ''
+  const defaultValue = '* * */2 * *'
   const [value, setValue] = useState(defaultValue)
 
   return (
@@ -157,6 +157,35 @@ export function DefaultValue() {
   )
 }
 
+export function DefaultPeriod() {
+  const defaultValue = ''
+  const defaultPeriod = 'year'
+  const [value, setValue] = useState(defaultValue)
+
+  return (
+    <div>
+      <p>Default period: {defaultPeriod}</p>
+      <p>Default value: {defaultValue}</p>
+      <p>Value: {value}</p>
+
+      <Cron value={value} setValue={setValue} defaultPeriod={defaultPeriod} />
+
+      <div style={{ marginTop: 10 }}>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          The &quot;defaultPeriod&quot; prop only work for empty default value
+        </span>
+      </div>
+      <div style={{ marginTop: 10 }}>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          If not set, the &quot;defaultPeriod&quot; is &quot;month&quot;
+        </span>
+      </div>
+    </div>
+  )
+}
+
 export function TrackError() {
   const inputRef = useRef<AntdInput>(null)
   const defaultValue = ''
@@ -172,6 +201,8 @@ export function TrackError() {
 
   return (
     <div>
+      <p>Value: {value}</p>
+
       <AntdInput
         ref={inputRef}
         onBlur={(event) => {
@@ -238,7 +269,8 @@ export function DisableErrorStyle() {
 }
 
 export function NoClearButton() {
-  const [value, setValue] = useState('')
+  const defaultValue = ''
+  const [value, setValue] = useState(defaultValue)
 
   return (
     <div>
@@ -252,21 +284,16 @@ export function NoClearButton() {
 export function InvalidDefaultValue() {
   const defaultValue = '*/2 */2 */2 */2 */2'
   const [value, setValue] = useState(defaultValue)
+  const [error, setError] = useState<CronError>()
 
   return (
     <div>
       <p>Default value: {defaultValue}</p>
       <p>Value: {value}</p>
 
-      <Cron value={value} setValue={setValue} />
+      <Cron value={value} setValue={setValue} setError={setError} />
 
-      <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
-        <span style={{ fontSize: 12 }}>
-          If the default value is not valid, the cron component will use &quot;*
-          * * * *&quot;
-        </span>
-      </div>
+      <p>Error: &quot;{error ? error.description : 'undefined'}&quot;</p>
     </div>
   )
 }
@@ -370,7 +397,7 @@ export function FrenchLocale() {
 }
 
 export function CustomENLocale() {
-  const defaultValue = ''
+  const defaultValue = '* * */2 * *'
   const [value, setValue] = useState(defaultValue)
 
   return (
@@ -410,7 +437,7 @@ export function CustomENLocale() {
 }
 
 export function NoPrefixAndSuffix() {
-  const defaultValue = ''
+  const defaultValue = '* * */2 * *'
   const [value, setValue] = useState(defaultValue)
 
   return (

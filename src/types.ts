@@ -11,6 +11,7 @@ export interface CronProps {
   clearButton?: boolean
   displayError?: boolean
   setError?: SetError
+  defaultPeriod?: PeriodType
   clearButtonProps?: ClearButtonProps
   locale?: Locale
 }
@@ -54,6 +55,7 @@ export type SetError =
   | Dispatch<SetStateAction<CronError>>
   | undefined
 export interface ClearButtonProps extends Omit<ButtonProps, 'onClick'> {}
+export type PeriodType = 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute'
 
 // Internal props
 
@@ -65,13 +67,12 @@ export interface FieldProps {
 }
 
 export interface PeriodProps extends Omit<FieldProps, 'value' | 'setValue'> {
-  value?: PeriodType
+  value: PeriodType
   setValue: SetValuePeriod
 }
 export interface MinutesProps extends FieldProps {
   period: PeriodType
 }
-export type PeriodType = 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute'
 export interface CustomSelectProps
   extends Omit<
     SelectProps<any>,

@@ -158,13 +158,7 @@ export function setCron(
       }
     })
   } else {
-    // Only set the internal error if it's not at the first render because the default
-    // value is not valid
-    if (!firstRender) {
-      setInternalError(true)
-      internalValueRef.current = ''
-    }
-
+    setInternalError(true)
     setError &&
       setError({
         type: 'invalid_cron',
@@ -324,7 +318,7 @@ export function getCronValueFromNumbers(
 }
 
 export function getCron(
-  period: PeriodType,
+  period: PeriodType | undefined,
   months: number[] | undefined,
   monthDays: number[] | undefined,
   weekDays: number[] | undefined,

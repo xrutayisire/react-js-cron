@@ -22,10 +22,11 @@ export default function Cron(props: CronProps) {
     displayError = true,
     setError,
     className,
+    defaultPeriod = 'month',
     clearButtonProps = {},
   } = props
   const internalValueRef = useRef<string>(value)
-  const [period, setPeriod] = useState<PeriodType>('month')
+  const [period, setPeriod] = useState<PeriodType | undefined>()
   const [monthDays, setMonthDays] = useState<number[] | undefined>()
   const [months, setMonths] = useState<number[] | undefined>()
   const [weekDays, setWeekDays] = useState<number[] | undefined>()
@@ -66,17 +67,32 @@ export default function Cron(props: CronProps) {
         setMonths,
         setPeriod
       )
+    } else if (value === '' && internalValueRef.current === '') {
+      // Clean errors if there was an error and user removed the string
+      setError && setError(undefined)
+      setInternalError(false)
     }
   }, [value, internalValueRef, setError, setValue, JSON.stringify(locale)]) // eslint-disable-line
 
   useEffect(() => {
-    const cron = getCron(period, months, monthDays, weekDays, hours, minutes)
+    // Only change the value if a user touched a field
+    if (
+      period ||
+      minutes ||
+      months ||
+      monthDays ||
+      weekDays ||
+      hours ||
+      minutes
+    ) {
+      const cron = getCron(period, months, monthDays, weekDays, hours, minutes)
 
-    setValue(cron)
-    internalValueRef.current = cron
+      setValue(cron)
+      internalValueRef.current = cron
 
-    setError && setError(undefined)
-    setInternalError(false)
+      setError && setError(undefined)
+      setInternalError(false)
+    }
   }, [period, monthDays, months, weekDays, hours, minutes, setValue, setError])
 
   const handleClear = useCallback(() => {
@@ -130,13 +146,13 @@ export default function Cron(props: CronProps) {
   return (
     <div className={internalClassName}>
       <Period
-        value={period}
+        value={period || defaultPeriod}
         setValue={setPeriod}
         locale={locale}
         className={className}
       />
 
-      {(period === 'month' || period === 'year') && (
+      {(!period || period === 'month' || period === 'year') && (
         <MonthDays
           value={monthDays}
           setValue={setMonthDays}
@@ -177,7 +193,7 @@ export default function Cron(props: CronProps) {
           value={minutes}
           setValue={setMinutes}
           locale={locale}
-          period={period}
+          period={period || defaultPeriod}
           className={className}
         />
       )}

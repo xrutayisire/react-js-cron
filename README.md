@@ -36,9 +36,10 @@ CronProps {
     | (value: string) => void
     | Dispatch<SetStateAction<string>> 
   className?: string
-  clearButton?: boolean
+  clearButton?: boolean // Default: true
+  defaultPeriod?: 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute' // Default: 'month'
   clearButtonProps?: ButtonProps // Extends antd button props without onClick
-  displayError?: boolean
+  displayError?: boolean // Default: true
   setError?: 
     | (error: {
       type: 'invalid_cron'
@@ -74,7 +75,7 @@ CronProps {
     errorInvalidCron?: string
     weekDays?: string[]
     months?: string[]
-  }   
+  }  // Default: See file 'src/locale.ts'
 }
 ````
 
