@@ -119,7 +119,15 @@ export default function CustomSelect(props: CustomSelectProps) {
   const doubleClick = useCallback(
     (newValueOption: string) => {
       const startValue = itemStartAt(type)
-      const limit = itemMaxNumber(type) + startValue
+      let maxNumber = itemMaxNumber(type)
+
+      // Internally "7" means nothing for "week-days" so itemMaxNumber should
+      // be 7, not 8
+      if (type === 'week-days') {
+        maxNumber = 7
+      }
+
+      const limit = maxNumber + startValue
       const multiple = +newValueOption
       const newValue: number[] = []
 
