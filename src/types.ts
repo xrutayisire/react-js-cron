@@ -98,6 +98,7 @@ export interface CustomSelectProps
   setValue: SetValueNumbersOrUndefined
   optionsList?: string[]
   locale: Locale
+  value?: number[]
 }
 export type CronType =
   | 'period'

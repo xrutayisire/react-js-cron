@@ -96,23 +96,24 @@ export default function CustomSelect(props: CustomSelectProps) {
 
   const simpleClick = useCallback(
     (newValueOption: string) => {
-      setValue((prevValue) => {
-        const newValueOptionNumber = Number(newValueOption)
+      const newValueOptionNumber = Number(newValueOption)
+      let newValue
 
-        if (prevValue) {
-          if (prevValue.some((v) => v === newValueOptionNumber)) {
-            return prevValue.filter((v) => v !== newValueOptionNumber)
-          }
-
-          return [...prevValue, newValueOptionNumber].sort(
+      if (value) {
+        if (value.some((v) => v === newValueOptionNumber)) {
+          newValue = value.filter((v) => v !== newValueOptionNumber)
+        } else {
+          newValue = [...value, newValueOptionNumber].sort(
             (a: number, b: number) => a - b
           )
-        } else {
-          return [newValueOptionNumber]
         }
-      })
+      } else {
+        newValue = [newValueOptionNumber]
+      }
+
+      setValue(newValue)
     },
-    [setValue]
+    [setValue, value]
   )
 
   const doubleClick = useCallback(
