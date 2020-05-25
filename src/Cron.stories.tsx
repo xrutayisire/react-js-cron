@@ -91,6 +91,43 @@ export function Input() {
   )
 }
 
+export function InputWithOnEnter() {
+  const inputRef = useRef<AntdInput>(null)
+  const defaultValue = ''
+  const [value, setValue] = useState(defaultValue)
+  const customSetValue = useCallback(
+    (newValue: string) => {
+      setValue(newValue)
+      inputRef.current?.setValue(newValue)
+    },
+    [inputRef]
+  )
+
+  return (
+    <div>
+      <AntdInput
+        ref={inputRef}
+        onBlur={(event) => {
+          setValue(event.target.value)
+        }}
+        onPressEnter={() => {
+          setValue(inputRef.current?.input.value || '')
+        }}
+      />
+      <div style={{ marginTop: 10 }}>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          You can also add &quot;onEnter&quot; support to set the value
+        </span>
+      </div>
+
+      <Divider>OR</Divider>
+
+      <Cron value={value} setValue={customSetValue} />
+    </div>
+  )
+}
+
 export function ReadOnlyInput() {
   const defaultValue = ''
   const [value, setValue] = useState(defaultValue)
