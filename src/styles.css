@@ -17,7 +17,7 @@ div.react-js-cron-select {
 .react-js-cron-select.react-js-cron-select-no-prefix {
   margin-left: 0;
 }
-.react-js-cron-error .react-js-cron-select .ant-select-selector {
+div.react-js-cron-error .react-js-cron-select .ant-select-selector {
   border-color: #ff4d4f;
   background: #fff6f6;
 }
