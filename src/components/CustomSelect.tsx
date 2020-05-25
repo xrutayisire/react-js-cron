@@ -94,9 +94,6 @@ export default function CustomSelect(props: CustomSelectProps) {
     setOpen(false)
   }, [])
 
-  const clicksRef = useRef<number[]>([])
-  const timeoutRef = useRef<number | undefined>()
-
   const simpleClick = useCallback(
     (newValueOption: string) => {
       setValue((prevValue) => {
@@ -150,24 +147,33 @@ export default function CustomSelect(props: CustomSelectProps) {
     [type, value, options, setValue]
   )
 
-  const onOptionClick = (newValueOption: string) => {
-    const doubleClickTimeout = 300
-    const clicks = clicksRef.current
-    clicks.push(new Date().getTime())
-    window.clearTimeout(timeoutRef.current)
+  const clicksRef = useRef<number[]>([])
+  const onOptionClick = useCallback(
+    (newValueOption: string) => {
+      const doubleClickTimeout = 300
+      const clicks = clicksRef.current
+      clicks.push(new Date().getTime())
 
-    timeoutRef.current = window.setTimeout(() => {
-      if (
-        clicks.length > 1 &&
-        clicks[clicks.length - 1] - clicks[clicks.length - 2] <
-          doubleClickTimeout
-      ) {
-        doubleClick(newValueOption)
-      } else {
-        simpleClick(newValueOption)
+      const id = window.setTimeout(() => {
+        if (
+          clicks.length > 1 &&
+          clicks[clicks.length - 1] - clicks[clicks.length - 2] <
+            doubleClickTimeout
+        ) {
+          doubleClick(newValueOption)
+        } else {
+          simpleClick(newValueOption)
+        }
+
+        clicksRef.current = []
+      }, doubleClickTimeout)
+
+      return () => {
+        window.clearTimeout(id)
       }
-    }, doubleClickTimeout)
-  }
+    },
+    [clicksRef, simpleClick, doubleClick]
+  )
 
   const onChange = useCallback(
     (newValue: any) => {
