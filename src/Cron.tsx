@@ -24,6 +24,7 @@ export default function Cron(props: CronProps) {
     className,
     defaultPeriod = 'month',
     clearButtonProps = {},
+    allowEmpty = 'for-default-value',
   } = props
   const internalValueRef = useRef<string>(value)
   const [period, setPeriod] = useState<PeriodType | undefined>()
@@ -39,6 +40,7 @@ export default function Cron(props: CronProps) {
       value,
       setInternalError,
       setError,
+      allowEmpty,
       internalValueRef,
       true,
       locale,
@@ -51,28 +53,30 @@ export default function Cron(props: CronProps) {
     )
   }, []) // eslint-disable-line
 
-  useEffect(() => {
-    if (value !== internalValueRef.current) {
-      setCron(
-        value,
-        setInternalError,
-        setError,
-        internalValueRef,
-        false,
-        locale,
-        setMinutes,
-        setHours,
-        setMonthDays,
-        setWeekDays,
-        setMonths,
-        setPeriod
-      )
-    } else if (value === '' && internalValueRef.current === '') {
-      // Clean errors if there was an error and user removed the string
-      setError && setError(undefined)
-      setInternalError(false)
-    }
-  }, [value, internalValueRef, setError, setValue, JSON.stringify(locale)]) // eslint-disable-line
+  const localeJSON = JSON.stringify(locale)
+  useEffect(
+    () => {
+      if (value !== internalValueRef.current) {
+        setCron(
+          value,
+          setInternalError,
+          setError,
+          allowEmpty,
+          internalValueRef,
+          false,
+          locale,
+          setMinutes,
+          setHours,
+          setMonthDays,
+          setWeekDays,
+          setMonths,
+          setPeriod
+        )
+      }
+    },
+    // eslint-disable-next-line
+    [value, internalValueRef, setError, setValue, localeJSON, allowEmpty]
+  )
 
   useEffect(() => {
     // Only change the value if a user touched a field
@@ -85,7 +89,14 @@ export default function Cron(props: CronProps) {
       hours ||
       minutes
     ) {
-      const cron = getCron(period, months, monthDays, weekDays, hours, minutes)
+      const cron = getCron(
+        period || defaultPeriod,
+        months,
+        monthDays,
+        weekDays,
+        hours,
+        minutes
+      )
 
       setValue(cron)
       internalValueRef.current = cron
@@ -93,7 +104,17 @@ export default function Cron(props: CronProps) {
       setError && setError(undefined)
       setInternalError(false)
     }
-  }, [period, monthDays, months, weekDays, hours, minutes, setValue, setError])
+  }, [
+    period,
+    monthDays,
+    months,
+    weekDays,
+    hours,
+    minutes,
+    setValue,
+    setError,
+    defaultPeriod,
+  ])
 
   const handleClear = useCallback(() => {
     setMonthDays(undefined)
@@ -103,7 +124,7 @@ export default function Cron(props: CronProps) {
     setMinutes(undefined)
 
     const cron = getCron(
-      period,
+      period || defaultPeriod,
       undefined,
       undefined,
       undefined,
@@ -116,7 +137,7 @@ export default function Cron(props: CronProps) {
 
     setError && setError(undefined)
     setInternalError(false)
-  }, [period, setError, setValue])
+  }, [period, setError, setValue, defaultPeriod])
 
   const internalClassName = useMemo(
     () =>

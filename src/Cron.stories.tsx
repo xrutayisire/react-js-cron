@@ -31,20 +31,26 @@ export function Example() {
         onBlur={(event) => {
           setValue(event.target.value)
         }}
+        onPressEnter={() => {
+          setValue(inputRef.current?.input.value || '')
+        }}
       />
 
       <Divider>OR</Divider>
 
       <Cron value={value} setValue={customSetValue} setError={setError} />
-      <p>
+
+      <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           Double click on a dropdown option to automatically select / unselect a
           periodicity
         </span>
-      </p>
+      </div>
 
-      <p>Error: &quot;{error ? error.description : 'undefined'}&quot;</p>
+      <p style={{ marginTop: 20 }}>
+        Error: {error ? error.description : 'undefined'}
+      </p>
     </div>
   )
 }
@@ -69,6 +75,7 @@ export function Input() {
           setValue(event.target.value)
         }}
       />
+
       <div style={{ marginTop: 10 }}>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
@@ -114,6 +121,7 @@ export function InputWithOnEnter() {
           setValue(inputRef.current?.input.value || '')
         }}
       />
+
       <div style={{ marginTop: 10 }}>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
@@ -153,6 +161,13 @@ export function DefaultValue() {
       <p>Value: {value}</p>
 
       <Cron value={value} setValue={setValue} />
+
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          The first value will always be used as default value
+        </span>
+      </div>
     </div>
   )
 }
@@ -170,16 +185,16 @@ export function DefaultPeriod() {
 
       <Cron value={value} setValue={setValue} defaultPeriod={defaultPeriod} />
 
-      <div style={{ marginTop: 10 }}>
+      <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           The &quot;defaultPeriod&quot; prop only work for empty default value
         </span>
       </div>
-      <div style={{ marginTop: 10 }}>
+      <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
-          If not set, the &quot;defaultPeriod&quot; is &quot;month&quot;
+          If not set, the prop &quot;defaultPeriod&quot; is &quot;month&quot;
         </span>
       </div>
     </div>
@@ -202,6 +217,7 @@ export function TrackError() {
   return (
     <div>
       <p>Value: {value}</p>
+      <p>Error: {error ? error.description : 'undefined'}</p>
 
       <AntdInput
         ref={inputRef}
@@ -209,6 +225,7 @@ export function TrackError() {
           setValue(event.target.value)
         }}
       />
+
       <div style={{ marginTop: 10 }}>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
@@ -221,11 +238,11 @@ export function TrackError() {
 
       <Cron value={value} setValue={customSetValue} setError={setError} />
 
-      <p>Error: &quot;{error ? error.description : 'undefined'}&quot;</p>
-      <div style={{ marginTop: 10 }}>
+      <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
-          Use prop &quot;setError&quot; to know when the value is not valid
+          Use prop &quot;setError&quot; to be able to know when the value is
+          invalid
         </span>
       </div>
     </div>
@@ -247,6 +264,9 @@ export function DisableErrorStyle() {
 
   return (
     <div>
+      <p>Display error: false</p>
+      <p>Error: {error ? error.description : 'undefined'}</p>
+
       <AntdInput
         ref={inputRef}
         onBlur={(event) => {
@@ -262,8 +282,6 @@ export function DisableErrorStyle() {
         setError={setError}
         displayError={false}
       />
-
-      <p>Error: &quot;{error ? error.description : 'undefined'}&quot;</p>
     </div>
   )
 }
@@ -274,6 +292,7 @@ export function NoClearButton() {
 
   return (
     <div>
+      <p>Clear button: false</p>
       <p>Value: {value}</p>
 
       <Cron clearButton={false} value={value} setValue={setValue} />
@@ -290,10 +309,103 @@ export function InvalidDefaultValue() {
     <div>
       <p>Default value: {defaultValue}</p>
       <p>Value: {value}</p>
+      <p>Error: {error ? error.description : 'undefined'}</p>
 
       <Cron value={value} setValue={setValue} setError={setError} />
+    </div>
+  )
+}
 
-      <p>Error: &quot;{error ? error.description : 'undefined'}&quot;</p>
+export function EmptyNeverAllowed() {
+  const inputRef = useRef<AntdInput>(null)
+  const defaultValue = ''
+  const [value, setValue] = useState(defaultValue)
+  const customSetValue = useCallback(
+    (newValue: string) => {
+      setValue(newValue)
+      inputRef.current?.setValue(newValue)
+    },
+    [inputRef]
+  )
+  const [error, setError] = useState<CronError>()
+
+  return (
+    <div>
+      <p>Allow empty: &quot;never&quot;</p>
+      <p>Default value: {defaultValue}</p>
+      <p>Value: {value}</p>
+      <p>Error: {error ? error.description : 'undefined'}</p>
+
+      <AntdInput
+        ref={inputRef}
+        onBlur={(event) => {
+          setValue(event.target.value)
+        }}
+      />
+
+      <Divider>OR</Divider>
+
+      <Cron
+        value={value}
+        setValue={customSetValue}
+        setError={setError}
+        allowEmpty='never'
+      />
+
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          If not set, the prop &quot;allowEmpty&quot; is
+          &quot;for-default-value&quot;
+        </span>
+      </div>
+    </div>
+  )
+}
+
+export function EmptyAlwaysAllowed() {
+  const inputRef = useRef<AntdInput>(null)
+  const defaultValue = ''
+  const [value, setValue] = useState(defaultValue)
+  const customSetValue = useCallback(
+    (newValue: string) => {
+      setValue(newValue)
+      inputRef.current?.setValue(newValue)
+    },
+    [inputRef]
+  )
+  const [error, setError] = useState<CronError>()
+
+  return (
+    <div>
+      <p>Allow empty: &quot;always&quot;</p>
+      <p>Default value: {defaultValue}</p>
+      <p>Value: {value}</p>
+      <p>Error: {error ? error.description : 'undefined'}</p>
+
+      <AntdInput
+        ref={inputRef}
+        onBlur={(event) => {
+          setValue(event.target.value)
+        }}
+      />
+
+      <Divider>OR</Divider>
+
+      <Cron
+        value={value}
+        setValue={customSetValue}
+        setError={setError}
+        allowEmpty='always'
+      />
+
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          If not set, the prop &quot;allowEmpty&quot; is
+          &quot;for-default-value&quot;
+        </span>
+      </div>
     </div>
   )
 }
@@ -313,6 +425,8 @@ export function FrenchLocale() {
 
   return (
     <div>
+      <p>Erreur: {error ? error.description : 'undefined'}</p>
+
       <AntdInput
         ref={inputRef}
         onBlur={(event) => {
@@ -375,8 +489,6 @@ export function FrenchLocale() {
         setError={setError}
       />
 
-      <p>Erreur: &quot;{error ? error.description : 'undefined'}&quot;</p>
-
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
@@ -384,7 +496,6 @@ export function FrenchLocale() {
           and &quot;months&quot; is important! The index will be used as value
         </span>
       </div>
-
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
@@ -485,6 +596,8 @@ export function CustomStyle() {
 
   return (
     <div>
+      <p>Error: {error ? error.description : 'undefined'}</p>
+
       <AntdInput
         ref={inputRef}
         onBlur={(event) => {
@@ -504,8 +617,6 @@ export function CustomStyle() {
         }}
       />
 
-      <p>Error: &quot;{error ? error.description : 'undefined'}&quot;</p>
-
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
@@ -519,7 +630,6 @@ export function CustomStyle() {
           <li>Clear button type changed to &quot;default&quot;</li>
         </ul>
       </div>
-
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
@@ -545,7 +655,6 @@ export function CustomStyle() {
           <li>.my-project-cron-select-dropdown-week-days</li>
         </ul>
       </div>
-
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>

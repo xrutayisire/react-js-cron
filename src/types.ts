@@ -13,6 +13,7 @@ export interface CronProps {
   setError?: SetError
   defaultPeriod?: PeriodType
   clearButtonProps?: ClearButtonProps
+  allowEmpty?: AllowEmpty
   locale?: Locale
 }
 export interface Locale {
@@ -56,6 +57,7 @@ export type SetError =
   | undefined
 export interface ClearButtonProps extends Omit<ButtonProps, 'onClick'> {}
 export type PeriodType = 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute'
+export type AllowEmpty = 'always' | 'never' | 'for-default-value'
 
 // Internal props
 

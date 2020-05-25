@@ -10,6 +10,7 @@ import {
   PeriodType,
   CronValues,
   Classes,
+  AllowEmpty,
 } from './types'
 import { DEFAULT_LOCALE_EN } from './locale'
 
@@ -18,6 +19,7 @@ export function setCron(
   string: string,
   setInternalError: SetInternalError,
   setError: SetError,
+  allowEmpty: AllowEmpty,
   internalValueRef: MutableRefObject<string>,
   firstRender: boolean,
   locale: Locale,
@@ -28,12 +30,21 @@ export function setCron(
   setMonths: SetValueNumbersOrUndefined,
   setPeriod: SetValuePeriod
 ) {
-  if (!string) return
-
   setError && setError(undefined)
   setInternalError(false)
 
   let error = false
+
+  if (!string) {
+    if (
+      allowEmpty === 'always' ||
+      (firstRender && allowEmpty === 'for-default-value')
+    ) {
+      return
+    }
+
+    error = true
+  }
 
   const values: CronValues = {
     period: undefined,
@@ -44,74 +55,76 @@ export function setCron(
     'month-days': undefined,
   }
 
-  const assignValueOrError = (item: string, type: CronType) => {
-    // Convert "*/1" to "*"
-    if (item === '*/1') {
-      values[type] = '*'
-    } else {
-      const cronValue = getCronValueFromString(item, type)
+  if (!error) {
+    const assignValueOrError = (item: string, type: CronType) => {
+      // Convert "*/1" to "*"
+      if (item === '*/1') {
+        values[type] = '*'
+      } else {
+        const cronValue = getCronValueFromString(item, type)
 
-      if (cronValue !== undefined) {
-        values[type] = cronValue
+        if (cronValue !== undefined) {
+          values[type] = cronValue
+        } else {
+          error = true
+        }
+      }
+    }
+
+    try {
+      // Sanitize
+      const cronString = string
+        .replace(/\s+/g, ' ')
+        .replace(/^ +/, '')
+        .replace(/ +$/, '')
+      const mask = cronString
+        .replace(/\*\//g, '')
+        .replace(/[^* ]/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/ +/g, '')
+      const items = cronString.split(' ')
+
+      if (items.length !== 5) {
+        error = true
+      }
+
+      if (mask === '*****') {
+        // 1 possibility
+        values.period = 'minute'
+      } else if (mask === '-****') {
+        // 1 possibility
+        values.period = 'hour'
+        assignValueOrError(items[0], 'minutes')
+      } else if (mask.substring(2, mask.length) === '***') {
+        // 4 possibilities
+        values.period = 'day'
+        assignValueOrError(items[0], 'minutes')
+        assignValueOrError(items[1], 'hours')
+      } else if (mask.substring(2, mask.length) === '-**') {
+        // 4 possibilities
+        values.period = 'month'
+        assignValueOrError(items[0], 'minutes')
+        assignValueOrError(items[1], 'hours')
+        assignValueOrError(items[2], 'month-days')
+      } else if (mask.substring(2, mask.length) === '**-') {
+        // 4 possibilities
+        values.period = 'week'
+        assignValueOrError(items[0], 'minutes')
+        assignValueOrError(items[1], 'hours')
+        assignValueOrError(items[4], 'week-days')
+      } else if (mask.substring(3, mask.length) === '-*') {
+        // 8 possibilities
+        values.period = 'year'
+        assignValueOrError(items[0], 'minutes')
+        assignValueOrError(items[1], 'hours')
+        assignValueOrError(items[2], 'month-days')
+        assignValueOrError(items[3], 'months')
       } else {
         error = true
       }
-    }
-  }
-
-  try {
-    // Sanitize
-    const cronString = string
-      .replace(/\s+/g, ' ')
-      .replace(/^ +/, '')
-      .replace(/ +$/, '')
-    const mask = cronString
-      .replace(/\*\//g, '')
-      .replace(/[^* ]/g, '-')
-      .replace(/-+/g, '-')
-      .replace(/ +/g, '')
-    const items = cronString.split(' ')
-
-    if (items.length !== 5) {
+    } catch (e) {
       error = true
     }
-
-    if (mask === '*****') {
-      // 1 possibility
-      values.period = 'minute'
-    } else if (mask === '-****') {
-      // 1 possibility
-      values.period = 'hour'
-      assignValueOrError(items[0], 'minutes')
-    } else if (mask.substring(2, mask.length) === '***') {
-      // 4 possibilities
-      values.period = 'day'
-      assignValueOrError(items[0], 'minutes')
-      assignValueOrError(items[1], 'hours')
-    } else if (mask.substring(2, mask.length) === '-**') {
-      // 4 possibilities
-      values.period = 'month'
-      assignValueOrError(items[0], 'minutes')
-      assignValueOrError(items[1], 'hours')
-      assignValueOrError(items[2], 'month-days')
-    } else if (mask.substring(2, mask.length) === '**-') {
-      // 4 possibilities
-      values.period = 'week'
-      assignValueOrError(items[0], 'minutes')
-      assignValueOrError(items[1], 'hours')
-      assignValueOrError(items[4], 'week-days')
-    } else if (mask.substring(3, mask.length) === '-*') {
-      // 8 possibilities
-      values.period = 'year'
-      assignValueOrError(items[0], 'minutes')
-      assignValueOrError(items[1], 'hours')
-      assignValueOrError(items[2], 'month-days')
-      assignValueOrError(items[3], 'months')
-    } else {
-      error = true
-    }
-  } catch (e) {
-    error = true
   }
 
   if (!error) {
@@ -158,6 +171,7 @@ export function setCron(
       }
     })
   } else {
+    internalValueRef.current = string
     setInternalError(true)
     setError &&
       setError({
@@ -318,7 +332,7 @@ export function getCronValueFromNumbers(
 }
 
 export function getCron(
-  period: PeriodType | undefined,
+  period: PeriodType,
   months: number[] | undefined,
   monthDays: number[] | undefined,
   weekDays: number[] | undefined,
