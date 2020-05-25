@@ -214,7 +214,8 @@ function getCronValueFromString(string: string, type: CronType) {
           matchNumbers[1] < startValue ||
           matchNumbers[2] >= limit ||
           matchNumbers[3] >= limit ||
-          matchNumbers[3] === 0
+          matchNumbers[3] === 0 ||
+          matchNumbers[1] > matchNumbers[2]
         ) {
           return
         }
@@ -235,7 +236,11 @@ function getCronValueFromString(string: string, type: CronType) {
       if (m && m.length === 3) {
         const matchNumbers = m.map((v: string) => Number(v))
 
-        if (matchNumbers[1] < startValue || matchNumbers[2] >= limit) {
+        if (
+          matchNumbers[1] < startValue ||
+          matchNumbers[2] >= limit ||
+          matchNumbers[1] > matchNumbers[2]
+        ) {
           return
         }
 
