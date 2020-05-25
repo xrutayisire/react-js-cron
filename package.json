@@ -39,9 +39,9 @@
     "prettier": "prettier --write 'src/**/*.{ts?(x),css}'"
   },
   "peerDependencies": {
-    "antd": "^4.2.5",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "antd": ">=4.1.0",
+    "react": ">=16.8.0",
+    "react-dom": "^>=16.8.0"
   },
   "devDependencies": {
     "@ant-design/icons": "^4.1.0",
