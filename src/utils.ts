@@ -145,11 +145,11 @@ export function setCron(
         if (Array.isArray(newValue)) {
           if ((key as CronType) === 'week-days') {
             // Convert "7" to "0" because "7" also means Sunday
-            // Remove duplicates in case of "0-7" string input
-            newValue = newValue
-              .map((v) => (v === 7 ? 0 : v))
-              .filter((v, i, a) => a.indexOf(v) === i)
+            newValue = newValue.map((v) => (v === 7 ? 0 : v))
           }
+
+          // Remove duplicates in case of "2-4,4" string input
+          newValue = newValue.filter((v, i, a) => a.indexOf(v) === i)
 
           // Sort to handle string like "4,1-3"
           newValue = newValue.sort((a: number, b: number) => a - b)
