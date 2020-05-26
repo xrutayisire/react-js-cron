@@ -1,6 +1,6 @@
 ## ReactJS Cron
 
-> A React cron editor with [antd](https://github.com/ant-design/ant-design) inspired by [jqcron](https://github.com/arnapou/jqcron)
+> A React cron editor with [antd](https://github.com/ant-design/ant-design) inspired by [jqCron](https://github.com/arnapou/jqcron)
 
 [![npm package](https://img.shields.io/npm/v/react-js-cron/latest.svg)](https://www.npmjs.com/package/react-js-cron)
 
