@@ -22,6 +22,7 @@ export default function CustomSelect(props: CustomSelectProps) {
     locale,
     className,
     humanizeLabels,
+    disabled,
     ...otherProps
   } = props
 
@@ -238,6 +239,7 @@ export default function CustomSelect(props: CustomSelectProps) {
       dropdownMatchSelectWidth={false}
       onSelect={onOptionClick}
       onDeselect={onOptionClick}
+      disabled={disabled}
       {...otherProps}
     />
   )

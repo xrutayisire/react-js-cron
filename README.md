@@ -39,6 +39,7 @@ CronProps {
   humanizeLabels?: boolean // Default: true
   humanizeValue?: boolean // Default: false
   defaultPeriod?: 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute' // Default: 'day'
+  disabled?: boolean // Default: false
   allowEmpty?: 'always' | 'never' | 'for-default-value' // Default: 'for-default-value'
   clearButton?: boolean // Default: true
   clearButtonProps?: ButtonProps // Extends antd button props without onClick

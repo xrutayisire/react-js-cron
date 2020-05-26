@@ -6,7 +6,7 @@ import { DEFAULT_LOCALE_EN } from '../locale'
 import { classNames } from '../utils'
 
 export default function Months(props: MonthsProps) {
-  const { value, setValue, locale, className, humanizeLabels } = props
+  const { value, setValue, locale, className, humanizeLabels, disabled } = props
   const optionsList = locale.months || DEFAULT_LOCALE_EN.months
 
   const internalClassName = useMemo(
@@ -35,6 +35,7 @@ export default function Months(props: MonthsProps) {
         locale={locale}
         className={className}
         humanizeLabels={humanizeLabels}
+        disabled={disabled}
       />
     </div>
   )

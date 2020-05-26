@@ -6,7 +6,7 @@ import { DEFAULT_LOCALE_EN } from '../locale'
 import { classNames } from '../utils'
 
 export default function Period(props: PeriodProps) {
-  const { value, setValue, locale, className } = props
+  const { value, setValue, locale, className, disabled } = props
   const options = [
     {
       value: 'year',
@@ -84,6 +84,7 @@ export default function Period(props: PeriodProps) {
         options={options}
         className={selectClassName}
         dropdownClassName={dropdownClassName}
+        disabled={disabled}
       />
     </div>
   )

@@ -27,6 +27,7 @@ export default function Cron(props: CronProps) {
     allowEmpty = 'for-default-value',
     humanizeLabels = true,
     humanizeValue = false,
+    disabled = false,
   } = props
   const internalValueRef = useRef<string>(value)
   const [period, setPeriod] = useState<PeriodType | undefined>()
@@ -151,8 +152,9 @@ export default function Cron(props: CronProps) {
         'react-js-cron-error': !!error && displayError,
         [`${className}`]: !!className,
         [`${className}-error`]: !!error && displayError && !!className,
+        [`${className}-disabled`]: disabled && !!className,
       }),
-    [className, error, displayError]
+    [className, error, displayError, disabled]
   )
 
   const {
@@ -178,6 +180,7 @@ export default function Cron(props: CronProps) {
         setValue={setPeriod}
         locale={locale}
         className={className}
+        disabled={disabled}
       />
 
       {periodForRender === 'year' && (
@@ -187,6 +190,7 @@ export default function Cron(props: CronProps) {
           locale={locale}
           className={className}
           humanizeLabels={humanizeLabels}
+          disabled={disabled}
         />
       )}
 
@@ -197,6 +201,7 @@ export default function Cron(props: CronProps) {
           locale={locale}
           className={className}
           weekDays={weekDays}
+          disabled={disabled}
         />
       )}
 
@@ -211,6 +216,7 @@ export default function Cron(props: CronProps) {
           humanizeLabels={humanizeLabels}
           period={periodForRender}
           monthDays={monthDays}
+          disabled={disabled}
         />
       )}
 
@@ -220,6 +226,7 @@ export default function Cron(props: CronProps) {
           setValue={setHours}
           locale={locale}
           className={className}
+          disabled={disabled}
         />
       )}
 
@@ -230,6 +237,7 @@ export default function Cron(props: CronProps) {
           locale={locale}
           period={periodForRender}
           className={className}
+          disabled={disabled}
         />
       )}
 
@@ -238,6 +246,7 @@ export default function Cron(props: CronProps) {
           className={clearButtonClassName}
           danger
           type='primary'
+          disabled={disabled}
           {...otherClearButtonProps}
           onClick={handleClear}
         >

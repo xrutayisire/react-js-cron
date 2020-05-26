@@ -11,6 +11,7 @@ export interface CronProps {
   humanizeLabels?: boolean
   humanizeValue?: boolean
   defaultPeriod?: PeriodType
+  disabled?: boolean
   allowEmpty?: AllowEmpty
   clearButton?: boolean
   clearButtonProps?: ClearButtonProps
@@ -71,6 +72,7 @@ export interface FieldProps {
   setValue: SetValueNumbersOrUndefined
   locale: Locale
   className?: string
+  disabled: boolean
 }
 export interface PeriodProps extends Omit<FieldProps, 'value' | 'setValue'> {
   value: PeriodType
@@ -118,6 +120,7 @@ export interface CustomSelectProps
   locale: Locale
   value?: number[]
   humanizeLabels?: boolean
+  disabled: boolean
 }
 export type CronType =
   | 'period'
