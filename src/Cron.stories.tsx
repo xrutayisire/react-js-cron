@@ -194,7 +194,7 @@ export function DefaultPeriod() {
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
-          If not set, the prop &quot;defaultPeriod&quot; is &quot;month&quot;
+          If not set, the prop &quot;defaultPeriod&quot; is &quot;day&quot;
         </span>
       </div>
     </div>

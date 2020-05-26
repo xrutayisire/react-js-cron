@@ -22,7 +22,7 @@ export default function Cron(props: CronProps) {
     displayError = true,
     setError,
     className,
-    defaultPeriod = 'month',
+    defaultPeriod = 'day',
     clearButtonProps = {},
     allowEmpty = 'for-default-value',
     humanizeLabels = true,
@@ -169,16 +169,18 @@ export default function Cron(props: CronProps) {
     [className, clearButtonClassNameProp]
   )
 
+  const periodForRender = period || defaultPeriod
+
   return (
     <div className={internalClassName}>
       <Period
-        value={period || defaultPeriod}
+        value={periodForRender}
         setValue={setPeriod}
         locale={locale}
         className={className}
       />
 
-      {period === 'year' && (
+      {periodForRender === 'year' && (
         <Months
           value={months}
           setValue={setMonths}
@@ -188,32 +190,31 @@ export default function Cron(props: CronProps) {
         />
       )}
 
-      {period !== 'minute' &&
-        period !== 'hour' &&
-        period !== 'day' &&
-        period !== 'week' && (
-          <MonthDays
-            value={monthDays}
-            setValue={setMonthDays}
-            locale={locale}
-            className={className}
-            weekDays={weekDays}
-          />
-        )}
+      {(periodForRender === 'year' || periodForRender === 'month') && (
+        <MonthDays
+          value={monthDays}
+          setValue={setMonthDays}
+          locale={locale}
+          className={className}
+          weekDays={weekDays}
+        />
+      )}
 
-      {period !== 'minute' && period !== 'hour' && period !== 'day' && (
+      {(periodForRender === 'year' ||
+        periodForRender === 'month' ||
+        periodForRender === 'week') && (
         <WeekDays
           value={weekDays}
           setValue={setWeekDays}
           locale={locale}
           className={className}
           humanizeLabels={humanizeLabels}
-          period={period || defaultPeriod}
+          period={periodForRender}
           monthDays={monthDays}
         />
       )}
 
-      {period !== 'minute' && period !== 'hour' && (
+      {periodForRender !== 'minute' && periodForRender !== 'hour' && (
         <Hours
           value={hours}
           setValue={setHours}
@@ -222,12 +223,12 @@ export default function Cron(props: CronProps) {
         />
       )}
 
-      {period !== 'minute' && (
+      {periodForRender !== 'minute' && (
         <Minutes
           value={minutes}
           setValue={setMinutes}
           locale={locale}
-          period={period || defaultPeriod}
+          period={periodForRender}
           className={className}
         />
       )}
