@@ -23,6 +23,7 @@ export default function CustomSelect(props: CustomSelectProps) {
     className,
     humanizeLabels,
     disabled,
+    readOnly,
     ...otherProps
   } = props
 
@@ -161,38 +162,42 @@ export default function CustomSelect(props: CustomSelectProps) {
   const clicksRef = useRef<number[]>([])
   const onOptionClick = useCallback(
     (newValueOption: string) => {
-      const doubleClickTimeout = 300
-      const clicks = clicksRef.current
-      clicks.push(new Date().getTime())
+      if (!readOnly) {
+        const doubleClickTimeout = 300
+        const clicks = clicksRef.current
+        clicks.push(new Date().getTime())
 
-      const id = window.setTimeout(() => {
-        if (
-          clicks.length > 1 &&
-          clicks[clicks.length - 1] - clicks[clicks.length - 2] <
-            doubleClickTimeout
-        ) {
-          doubleClick(newValueOption)
-        } else {
-          simpleClick(newValueOption)
+        const id = window.setTimeout(() => {
+          if (
+            clicks.length > 1 &&
+            clicks[clicks.length - 1] - clicks[clicks.length - 2] <
+              doubleClickTimeout
+          ) {
+            doubleClick(newValueOption)
+          } else {
+            simpleClick(newValueOption)
+          }
+
+          clicksRef.current = []
+        }, doubleClickTimeout)
+
+        return () => {
+          window.clearTimeout(id)
         }
-
-        clicksRef.current = []
-      }, doubleClickTimeout)
-
-      return () => {
-        window.clearTimeout(id)
       }
     },
-    [clicksRef, simpleClick, doubleClick]
+    [clicksRef, simpleClick, doubleClick, readOnly]
   )
 
   const onChange = useCallback(
     (newValue: any) => {
-      if (newValue && newValue.length === 0) {
-        setValue([])
+      if (!readOnly) {
+        if (newValue && newValue.length === 0) {
+          setValue([])
+        }
       }
     },
-    [setValue]
+    [setValue, readOnly]
   )
 
   const internalClassName = useMemo(
@@ -222,9 +227,9 @@ export default function CustomSelect(props: CustomSelectProps) {
   return (
     <Select
       mode='tags'
-      allowClear
+      allowClear={!readOnly}
       virtual={false}
-      open={open}
+      open={readOnly ? false : open}
       value={stringValue}
       onChange={onChange}
       onClick={onClick}
@@ -234,7 +239,7 @@ export default function CustomSelect(props: CustomSelectProps) {
       dropdownClassName={dropdownClassNames}
       options={options}
       showSearch={false}
-      showArrow={true}
+      showArrow={!readOnly}
       menuItemSelectedIcon={null}
       dropdownMatchSelectWidth={false}
       onSelect={onOptionClick}

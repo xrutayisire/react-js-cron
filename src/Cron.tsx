@@ -28,6 +28,7 @@ export default function Cron(props: CronProps) {
     humanizeLabels = true,
     humanizeValue = false,
     disabled = false,
+    readOnly = false,
   } = props
   const internalValueRef = useRef<string>(value)
   const [period, setPeriod] = useState<PeriodType | undefined>()
@@ -149,12 +150,15 @@ export default function Cron(props: CronProps) {
     () =>
       classNames({
         'react-js-cron': true,
-        'react-js-cron-error': !!error && displayError,
+        'react-js-cron-error': error && displayError,
+        'react-js-cron-disabled': disabled,
+        'react-js-cron-read-only': readOnly,
         [`${className}`]: !!className,
-        [`${className}-error`]: !!error && displayError && !!className,
+        [`${className}-error`]: error && displayError && !!className,
         [`${className}-disabled`]: disabled && !!className,
+        [`${className}-read-only`]: readOnly && !!className,
       }),
-    [className, error, displayError, disabled]
+    [className, error, displayError, disabled, readOnly]
   )
 
   const {
@@ -181,6 +185,7 @@ export default function Cron(props: CronProps) {
         locale={locale}
         className={className}
         disabled={disabled}
+        readOnly={readOnly}
       />
 
       {periodForRender === 'year' && (
@@ -191,6 +196,7 @@ export default function Cron(props: CronProps) {
           className={className}
           humanizeLabels={humanizeLabels}
           disabled={disabled}
+          readOnly={readOnly}
         />
       )}
 
@@ -202,6 +208,7 @@ export default function Cron(props: CronProps) {
           className={className}
           weekDays={weekDays}
           disabled={disabled}
+          readOnly={readOnly}
         />
       )}
 
@@ -217,6 +224,7 @@ export default function Cron(props: CronProps) {
           period={periodForRender}
           monthDays={monthDays}
           disabled={disabled}
+          readOnly={readOnly}
         />
       )}
 
@@ -227,6 +235,7 @@ export default function Cron(props: CronProps) {
           locale={locale}
           className={className}
           disabled={disabled}
+          readOnly={readOnly}
         />
       )}
 
@@ -238,10 +247,11 @@ export default function Cron(props: CronProps) {
           period={periodForRender}
           className={className}
           disabled={disabled}
+          readOnly={readOnly}
         />
       )}
 
-      {clearButton && (
+      {clearButton && !readOnly && (
         <Button
           className={clearButtonClassName}
           danger

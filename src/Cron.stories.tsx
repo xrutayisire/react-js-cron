@@ -201,6 +201,50 @@ export function DefaultPeriod() {
   )
 }
 
+export function Disabled() {
+  const defaultValue = '30 5 * * 1,6'
+  const [value, setValue] = useState(defaultValue)
+
+  return (
+    <div>
+      <p>Disabled: true</p>
+      <p>Default value: {defaultValue}</p>
+      <p>Value: {value}</p>
+
+      <Cron value={value} setValue={setValue} disabled />
+
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          If not set, the prop &quot;disabled&quot; is false
+        </span>
+      </div>
+    </div>
+  )
+}
+
+export function ReadOnly() {
+  const defaultValue = '30 5 * * 1,6'
+  const [value, setValue] = useState(defaultValue)
+
+  return (
+    <div>
+      <p>Read only: true</p>
+      <p>Default value: {defaultValue}</p>
+      <p>Value: {value}</p>
+
+      <Cron value={value} setValue={setValue} readOnly />
+
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          If not set, the prop &quot;readOnly&quot; is false
+        </span>
+      </div>
+    </div>
+  )
+}
+
 export function OnlyHumanizeLabels() {
   const inputRef = useRef<AntdInput>(null)
   const defaultValue = '* * * * MON-WED,sat'
@@ -382,28 +426,6 @@ export function HumanizeLabelsAndValue() {
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           Works only for week days and months
-        </span>
-      </div>
-    </div>
-  )
-}
-
-export function Disabled() {
-  const defaultValue = '30 5 * * 1,6'
-  const [value, setValue] = useState(defaultValue)
-
-  return (
-    <div>
-      <p>Disabled: true</p>
-      <p>Default value: {defaultValue}</p>
-      <p>Value: {value}</p>
-
-      <Cron value={value} setValue={setValue} disabled />
-
-      <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
-        <span style={{ fontSize: 12 }}>
-          If not set, the prop &quot;disabled&quot; is false
         </span>
       </div>
     </div>
@@ -852,6 +874,7 @@ export function CustomStyle() {
           <li>.my-project-cron</li>
           <li>.my-project-cron-error</li>
           <li>.my-project-cron-disabled</li>
+          <li>.my-project-cron-read-only</li>
           <li>.my-project-cron-clear-button</li>
           <li>.my-project-cron-period</li>
           <li>.my-project-cron-minutes</li>

@@ -6,7 +6,15 @@ import { DEFAULT_LOCALE_EN } from '../locale'
 import { classNames } from '../utils'
 
 export default function MonthDays(props: MonthDaysProps) {
-  const { value, setValue, locale, className, weekDays, disabled } = props
+  const {
+    value,
+    setValue,
+    locale,
+    className,
+    weekDays,
+    disabled,
+    readOnly,
+  } = props
   const noWeekDays = !weekDays || weekDays.length === 0
 
   const internalClassName = useMemo(
@@ -46,6 +54,7 @@ export default function MonthDays(props: MonthDaysProps) {
         locale={locale}
         className={className}
         disabled={disabled}
+        readOnly={readOnly}
       />
     </div>
   )

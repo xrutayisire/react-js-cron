@@ -6,7 +6,7 @@ import { DEFAULT_LOCALE_EN } from '../locale'
 import { classNames } from '../utils'
 
 export default function Period(props: PeriodProps) {
-  const { value, setValue, locale, className, disabled } = props
+  const { value, setValue, locale, className, disabled, readOnly } = props
   const options = [
     {
       value: 'year',
@@ -36,9 +36,11 @@ export default function Period(props: PeriodProps) {
 
   const handleChange = useCallback(
     (newValue) => {
-      setValue(newValue)
+      if (!readOnly) {
+        setValue(newValue)
+      }
     },
-    [setValue]
+    [setValue, readOnly]
   )
 
   const internalClassName = useMemo(
@@ -85,6 +87,8 @@ export default function Period(props: PeriodProps) {
         className={selectClassName}
         dropdownClassName={dropdownClassName}
         disabled={disabled}
+        showArrow={!readOnly}
+        open={readOnly ? false : undefined}
       />
     </div>
   )

@@ -6,7 +6,7 @@ import { DEFAULT_LOCALE_EN } from '../locale'
 import { classNames } from '../utils'
 
 export default function Hours(props: FieldProps) {
-  const { value, setValue, locale, className, disabled } = props
+  const { value, setValue, locale, className, disabled, readOnly } = props
 
   const internalClassName = useMemo(
     () =>
@@ -32,6 +32,7 @@ export default function Hours(props: FieldProps) {
         locale={locale}
         className={className}
         disabled={disabled}
+        readOnly={readOnly}
       />
     </div>
   )

@@ -6,7 +6,15 @@ import { DEFAULT_LOCALE_EN } from '../locale'
 import { classNames } from '../utils'
 
 export default function Minutes(props: MinutesProps) {
-  const { value, setValue, locale, period, className, disabled } = props
+  const {
+    value,
+    setValue,
+    locale,
+    period,
+    className,
+    disabled,
+    readOnly,
+  } = props
 
   const internalClassName = useMemo(
     () =>
@@ -46,6 +54,7 @@ export default function Minutes(props: MinutesProps) {
         locale={locale}
         className={className}
         disabled={disabled}
+        readOnly={readOnly}
       />
 
       {period === 'hour' && locale.suffixMinutesForHourPeriod !== '' && (

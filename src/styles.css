@@ -29,6 +29,11 @@ div.react-js-cron-select.react-js-cron-custom-select.ant-select
   padding-left: 11px;
   padding-right: 30px;
 }
+.react-js-cron-read-only
+  div.react-js-cron-select.react-js-cron-custom-select.ant-select
+  div.ant-select-selector {
+  padding-right: 11px;
+}
 div.react-js-cron-custom-select .ant-select-selection-search {
   width: 0 !important;
 }
