@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react'
 
-import { FieldProps } from '../types'
+import { MonthsProps } from '../types'
 import CustomSelect from '../components/CustomSelect'
 import { DEFAULT_LOCALE_EN } from '../locale'
 import { classNames } from '../utils'
 
-export default function Months(props: FieldProps) {
-  const { value, setValue, locale, className } = props
+export default function Months(props: MonthsProps) {
+  const { value, setValue, locale, className, humanizeLabels } = props
   const optionsList = locale.months || DEFAULT_LOCALE_EN.months
 
   const internalClassName = useMemo(
@@ -34,6 +34,7 @@ export default function Months(props: FieldProps) {
         startAtZero={false}
         locale={locale}
         className={className}
+        humanizeLabels={humanizeLabels}
       />
     </div>
   )

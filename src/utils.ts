@@ -13,6 +13,10 @@ import {
   AllowEmpty,
 } from './types'
 import { DEFAULT_LOCALE_EN } from './locale'
+import {
+  HUMANIZED_WEEK_DAYS_LABELS,
+  HUMANIZED_MONTHS_LABELS,
+} from './constants'
 
 // Set cron (string like * * * * *)
 export function setCron(
@@ -111,14 +115,20 @@ export function setCron(
         values.period = 'week'
         assignValueOrError(items[0], 'minutes')
         assignValueOrError(items[1], 'hours')
-        assignValueOrError(items[4], 'week-days')
+        assignValueOrError(
+          getHumanizedStringFromArray(items[4], HUMANIZED_WEEK_DAYS_LABELS),
+          'week-days'
+        )
       } else if (mask.substring(3, mask.length) === '-*') {
         // 8 possibilities
         values.period = 'year'
         assignValueOrError(items[0], 'minutes')
         assignValueOrError(items[1], 'hours')
         assignValueOrError(items[2], 'month-days')
-        assignValueOrError(items[3], 'months')
+        assignValueOrError(
+          getHumanizedStringFromArray(items[3], HUMANIZED_MONTHS_LABELS),
+          'months'
+        )
       } else {
         error = true
       }
@@ -284,13 +294,16 @@ function getCronValueFromString(string: string, type: CronType) {
 // Get a cron value string from array of number, ex: "[2,3,4,5]" => "2-5"
 export function getCronValueFromNumbers(
   arrayNumberValue: number[] | undefined,
-  type: CronType
+  type: CronType,
+  humanizeLabels?: boolean
 ) {
   if (!arrayNumberValue || arrayNumberValue.length === 0) {
     return '*'
   }
 
-  const cron: string[] = [arrayNumberValue[0].toString()]
+  const cron: string[] = [
+    getHumanizedStringFromNumber(arrayNumberValue[0], type, humanizeLabels),
+  ]
   let s = arrayNumberValue[0]
   let c = arrayNumberValue[0]
   const n = arrayNumberValue.length
@@ -298,10 +311,16 @@ export function getCronValueFromNumbers(
   for (let i = 1; i < n; i++) {
     if (arrayNumberValue[i] === c + 1) {
       c = arrayNumberValue[i]
-      cron[cron.length - 1] = s + '-' + c
+
+      cron[cron.length - 1] = `${getHumanizedStringFromNumber(
+        s,
+        type,
+        humanizeLabels
+      )}-${getHumanizedStringFromNumber(c, type, humanizeLabels)}`
     } else {
       s = c = arrayNumberValue[i]
-      cron.push(c.toString())
+
+      cron.push(getHumanizedStringFromNumber(c, type, humanizeLabels))
     }
   }
 
@@ -337,7 +356,8 @@ export function getCron(
   monthDays: number[] | undefined,
   weekDays: number[] | undefined,
   hours: number[] | undefined,
-  minutes: number[] | undefined
+  minutes: number[] | undefined,
+  humanizeLabels: boolean
 ) {
   const items = ['*', '*', '*', '*', '*']
 
@@ -360,11 +380,11 @@ export function getCron(
   }
 
   if (period === 'year') {
-    items[3] = getCronValueFromNumbers(months, 'months')
+    items[3] = getCronValueFromNumbers(months, 'months', humanizeLabels)
   }
 
   if (period === 'week') {
-    items[4] = getCronValueFromNumbers(weekDays, 'week-days')
+    items[4] = getCronValueFromNumbers(weekDays, 'week-days', humanizeLabels)
   }
 
   return items.join(' ')
@@ -440,4 +460,40 @@ export function classNames(classes: Classes) {
     .filter(([key, value]) => key && value)
     .map(([key]) => key)
     .join(' ')
+}
+
+function getHumanizedStringFromArray(
+  string: string,
+  humanizedLabels: string[]
+) {
+  let humanizedString = string
+
+  humanizedLabels.forEach((label, index) => {
+    if (label) {
+      const re = new RegExp(label, 'gi')
+      humanizedString = humanizedString.replace(re, index.toString())
+    }
+  })
+
+  return humanizedString
+}
+
+function getHumanizedStringFromNumber(
+  number: number,
+  type: CronType,
+  humanizeLabels?: boolean
+) {
+  let defaultStr = number.toString()
+
+  if (!humanizeLabels) {
+    return defaultStr
+  }
+
+  if (type === 'week-days') {
+    defaultStr = HUMANIZED_WEEK_DAYS_LABELS[number]
+  } else if (type === 'months') {
+    defaultStr = HUMANIZED_MONTHS_LABELS[number]
+  }
+
+  return defaultStr
 }

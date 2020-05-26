@@ -201,6 +201,72 @@ export function DefaultPeriod() {
   )
 }
 
+export function HumanizeLabels() {
+  const inputRef = useRef<AntdInput>(null)
+  const defaultValue = '* * * * MON-WED,sat'
+  const [value, setValue] = useState(defaultValue)
+  const [error, setError] = useState<CronError>()
+  const customSetValue = useCallback(
+    (newValue: string) => {
+      setValue(newValue)
+      inputRef.current?.setValue(newValue)
+    },
+    [inputRef]
+  )
+
+  return (
+    <div>
+      <p>Humanize labels: true</p>
+      <p>Default value: {defaultValue}</p>
+      <p>Value: {value}</p>
+      <p>Error: {error ? error.description : 'undefined'}</p>
+
+      <AntdInput
+        ref={inputRef}
+        onBlur={(event) => {
+          setValue(event.target.value)
+        }}
+      />
+
+      <Divider>OR</Divider>
+
+      <Cron
+        value={value}
+        setValue={customSetValue}
+        setError={setError}
+        humanizeLabels
+      />
+
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          If not set, the prop &quot;humanizeLabels&quot; is false
+        </span>
+      </div>
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          If the the prop &quot;humanizeLabels&quot; is true, the component will
+          automatically convert valid number value to string
+        </span>
+      </div>
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          If the the prop &quot;humanizeLabels&quot; is false, the component
+          will automatically convert valid string value to number
+        </span>
+      </div>
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          A valid string value can be in lower or upper case
+        </span>
+      </div>
+    </div>
+  )
+}
+
 export function TrackError() {
   const inputRef = useRef<AntdInput>(null)
   const defaultValue = ''

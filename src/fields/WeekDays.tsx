@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react'
 
-import { FieldProps } from '../types'
+import { WeekDaysProps } from '../types'
 import CustomSelect from '../components/CustomSelect'
 import { DEFAULT_LOCALE_EN } from '../locale'
 import { classNames } from '../utils'
 
-export default function WeekDays(props: FieldProps) {
-  const { value, setValue, locale, className } = props
+export default function WeekDays(props: WeekDaysProps) {
+  const { value, setValue, locale, className, humanizeLabels } = props
   const optionsList = locale.weekDays || DEFAULT_LOCALE_EN.weekDays
 
   const internalClassName = useMemo(
@@ -33,6 +33,7 @@ export default function WeekDays(props: FieldProps) {
         setValue={setValue}
         locale={locale}
         className={className}
+        humanizeLabels={humanizeLabels}
       />
     </div>
   )

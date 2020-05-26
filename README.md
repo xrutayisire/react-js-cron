@@ -50,7 +50,8 @@ CronProps {
       description: string
     }>>
     | undefined
-  allowEmpty?: 'always' | 'never' | 'for-default-value'  // Default: 'for-default-value'
+  allowEmpty?: 'always' | 'never' | 'for-default-value' // Default: 'for-default-value'
+  humanizeLabels?: boolean // Default: false
   locale?: {
     everyText?: string
     emptyHours?: string
