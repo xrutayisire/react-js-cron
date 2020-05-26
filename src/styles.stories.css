@@ -1,3 +1,7 @@
+.sbdocs-content {
+  max-width: 1400px !important;
+}
+
 .my-project-cron > div > span {
   font-weight: bold;
 }
