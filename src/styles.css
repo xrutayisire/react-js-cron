@@ -41,6 +41,14 @@ div.react-js-cron-custom-select .ant-select-selection-placeholder {
   transition: none;
   opacity: 1;
 }
+.react-js-cron-week-days-placeholder
+  .react-js-cron-custom-select
+  .ant-select-selection-placeholder,
+.react-js-cron-month-days-placeholder
+  .react-js-cron-custom-select
+  .ant-select-selection-placeholder {
+  opacity: 0.4;
+}
 .react-js-cron-custom-select-dropdown {
   min-width: 0 !important;
   width: 170px !important;

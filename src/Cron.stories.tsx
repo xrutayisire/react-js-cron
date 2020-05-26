@@ -13,7 +13,7 @@ export default {
 
 export function Example() {
   const inputRef = useRef<AntdInput>(null)
-  const defaultValue = '*/2 */2 1-4,7 * *'
+  const defaultValue = '30 5 * * */6'
   const [value, setValue] = useState(defaultValue)
   const customSetValue = useCallback(
     (newValue: string) => {
@@ -100,7 +100,7 @@ export function Input() {
 
 export function InputWithOnEnter() {
   const inputRef = useRef<AntdInput>(null)
-  const defaultValue = '* * */2 * *'
+  const defaultValue = '0 10 * * 1,3,5'
   const [value, setValue] = useState(defaultValue)
   const customSetValue = useCallback(
     (newValue: string) => {
@@ -137,7 +137,7 @@ export function InputWithOnEnter() {
 }
 
 export function ReadOnlyInput() {
-  const defaultValue = '* * */2 * *'
+  const defaultValue = '0 10 * * 1,3,5'
   const [value, setValue] = useState(defaultValue)
 
   return (
@@ -488,7 +488,7 @@ export function NoClearButton() {
 }
 
 export function InvalidDefaultValue() {
-  const defaultValue = '*/2 */2 */2 */2 */2'
+  const defaultValue = '*/2 */2 */2 1-6 */6 * *'
   const [value, setValue] = useState(defaultValue)
   const [error, setError] = useState<CronError>()
 
@@ -599,7 +599,7 @@ export function EmptyAlwaysAllowed() {
 
 export function FrenchLocale() {
   const inputRef = useRef<AntdInput>(null)
-  const defaultValue = '*/2 */2 */2 * *'
+  const defaultValue = '30 14 22 * *'
   const [value, setValue] = useState(defaultValue)
   const customSetValue = useCallback(
     (newValue: string) => {
@@ -626,36 +626,30 @@ export function FrenchLocale() {
       <Cron
         locale={{
           everyText: 'chaque',
-          emptyHours: 'chaque heure',
-          emptyWeekDays: 'chaque jour de la semaine',
-          emptyMonthDays: 'chaque jour du mois',
           emptyMonths: 'chaque mois',
+          emptyMonthDays: 'chaque jour du mois',
+          emptyMonthDaysShort: 'jour du mois',
+          emptyWeekDays: 'chaque jour de la semaine',
+          emptyWeekDaysShort: 'jour de la semaine',
+          emptyHours: 'chaque heure',
           emptyMinutes: 'chaque minute',
-          emptyMinutesWhenHourPeriod: 'chaque',
-          minuteOption: 'minute',
-          hourOption: 'heure',
-          dayOption: 'jour',
-          weekOption: 'semaine',
-          monthOption: 'mois',
+          emptyMinutesForHourPeriod: 'chaque',
           yearOption: 'année',
+          monthOption: 'mois',
+          weekOption: 'semaine',
+          dayOption: 'jour',
+          hourOption: 'heure',
+          minuteOption: 'minute',
           prefixPeriod: 'Chaque',
-          prefixHours: 'à',
-          prefixWeekDays: 'le',
+          prefixMonths: 'en',
           prefixMonthDays: 'le',
-          prefixMonths: 'de',
+          prefixWeekDays: 'le',
+          prefixWeekDaysForMonthAndYearPeriod: 'et',
+          prefixHours: 'à',
           prefixMinutes: ':',
-          prefixMinutesWhenHourPeriod: 'à',
-          suffixMinutesWhenHourPeriod: 'minute(s)',
+          prefixMinutesForHourPeriod: 'à',
+          suffixMinutesForHourPeriod: 'minute(s)',
           errorInvalidCron: 'Expression cron invalide',
-          weekDays: [
-            'dimanche',
-            'lundi',
-            'mardi',
-            'mercredi',
-            'jeudi',
-            'vendredi',
-            'samedi',
-          ],
           months: [
             'janvier',
             'février',
@@ -669,6 +663,15 @@ export function FrenchLocale() {
             'octobre',
             'novembre',
             'décembre',
+          ],
+          weekDays: [
+            'dimanche',
+            'lundi',
+            'mardi',
+            'mercredi',
+            'jeudi',
+            'vendredi',
+            'samedi',
           ],
         }}
         value={value}
@@ -695,7 +698,7 @@ export function FrenchLocale() {
 }
 
 export function CustomENLocale() {
-  const defaultValue = '* * */2 * *'
+  const defaultValue = '30 14 22 * *'
   const [value, setValue] = useState(defaultValue)
 
   return (
@@ -710,13 +713,13 @@ export function CustomENLocale() {
           emptyMonthDays: 'all days of the month',
           emptyMonths: 'all months',
           emptyMinutes: 'all minutes',
-          emptyMinutesWhenHourPeriod: 'all',
-          minuteOption: 'minutes',
-          hourOption: 'hours',
-          dayOption: 'days',
-          weekOption: 'weeks',
-          monthOption: 'months',
+          emptyMinutesForHourPeriod: 'all',
           yearOption: 'years',
+          monthOption: 'months',
+          weekOption: 'weeks',
+          dayOption: 'days',
+          hourOption: 'hours',
+          minuteOption: 'minutes',
           prefixPeriod: 'All',
         }}
         value={value}
@@ -735,7 +738,7 @@ export function CustomENLocale() {
 }
 
 export function NoPrefixAndSuffix() {
-  const defaultValue = '* * */2 * *'
+  const defaultValue = '30 14 22 * *'
   const [value, setValue] = useState(defaultValue)
 
   return (
@@ -744,14 +747,15 @@ export function NoPrefixAndSuffix() {
 
       <Cron
         locale={{
+          prefixPeriod: '',
+          prefixMonths: '',
+          prefixMonthDays: '',
+          prefixWeekDays: '',
+          prefixWeekDaysForMonthAndYearPeriod: '',
           prefixHours: '',
           prefixMinutes: '',
-          prefixMinutesWhenHourPeriod: '',
-          prefixMonthDays: '',
-          prefixMonths: '',
-          prefixPeriod: '',
-          prefixWeekDays: '',
-          suffixMinutesWhenHourPeriod: '',
+          prefixMinutesForHourPeriod: '',
+          suffixMinutesForHourPeriod: '',
         }}
         value={value}
         setValue={setValue}
@@ -770,7 +774,7 @@ export function NoPrefixAndSuffix() {
 
 export function CustomStyle() {
   const inputRef = useRef<AntdInput>(null)
-  const defaultValue = '*/7 */2 1-12 * *'
+  const defaultValue = '30 14 22 * *'
   const [value, setValue] = useState(defaultValue)
   const customSetValue = useCallback(
     (newValue: string) => {

@@ -178,15 +178,6 @@ export default function Cron(props: CronProps) {
         className={className}
       />
 
-      {(!period || period === 'month' || period === 'year') && (
-        <MonthDays
-          value={monthDays}
-          setValue={setMonthDays}
-          locale={locale}
-          className={className}
-        />
-      )}
-
       {period === 'year' && (
         <Months
           value={months}
@@ -197,13 +188,28 @@ export default function Cron(props: CronProps) {
         />
       )}
 
-      {period === 'week' && (
+      {period !== 'minute' &&
+        period !== 'hour' &&
+        period !== 'day' &&
+        period !== 'week' && (
+          <MonthDays
+            value={monthDays}
+            setValue={setMonthDays}
+            locale={locale}
+            className={className}
+            weekDays={weekDays}
+          />
+        )}
+
+      {period !== 'minute' && period !== 'hour' && period !== 'day' && (
         <WeekDays
           value={weekDays}
           setValue={setWeekDays}
           locale={locale}
           className={className}
           humanizeLabels={humanizeLabels}
+          period={period || defaultPeriod}
+          monthDays={monthDays}
         />
       )}
 

@@ -20,26 +20,29 @@ export interface CronProps {
 }
 export interface Locale {
   everyText?: string
-  emptyHours?: string
-  emptyWeekDays?: string
-  emptyMonthDays?: string
   emptyMonths?: string
+  emptyMonthDays?: string
+  emptyMonthDaysShort?: string
+  emptyWeekDays?: string
+  emptyWeekDaysShort?: string
+  emptyHours?: string
   emptyMinutes?: string
-  emptyMinutesWhenHourPeriod?: string
-  minuteOption?: string
-  hourOption?: string
-  dayOption?: string
-  weekOption?: string
-  monthOption?: string
+  emptyMinutesForHourPeriod?: string
   yearOption?: string
+  monthOption?: string
+  weekOption?: string
+  dayOption?: string
+  hourOption?: string
+  minuteOption?: string
   prefixPeriod?: string
-  prefixHours?: string
-  prefixWeekDays?: string
-  prefixMonthDays?: string
   prefixMonths?: string
+  prefixMonthDays?: string
+  prefixWeekDays?: string
+  prefixWeekDaysForMonthAndYearPeriod?: string
+  prefixHours?: string
   prefixMinutes?: string
-  prefixMinutesWhenHourPeriod?: string
-  suffixMinutesWhenHourPeriod?: string
+  prefixMinutesForHourPeriod?: string
+  suffixMinutesForHourPeriod?: string
   errorInvalidCron?: string
   weekDays?: string[]
   months?: string[]
@@ -76,8 +79,13 @@ export interface PeriodProps extends Omit<FieldProps, 'value' | 'setValue'> {
 export interface MonthsProps extends FieldProps {
   humanizeLabels: boolean
 }
+export interface MonthDaysProps extends FieldProps {
+  weekDays?: number[]
+}
 export interface WeekDaysProps extends FieldProps {
   humanizeLabels: boolean
+  period: PeriodType
+  monthDays?: number[]
 }
 export interface MinutesProps extends FieldProps {
   period: PeriodType
@@ -125,26 +133,29 @@ export type SetValuePeriod = Dispatch<SetStateAction<PeriodType>>
 export type SetInternalError = Dispatch<SetStateAction<boolean>>
 export interface DefaultLocale {
   everyText: string
-  emptyHours: string
-  emptyWeekDays: string
-  emptyMonthDays: string
   emptyMonths: string
+  emptyMonthDays: string
+  emptyMonthDaysShort: string
+  emptyWeekDays: string
+  emptyWeekDaysShort: string
+  emptyHours: string
   emptyMinutes: string
-  emptyMinutesWhenHourPeriod: string
-  minuteOption: string
-  hourOption: string
-  dayOption: string
-  weekOption: string
-  monthOption: string
+  emptyMinutesForHourPeriod: string
   yearOption: string
+  monthOption: string
+  weekOption: string
+  dayOption: string
+  hourOption: string
+  minuteOption: string
   prefixPeriod: string
-  prefixHours: string
-  prefixWeekDays: string
-  prefixMonthDays: string
   prefixMonths: string
+  prefixMonthDays: string
+  prefixWeekDays: string
+  prefixWeekDaysForMonthAndYearPeriod: string
+  prefixHours: string
   prefixMinutes: string
-  prefixMinutesWhenHourPeriod: string
-  suffixMinutesWhenHourPeriod: string
+  prefixMinutesForHourPeriod: string
+  suffixMinutesForHourPeriod: string
   errorInvalidCron: string
   weekDays: string[]
   months: string[]

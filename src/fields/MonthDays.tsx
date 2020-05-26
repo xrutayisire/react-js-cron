@@ -1,21 +1,32 @@
 import React, { useMemo } from 'react'
 
 import CustomSelect from '../components/CustomSelect'
-import { FieldProps } from '../types'
+import { MonthDaysProps } from '../types'
 import { DEFAULT_LOCALE_EN } from '../locale'
 import { classNames } from '../utils'
 
-export default function MonthDays(props: FieldProps) {
-  const { value, setValue, locale, className } = props
+export default function MonthDays(props: MonthDaysProps) {
+  const { value, setValue, locale, className, weekDays } = props
+  const noWeekDays = !weekDays || weekDays.length === 0
 
   const internalClassName = useMemo(
     () =>
       classNames({
         'react-js-cron-month-days': true,
+        'react-js-cron-month-days-placeholder': !noWeekDays,
         [`${className}-month-days`]: !!className,
       }),
-    [className]
+    [className, noWeekDays]
   )
+
+  const localeJSON = JSON.stringify(locale)
+  const placeholder = useMemo(() => {
+    if (noWeekDays) {
+      return locale.emptyMonthDays || DEFAULT_LOCALE_EN.emptyMonthDays
+    }
+
+    return locale.emptyMonthDaysShort || DEFAULT_LOCALE_EN.emptyMonthDaysShort
+  }, [noWeekDays, localeJSON]) // eslint-disable-line
 
   return (
     <div className={internalClassName}>
@@ -26,7 +37,7 @@ export default function MonthDays(props: FieldProps) {
       )}
 
       <CustomSelect
-        placeholder={locale.emptyMonthDays || DEFAULT_LOCALE_EN.emptyMonthDays}
+        placeholder={placeholder}
         value={value}
         setValue={setValue}
         nbOptions={31}

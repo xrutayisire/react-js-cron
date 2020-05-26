@@ -93,25 +93,27 @@ export function setCron(
       }
 
       if (mask === '*****') {
-        // 1 possibility
         values.period = 'minute'
       } else if (mask === '-****') {
-        // 1 possibility
         values.period = 'hour'
         assignValueOrError(items[0], 'minutes')
       } else if (mask.substring(2, mask.length) === '***') {
-        // 4 possibilities
         values.period = 'day'
         assignValueOrError(items[0], 'minutes')
         assignValueOrError(items[1], 'hours')
-      } else if (mask.substring(2, mask.length) === '-**') {
-        // 4 possibilities
+      } else if (
+        mask.substring(2, mask.length) === '-**' ||
+        mask.substring(2, mask.length) === '-*-'
+      ) {
         values.period = 'month'
         assignValueOrError(items[0], 'minutes')
         assignValueOrError(items[1], 'hours')
         assignValueOrError(items[2], 'month-days')
+        assignValueOrError(
+          getHumanizedStringFromArray(items[4], HUMANIZED_WEEK_DAYS_LABELS),
+          'week-days'
+        )
       } else if (mask.substring(2, mask.length) === '**-') {
-        // 4 possibilities
         values.period = 'week'
         assignValueOrError(items[0], 'minutes')
         assignValueOrError(items[1], 'hours')
@@ -119,8 +121,10 @@ export function setCron(
           getHumanizedStringFromArray(items[4], HUMANIZED_WEEK_DAYS_LABELS),
           'week-days'
         )
-      } else if (mask.substring(3, mask.length) === '-*') {
-        // 8 possibilities
+      } else if (
+        mask.substring(3, mask.length) === '-*' ||
+        mask.substring(3, mask.length) === '--'
+      ) {
         values.period = 'year'
         assignValueOrError(items[0], 'minutes')
         assignValueOrError(items[1], 'hours')
@@ -128,6 +132,10 @@ export function setCron(
         assignValueOrError(
           getHumanizedStringFromArray(items[3], HUMANIZED_MONTHS_LABELS),
           'months'
+        )
+        assignValueOrError(
+          getHumanizedStringFromArray(items[4], HUMANIZED_WEEK_DAYS_LABELS),
+          'week-days'
         )
       } else {
         error = true
@@ -361,7 +369,7 @@ export function getCron(
 ) {
   const items = ['*', '*', '*', '*', '*']
 
-  if (period === 'hour') {
+  if (period !== 'minute') {
     items[0] = getCronValueFromNumbers(minutes, 'minutes')
   }
 
@@ -371,7 +379,6 @@ export function getCron(
     period === 'month' ||
     period === 'year'
   ) {
-    items[0] = getCronValueFromNumbers(minutes, 'minutes')
     items[1] = getCronValueFromNumbers(hours, 'hours')
   }
 
@@ -383,7 +390,7 @@ export function getCron(
     items[3] = getCronValueFromNumbers(months, 'months', humanizeValue)
   }
 
-  if (period === 'week') {
+  if (period === 'week' || period === 'month' || period === 'year') {
     items[4] = getCronValueFromNumbers(weekDays, 'week-days', humanizeValue)
   }
 

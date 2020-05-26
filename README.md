@@ -55,26 +55,29 @@ CronProps {
     | undefined
   locale?: {
     everyText?: string
-    emptyHours?: string
-    emptyWeekDays?: string
-    emptyMonthDays?: string
     emptyMonths?: string
+    emptyMonthDays?: string
+    emptyMonthDaysShort?: string
+    emptyWeekDays?: string
+    emptyWeekDaysShort?: string
+    emptyHours?: string
     emptyMinutes?: string
-    emptyMinutesWhenHourPeriod?: string
-    minuteOption?: string
-    hourOption?: string
-    dayOption?: string
-    weekOption?: string
-    monthOption?: string
+    emptyMinutesForHourPeriod?: string
     yearOption?: string
+    monthOption?: string
+    weekOption?: string
+    dayOption?: string
+    hourOption?: string
+    minuteOption?: string
     prefixPeriod?: string
-    prefixHours?: string
-    prefixWeekDays?: string
-    prefixMonthDays?: string
     prefixMonths?: string
+    prefixMonthDays?: string
+    prefixWeekDays?: string
+    prefixWeekDaysForMonthAndYearPeriod?: string
+    prefixHours?: string
     prefixMinutes?: string
-    prefixMinutesWhenHourPeriod?: string
-    suffixMinutesWhenHourPeriod?: string
+    prefixMinutesForHourPeriod?: string
+    suffixMinutesForHourPeriod?: string
     errorInvalidCron?: string
     weekDays?: string[]
     months?: string[]
