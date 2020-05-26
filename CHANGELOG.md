@@ -1,5 +1,18 @@
 ## Changelog
 
+#### 1.0.3
+
+- Fix bug when the input string contains duplicates
+- Clear button should have a margin-bottom in case of a break line
+- Add prop to humanize labels for week days and months
+- Add a prop 'allowEmpty' to choose how the component handles the default value
+- Add a prop 'defaultPeriod' used when default value is an empty string
+- Empty string and invalid string should not change the value
+- Fix a bug accepting string like '5-0'
+- Fix infinite loop for bad string like '*/0' or '1-2/0'
+- Always use 0 for Sunday
+- Fix a bug when using 0 for Sunday
+
 #### 1.0.2
 
 - Fix bug that caused the impossibility to unselect last value

@@ -1,6 +1,6 @@
 {
   "name": "react-js-cron",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A React cron editor with antd inspired by jqcron",
   "author": "Xavier Rutayisire <xavier.rutayisire@gmail.com> (https://github.com/xrutayisire/)",
   "license": "MIT",
