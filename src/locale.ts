@@ -7,7 +7,7 @@ export const DEFAULT_LOCALE_EN: DefaultLocale = {
   emptyMonthDays: 'every day of the month',
   emptyMonths: 'every month',
   emptyMinutes: 'every minute',
-  emptyMinutesWhenHoursPeriod: 'every',
+  emptyMinutesWhenHourPeriod: 'every',
   minuteOption: 'minute',
   hourOption: 'hour',
   dayOption: 'day',
@@ -20,8 +20,8 @@ export const DEFAULT_LOCALE_EN: DefaultLocale = {
   prefixMonthDays: 'on',
   prefixMonths: 'of',
   prefixMinutes: ':',
-  prefixMinutesWhenHoursPeriod: 'at',
-  suffixMinutesWhenHoursPeriod: 'minute(s)',
+  prefixMinutesWhenHourPeriod: 'at',
+  suffixMinutesWhenHourPeriod: 'minute(s)',
   errorInvalidCron: 'Invalid cron expression',
   weekDays: [
     // Order is important, the index will be used as value

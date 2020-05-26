@@ -20,10 +20,10 @@ export default function Minutes(props: MinutesProps) {
   return (
     <div className={internalClassName}>
       {period === 'hour'
-        ? locale.prefixMinutesWhenHoursPeriod !== '' && (
+        ? locale.prefixMinutesWhenHourPeriod !== '' && (
             <span>
-              {locale.prefixMinutesWhenHoursPeriod ||
-                DEFAULT_LOCALE_EN.prefixMinutesWhenHoursPeriod}
+              {locale.prefixMinutesWhenHourPeriod ||
+                DEFAULT_LOCALE_EN.prefixMinutesWhenHourPeriod}
             </span>
           )
         : locale.prefixMinutes !== '' && (
@@ -35,8 +35,8 @@ export default function Minutes(props: MinutesProps) {
       <CustomSelect
         placeholder={
           period === 'hour'
-            ? locale.emptyMinutesWhenHoursPeriod ||
-              DEFAULT_LOCALE_EN.emptyMinutesWhenHoursPeriod
+            ? locale.emptyMinutesWhenHourPeriod ||
+              DEFAULT_LOCALE_EN.emptyMinutesWhenHourPeriod
             : locale.emptyMinutes || DEFAULT_LOCALE_EN.emptyMinutes
         }
         value={value}
@@ -47,10 +47,10 @@ export default function Minutes(props: MinutesProps) {
         className={className}
       />
 
-      {period === 'hour' && locale.suffixMinutesWhenHoursPeriod !== '' && (
+      {period === 'hour' && locale.suffixMinutesWhenHourPeriod !== '' && (
         <span>
-          {locale.suffixMinutesWhenHoursPeriod ||
-            DEFAULT_LOCALE_EN.suffixMinutesWhenHoursPeriod}
+          {locale.suffixMinutesWhenHourPeriod ||
+            DEFAULT_LOCALE_EN.suffixMinutesWhenHourPeriod}
         </span>
       )}
     </div>

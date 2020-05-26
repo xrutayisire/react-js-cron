@@ -60,7 +60,7 @@ CronProps {
     emptyMonthDays?: string
     emptyMonths?: string
     emptyMinutes?: string
-    emptyMinutesWhenHoursPeriod?: string
+    emptyMinutesWhenHourPeriod?: string
     minuteOption?: string
     hourOption?: string
     dayOption?: string
@@ -73,8 +73,8 @@ CronProps {
     prefixMonthDays?: string
     prefixMonths?: string
     prefixMinutes?: string
-    prefixMinutesWhenHoursPeriod?: string
-    suffixMinutesWhenHoursPeriod?: string
+    prefixMinutesWhenHourPeriod?: string
+    suffixMinutesWhenHourPeriod?: string
     errorInvalidCron?: string
     weekDays?: string[]
     months?: string[]

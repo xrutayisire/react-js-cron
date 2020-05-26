@@ -631,7 +631,7 @@ export function FrenchLocale() {
           emptyMonthDays: 'chaque jour du mois',
           emptyMonths: 'chaque mois',
           emptyMinutes: 'chaque minute',
-          emptyMinutesWhenHoursPeriod: 'chaque',
+          emptyMinutesWhenHourPeriod: 'chaque',
           minuteOption: 'minute',
           hourOption: 'heure',
           dayOption: 'jour',
@@ -644,8 +644,8 @@ export function FrenchLocale() {
           prefixMonthDays: 'le',
           prefixMonths: 'de',
           prefixMinutes: ':',
-          prefixMinutesWhenHoursPeriod: 'à',
-          suffixMinutesWhenHoursPeriod: 'minute(s)',
+          prefixMinutesWhenHourPeriod: 'à',
+          suffixMinutesWhenHourPeriod: 'minute(s)',
           errorInvalidCron: 'Expression cron invalide',
           weekDays: [
             'dimanche',
@@ -710,7 +710,7 @@ export function CustomENLocale() {
           emptyMonthDays: 'all days of the month',
           emptyMonths: 'all months',
           emptyMinutes: 'all minutes',
-          emptyMinutesWhenHoursPeriod: 'all',
+          emptyMinutesWhenHourPeriod: 'all',
           minuteOption: 'minutes',
           hourOption: 'hours',
           dayOption: 'days',
@@ -746,12 +746,12 @@ export function NoPrefixAndSuffix() {
         locale={{
           prefixHours: '',
           prefixMinutes: '',
-          prefixMinutesWhenHoursPeriod: '',
+          prefixMinutesWhenHourPeriod: '',
           prefixMonthDays: '',
           prefixMonths: '',
           prefixPeriod: '',
           prefixWeekDays: '',
-          suffixMinutesWhenHoursPeriod: '',
+          suffixMinutesWhenHourPeriod: '',
         }}
         value={value}
         setValue={setValue}
