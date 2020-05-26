@@ -36,8 +36,11 @@ CronProps {
     | (value: string) => void
     | Dispatch<SetStateAction<string>> 
   className?: string
-  clearButton?: boolean // Default: true
+  humanizeLabels?: boolean // Default: true
+  humanizeValue?: boolean // Default: false
   defaultPeriod?: 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute' // Default: 'month'
+  allowEmpty?: 'always' | 'never' | 'for-default-value' // Default: 'for-default-value'
+  clearButton?: boolean // Default: true
   clearButtonProps?: ButtonProps // Extends antd button props without onClick
   displayError?: boolean // Default: true
   setError?: 
@@ -50,8 +53,6 @@ CronProps {
       description: string
     }>>
     | undefined
-  allowEmpty?: 'always' | 'never' | 'for-default-value' // Default: 'for-default-value'
-  humanizeLabels?: boolean // Default: false
   locale?: {
     everyText?: string
     emptyHours?: string

@@ -25,7 +25,8 @@ export default function Cron(props: CronProps) {
     defaultPeriod = 'month',
     clearButtonProps = {},
     allowEmpty = 'for-default-value',
-    humanizeLabels = false,
+    humanizeLabels = true,
+    humanizeValue = false,
   } = props
   const internalValueRef = useRef<string>(value)
   const [period, setPeriod] = useState<PeriodType | undefined>()
@@ -97,7 +98,7 @@ export default function Cron(props: CronProps) {
         weekDays,
         hours,
         minutes,
-        humanizeLabels
+        humanizeValue
       )
 
       setValue(cron)
@@ -116,7 +117,7 @@ export default function Cron(props: CronProps) {
     setValue,
     setError,
     defaultPeriod,
-    humanizeLabels,
+    humanizeValue,
   ])
 
   const handleClear = useCallback(() => {
@@ -133,7 +134,7 @@ export default function Cron(props: CronProps) {
       undefined,
       undefined,
       undefined,
-      humanizeLabels
+      humanizeValue
     )
 
     setValue(cron)
@@ -141,7 +142,7 @@ export default function Cron(props: CronProps) {
 
     setError && setError(undefined)
     setInternalError(false)
-  }, [period, setError, setValue, defaultPeriod, humanizeLabels])
+  }, [period, setError, setValue, defaultPeriod, humanizeValue])
 
   const internalClassName = useMemo(
     () =>

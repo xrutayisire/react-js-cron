@@ -201,7 +201,7 @@ export function DefaultPeriod() {
   )
 }
 
-export function HumanizeLabels() {
+export function OnlyHumanizeLabels() {
   const inputRef = useRef<AntdInput>(null)
   const defaultValue = '* * * * MON-WED,sat'
   const [value, setValue] = useState(defaultValue)
@@ -230,37 +230,158 @@ export function HumanizeLabels() {
 
       <Divider>OR</Divider>
 
+      <Cron value={value} setValue={customSetValue} setError={setError} />
+
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          If not set, the prop &quot;humanizeLabels&quot; is true
+        </span>
+      </div>
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          Humanizes the labels in the cron component
+        </span>
+      </div>
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          Works only for week days and months
+        </span>
+      </div>
+    </div>
+  )
+}
+
+export function OnlyHumanizeValue() {
+  const inputRef = useRef<AntdInput>(null)
+  const defaultValue = '* * * * MON-WED,sat'
+  const [value, setValue] = useState(defaultValue)
+  const [error, setError] = useState<CronError>()
+  const customSetValue = useCallback(
+    (newValue: string) => {
+      setValue(newValue)
+      inputRef.current?.setValue(newValue)
+    },
+    [inputRef]
+  )
+
+  return (
+    <div>
+      <p>Humanize labels: false</p>
+      <p>Humanize value: true</p>
+      <p>Default value: {defaultValue}</p>
+      <p>Value: {value}</p>
+      <p>Error: {error ? error.description : 'undefined'}</p>
+
+      <AntdInput
+        ref={inputRef}
+        onBlur={(event) => {
+          setValue(event.target.value)
+        }}
+      />
+
+      <Divider>OR</Divider>
+
       <Cron
         value={value}
         setValue={customSetValue}
         setError={setError}
-        humanizeLabels
+        humanizeLabels={false}
+        humanizeValue
       />
 
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
-          If not set, the prop &quot;humanizeLabels&quot; is false
+          If not set, the prop &quot;humanizeValue&quot; is false
         </span>
       </div>
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
-          If the the prop &quot;humanizeLabels&quot; is true, the component will
-          automatically convert valid number value to string
+          The prop &quot;humanizeValue&quot; cannot be used to prohibit used of
+          valid string value like &quot;MON,WED&quot;
         </span>
       </div>
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
-          If the the prop &quot;humanizeLabels&quot; is false, the component
-          will automatically convert valid string value to number
+          If the prop &quot;humanizeValue&quot; is true, the component will
+          automatically convert a valid number value to string
         </span>
       </div>
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
-          A valid string value can be in lower or upper case
+          If the prop &quot;humanizeValue&quot; is false, the component will
+          automatically convert a valid string value to number
+        </span>
+      </div>
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          A valid string value can be in lowercase or uppercase
+        </span>
+      </div>
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          Works only for week days and months
+        </span>
+      </div>
+    </div>
+  )
+}
+
+export function HumanizeLabelsAndValue() {
+  const inputRef = useRef<AntdInput>(null)
+  const defaultValue = '* * * * MON-WED,sat'
+  const [value, setValue] = useState(defaultValue)
+  const [error, setError] = useState<CronError>()
+  const customSetValue = useCallback(
+    (newValue: string) => {
+      setValue(newValue)
+      inputRef.current?.setValue(newValue)
+    },
+    [inputRef]
+  )
+
+  return (
+    <div>
+      <p>Humanize labels: true</p>
+      <p>Humanize value: true</p>
+      <p>Default value: {defaultValue}</p>
+      <p>Value: {value}</p>
+      <p>Error: {error ? error.description : 'undefined'}</p>
+
+      <AntdInput
+        ref={inputRef}
+        onBlur={(event) => {
+          setValue(event.target.value)
+        }}
+      />
+
+      <Divider>OR</Divider>
+
+      <Cron
+        value={value}
+        setValue={customSetValue}
+        setError={setError}
+        humanizeValue
+      />
+
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          Humanizes in the cron component both the labels and the value
+        </span>
+      </div>
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          Works only for week days and months
         </span>
       </div>
     </div>

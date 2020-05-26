@@ -8,13 +8,14 @@ export interface CronProps {
   value: string
   setValue: SetValue
   className?: string
+  humanizeLabels?: boolean
+  humanizeValue?: boolean
+  defaultPeriod?: PeriodType
+  allowEmpty?: AllowEmpty
   clearButton?: boolean
+  clearButtonProps?: ClearButtonProps
   displayError?: boolean
   setError?: SetError
-  defaultPeriod?: PeriodType
-  clearButtonProps?: ClearButtonProps
-  allowEmpty?: AllowEmpty
-  humanizeLabels?: boolean
   locale?: Locale
 }
 export interface Locale {

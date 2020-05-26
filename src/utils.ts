@@ -295,14 +295,14 @@ function getCronValueFromString(string: string, type: CronType) {
 export function getCronValueFromNumbers(
   arrayNumberValue: number[] | undefined,
   type: CronType,
-  humanizeLabels?: boolean
+  humanize?: boolean
 ) {
   if (!arrayNumberValue || arrayNumberValue.length === 0) {
     return '*'
   }
 
   const cron: string[] = [
-    getHumanizedStringFromNumber(arrayNumberValue[0], type, humanizeLabels),
+    getHumanizedStringFromNumber(arrayNumberValue[0], type, humanize),
   ]
   let s = arrayNumberValue[0]
   let c = arrayNumberValue[0]
@@ -315,12 +315,12 @@ export function getCronValueFromNumbers(
       cron[cron.length - 1] = `${getHumanizedStringFromNumber(
         s,
         type,
-        humanizeLabels
-      )}-${getHumanizedStringFromNumber(c, type, humanizeLabels)}`
+        humanize
+      )}-${getHumanizedStringFromNumber(c, type, humanize)}`
     } else {
       s = c = arrayNumberValue[i]
 
-      cron.push(getHumanizedStringFromNumber(c, type, humanizeLabels))
+      cron.push(getHumanizedStringFromNumber(c, type, humanize))
     }
   }
 
@@ -357,7 +357,7 @@ export function getCron(
   weekDays: number[] | undefined,
   hours: number[] | undefined,
   minutes: number[] | undefined,
-  humanizeLabels: boolean
+  humanizeValue: boolean
 ) {
   const items = ['*', '*', '*', '*', '*']
 
@@ -380,11 +380,11 @@ export function getCron(
   }
 
   if (period === 'year') {
-    items[3] = getCronValueFromNumbers(months, 'months', humanizeLabels)
+    items[3] = getCronValueFromNumbers(months, 'months', humanizeValue)
   }
 
   if (period === 'week') {
-    items[4] = getCronValueFromNumbers(weekDays, 'week-days', humanizeLabels)
+    items[4] = getCronValueFromNumbers(weekDays, 'week-days', humanizeValue)
   }
 
   return items.join(' ')
@@ -481,11 +481,11 @@ function getHumanizedStringFromArray(
 function getHumanizedStringFromNumber(
   number: number,
   type: CronType,
-  humanizeLabels?: boolean
+  humanize?: boolean
 ) {
   let defaultStr = number.toString()
 
-  if (!humanizeLabels) {
+  if (!humanize) {
     return defaultStr
   }
 
