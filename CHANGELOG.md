@@ -1,5 +1,16 @@
 ## Changelog
 
+#### 1.0.5
+
+- Update README image with new features
+- Add a prop leadingZero to add a '0' before number lower than 10
+- Add a prop to make read only the component
+- Add a prop to disable the component
+- Set day as default period
+- Add missing support for mixing week days with month and month days
+- Rename some locale properties to fix typos
+- Fix typo in jqCron name
+
 #### 1.0.4
 
 - Add a prop to humanize the value
