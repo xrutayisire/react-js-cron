@@ -2,10 +2,10 @@
   max-width: 1400px !important;
 }
 
-.my-project-cron > div > span {
+.my-project-cron-field > span {
   font-weight: bold;
 }
-.my-project-cron-error > div > span {
+.my-project-cron-error-field > span {
   color: #ff4d4f;
 }
 .my-project-cron .my-project-cron-select > div:first-child {

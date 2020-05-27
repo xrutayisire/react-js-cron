@@ -46,7 +46,9 @@ export default function Period(props: PeriodProps) {
   const internalClassName = useMemo(
     () =>
       classNames({
+        'react-js-cron-field': true,
         'react-js-cron-period': true,
+        [`${className}-field`]: !!className,
         [`${className}-period`]: !!className,
       }),
     [className]

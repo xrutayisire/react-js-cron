@@ -23,8 +23,10 @@ export default function WeekDays(props: WeekDaysProps) {
   const internalClassName = useMemo(
     () =>
       classNames({
+        'react-js-cron-field': true,
         'react-js-cron-week-days': true,
         'react-js-cron-week-days-placeholder': !noMonthDays,
+        [`${className}-field`]: !!className,
         [`${className}-week-days`]: !!className,
       }),
     [className, noMonthDays]

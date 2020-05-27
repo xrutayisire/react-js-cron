@@ -19,7 +19,9 @@ export default function Hours(props: HoursProps) {
   const internalClassName = useMemo(
     () =>
       classNames({
+        'react-js-cron-field': true,
         'react-js-cron-hours': true,
+        [`${className}-field`]: !!className,
         [`${className}-hours`]: !!className,
       }),
     [className]

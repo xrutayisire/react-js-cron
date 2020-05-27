@@ -234,43 +234,45 @@ export default function Cron(props: CronProps) {
         />
       )}
 
-      {periodForRender !== 'minute' && periodForRender !== 'hour' && (
-        <Hours
-          value={hours}
-          setValue={setHours}
-          locale={locale}
-          className={className}
-          disabled={disabled}
-          readOnly={readOnly}
-          leadingZero={leadingZero}
-        />
-      )}
+      <div>
+        {periodForRender !== 'minute' && periodForRender !== 'hour' && (
+          <Hours
+            value={hours}
+            setValue={setHours}
+            locale={locale}
+            className={className}
+            disabled={disabled}
+            readOnly={readOnly}
+            leadingZero={leadingZero}
+          />
+        )}
 
-      {periodForRender !== 'minute' && (
-        <Minutes
-          value={minutes}
-          setValue={setMinutes}
-          locale={locale}
-          period={periodForRender}
-          className={className}
-          disabled={disabled}
-          readOnly={readOnly}
-          leadingZero={leadingZero}
-        />
-      )}
+        {periodForRender !== 'minute' && (
+          <Minutes
+            value={minutes}
+            setValue={setMinutes}
+            locale={locale}
+            period={periodForRender}
+            className={className}
+            disabled={disabled}
+            readOnly={readOnly}
+            leadingZero={leadingZero}
+          />
+        )}
 
-      {clearButton && !readOnly && (
-        <Button
-          className={clearButtonClassName}
-          danger
-          type='primary'
-          disabled={disabled}
-          {...otherClearButtonProps}
-          onClick={handleClear}
-        >
-          Clear
-        </Button>
-      )}
+        {clearButton && !readOnly && (
+          <Button
+            className={clearButtonClassName}
+            danger
+            type='primary'
+            disabled={disabled}
+            {...otherClearButtonProps}
+            onClick={handleClear}
+          >
+            Clear
+          </Button>
+        )}
+      </div>
     </div>
   )
 }

@@ -3,12 +3,13 @@
   align-items: flex-start;
   flex-wrap: wrap;
 }
-.react-js-cron > div {
+.react-js-cron > div,
+.react-js-cron-field {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
 }
-.react-js-cron > div > span {
+.react-js-cron-field > span {
   margin-left: 5px;
 }
 div.react-js-cron-select {

@@ -1020,6 +1020,7 @@ export function CustomStyle() {
           <li>.my-project-cron-disabled</li>
           <li>.my-project-cron-read-only</li>
           <li>.my-project-cron-clear-button</li>
+          <li>.my-project-cron-field</li>
           <li>.my-project-cron-period</li>
           <li>.my-project-cron-minutes</li>
           <li>.my-project-cron-hours</li>

@@ -20,7 +20,9 @@ export default function Months(props: MonthsProps) {
   const internalClassName = useMemo(
     () =>
       classNames({
+        'react-js-cron-field': true,
         'react-js-cron-months': true,
+        [`${className}-field`]: !!className,
         [`${className}-months`]: !!className,
       }),
     [className]
