@@ -15,6 +15,7 @@ export interface CronProps {
   disabled?: boolean
   readOnly?: boolean
   allowEmpty?: AllowEmpty
+  shortcuts?: boolean
   clearButton?: boolean
   clearButtonProps?: ClearButtonProps
   displayError?: boolean

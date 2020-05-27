@@ -43,6 +43,7 @@ CronProps {
   disabled?: boolean // Default: false
   readOnly?: boolean // Default: false
   allowEmpty?: 'always' | 'never' | 'for-default-value' // Default: 'for-default-value'
+  shortcuts?: boolean // Default: true
   clearButton?: boolean // Default: true
   clearButtonProps?: ButtonProps // Extends antd button props without onClick
   displayError?: boolean // Default: true

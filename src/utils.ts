@@ -17,6 +17,7 @@ import { DEFAULT_LOCALE_EN } from './locale'
 import {
   HUMANIZED_WEEK_DAYS_LABELS,
   HUMANIZED_MONTHS_LABELS,
+  SUPPORTED_SHORTCUTS,
 } from './constants'
 
 // Set cron (string like * * * * *)
@@ -28,6 +29,7 @@ export function setCron(
   internalValueRef: MutableRefObject<string>,
   firstRender: boolean,
   locale: Locale,
+  shortcuts: boolean,
   setMinutes: SetValueNumbersOrUndefined,
   setHours: SetValueNumbersOrUndefined,
   setMonthDays: SetValueNumbersOrUndefined,
@@ -35,12 +37,14 @@ export function setCron(
   setMonths: SetValueNumbersOrUndefined,
   setPeriod: SetValuePeriod
 ) {
+  let stringValue = string
+
   setError && setError(undefined)
   setInternalError(false)
 
   let error = false
 
-  if (!string) {
+  if (!stringValue) {
     if (
       allowEmpty === 'always' ||
       (firstRender && allowEmpty === 'for-default-value')
@@ -76,9 +80,17 @@ export function setCron(
       }
     }
 
+    if (shortcuts) {
+      SUPPORTED_SHORTCUTS.forEach((supportedShortcut) => {
+        if (stringValue === supportedShortcut.name) {
+          stringValue = supportedShortcut.value
+        }
+      })
+    }
+
     try {
       // Sanitize
-      const cronString = string
+      const cronString = stringValue
         .replace(/\s+/g, ' ')
         .replace(/^ +/, '')
         .replace(/ +$/, '')
@@ -190,7 +202,7 @@ export function setCron(
       }
     })
   } else {
-    internalValueRef.current = string
+    internalValueRef.current = stringValue
     setInternalError(true)
     setError &&
       setError({

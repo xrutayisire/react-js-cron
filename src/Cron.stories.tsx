@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react'
-import { Input as AntdInput, Divider } from 'antd'
+import { Input as AntdInput, Divider, Table } from 'antd'
 import { InfoCircleOutlined } from '@ant-design/icons'
 
 import Cron, { CronError } from './index'
@@ -682,6 +682,105 @@ export function EmptyAlwaysAllowed() {
           &quot;for-default-value&quot;
         </span>
       </div>
+    </div>
+  )
+}
+
+export function Shortcuts() {
+  const inputRef = useRef<AntdInput>(null)
+  const defaultValue = '@monthly'
+  const [value, setValue] = useState(defaultValue)
+  const customSetValue = useCallback(
+    (newValue: string) => {
+      setValue(newValue)
+      inputRef.current?.setValue(newValue)
+    },
+    [inputRef]
+  )
+  const [error, setError] = useState<CronError>()
+
+  const columns = [
+    {
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      dataIndex: 'description',
+      key: 'description',
+    },
+    {
+      dataIndex: 'value',
+      key: 'value',
+    },
+  ]
+
+  const data = [
+    {
+      key: '1',
+      name: '@yearly (or @annually)',
+      description: 'Run once a year at midnight of 1 January',
+      value: '0 0 1 1 *',
+    },
+    {
+      key: '2',
+      name: '@monthly',
+      description: 'Run once a month at midnight of the first day of the month',
+      value: '0 0 1 * *',
+    },
+    {
+      key: '3',
+      name: '@weekly',
+      description: 'Run once a week at midnight on Sunday morning',
+      value: '0 0 * * 0',
+    },
+    {
+      key: '4',
+      name: '@daily (or @midnight)',
+      description: 'Run once a day at midnight',
+      value: '0 0 * * *',
+    },
+    {
+      key: '5',
+      name: '@hourly',
+      description: 'Run once an hour at the beginning of the hour',
+      value: '0 * * * *',
+    },
+  ]
+
+  return (
+    <div>
+      <p>Shortcuts: true</p>
+      <p>Default value: {defaultValue}</p>
+      <p>Value: {value}</p>
+      <p>Error: {error ? error.description : 'undefined'}</p>
+
+      <AntdInput
+        ref={inputRef}
+        onBlur={(event) => {
+          setValue(event.target.value)
+        }}
+      />
+
+      <Divider>OR</Divider>
+
+      <Cron value={value} setValue={customSetValue} setError={setError} />
+
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          If not set, the prop &quot;Shortcuts&quot; is true
+        </span>
+      </div>
+
+      <Table
+        columns={columns}
+        dataSource={data}
+        showHeader={false}
+        bordered
+        pagination={false}
+        style={{ marginTop: 20 }}
+        title={() => <h3>Supported shortcuts</h3>}
+      />
     </div>
   )
 }

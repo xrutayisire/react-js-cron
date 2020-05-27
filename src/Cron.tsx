@@ -30,6 +30,7 @@ export default function Cron(props: CronProps) {
     disabled = false,
     readOnly = false,
     leadingZero = 'never',
+    shortcuts = true,
   } = props
   const internalValueRef = useRef<string>(value)
   const [period, setPeriod] = useState<PeriodType | undefined>()
@@ -50,6 +51,7 @@ export default function Cron(props: CronProps) {
         internalValueRef,
         true,
         locale,
+        shortcuts,
         setMinutes,
         setHours,
         setMonthDays,
@@ -74,6 +76,7 @@ export default function Cron(props: CronProps) {
           internalValueRef,
           false,
           locale,
+          shortcuts,
           setMinutes,
           setHours,
           setMonthDays,
@@ -84,7 +87,7 @@ export default function Cron(props: CronProps) {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [value, internalValueRef, localeJSON, allowEmpty]
+    [value, internalValueRef, localeJSON, allowEmpty, shortcuts]
   )
 
   useEffect(
