@@ -11,6 +11,7 @@ import {
   CronValues,
   Classes,
   AllowEmpty,
+  LeadingZero,
 } from './types'
 import { DEFAULT_LOCALE_EN } from './locale'
 import {
@@ -303,14 +304,20 @@ function getCronValueFromString(string: string, type: CronType) {
 export function getCronValueFromNumbers(
   arrayNumberValue: number[] | undefined,
   type: CronType,
-  humanize?: boolean
+  humanize?: boolean,
+  leadingZero?: LeadingZero
 ) {
   if (!arrayNumberValue || arrayNumberValue.length === 0) {
     return '*'
   }
 
   const cron: string[] = [
-    getHumanizedStringFromNumber(arrayNumberValue[0], type, humanize),
+    getHumanizedStringFromNumber(
+      arrayNumberValue[0],
+      type,
+      humanize,
+      leadingZero
+    ),
   ]
   let s = arrayNumberValue[0]
   let c = arrayNumberValue[0]
@@ -323,17 +330,21 @@ export function getCronValueFromNumbers(
       cron[cron.length - 1] = `${getHumanizedStringFromNumber(
         s,
         type,
-        humanize
-      )}-${getHumanizedStringFromNumber(c, type, humanize)}`
+        humanize,
+        leadingZero
+      )}-${getHumanizedStringFromNumber(c, type, humanize, leadingZero)}`
     } else {
       s = c = arrayNumberValue[i]
 
-      cron.push(getHumanizedStringFromNumber(c, type, humanize))
+      cron.push(getHumanizedStringFromNumber(c, type, humanize, leadingZero))
     }
   }
 
   if (cron.length > 1) {
-    const multiple = cron[0] === '0' ? Number(+cron[1]) : Number(+cron[0])
+    const multiple =
+      parseInt(cron[0], 10) === 0
+        ? parseInt(cron[1], 10)
+        : parseInt(cron[0], 10)
     const total = getTotalItem(multiple, type)
     let valid = true
 
@@ -343,7 +354,10 @@ export function getCronValueFromNumbers(
       for (let i = 1; i < cron.length; i++) {
         counter += multiple
 
-        if (Number(cron[i]) % multiple !== 0 || multiple * i !== counter) {
+        if (
+          parseInt(cron[i], 10) % multiple !== 0 ||
+          multiple * i !== counter
+        ) {
           valid = false
           break
         }
@@ -488,18 +502,22 @@ function getHumanizedStringFromArray(
 function getHumanizedStringFromNumber(
   number: number,
   type: CronType,
-  humanize?: boolean
+  humanize?: boolean,
+  leadingZero?: LeadingZero
 ) {
   let defaultStr = number.toString()
 
-  if (!humanize) {
-    return defaultStr
-  }
-
-  if (type === 'week-days') {
+  if (type === 'week-days' && humanize) {
     defaultStr = HUMANIZED_WEEK_DAYS_LABELS[number]
-  } else if (type === 'months') {
+  } else if (type === 'months' && humanize) {
     defaultStr = HUMANIZED_MONTHS_LABELS[number]
+  } else if (
+    number < 10 &&
+    leadingZero &&
+    (leadingZero === 'always' ||
+      (Array.isArray(leadingZero) && leadingZero.includes(type)))
+  ) {
+    defaultStr = defaultStr.padStart(2, '0')
   }
 
   return defaultStr

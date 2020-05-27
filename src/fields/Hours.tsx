@@ -1,12 +1,20 @@
 import React, { useMemo } from 'react'
 
 import CustomSelect from '../components/CustomSelect'
-import { FieldProps } from '../types'
+import { HoursProps } from '../types'
 import { DEFAULT_LOCALE_EN } from '../locale'
 import { classNames } from '../utils'
 
-export default function Hours(props: FieldProps) {
-  const { value, setValue, locale, className, disabled, readOnly } = props
+export default function Hours(props: HoursProps) {
+  const {
+    value,
+    setValue,
+    locale,
+    className,
+    disabled,
+    readOnly,
+    leadingZero,
+  } = props
 
   const internalClassName = useMemo(
     () =>
@@ -33,6 +41,7 @@ export default function Hours(props: FieldProps) {
         className={className}
         disabled={disabled}
         readOnly={readOnly}
+        leadingZero={leadingZero}
       />
     </div>
   )

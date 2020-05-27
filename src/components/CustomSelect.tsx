@@ -24,6 +24,7 @@ export default function CustomSelect(props: CustomSelectProps) {
     humanizeLabels,
     disabled,
     readOnly,
+    leadingZero,
     ...otherProps
   } = props
 
@@ -73,7 +74,12 @@ export default function CustomSelect(props: CustomSelectProps) {
         return <></>
       }
 
-      const cronValue = getCronValueFromNumbers(value, type, humanizeLabels)
+      const cronValue = getCronValueFromNumbers(
+        value,
+        type,
+        humanizeLabels,
+        leadingZero
+      )
       const testEveryValue = cronValue.match(/^\*\/([0-9]+),?/) || []
 
       return (
@@ -86,7 +92,7 @@ export default function CustomSelect(props: CustomSelectProps) {
         </div>
       )
     },
-    [value, type, locale, humanizeLabels]
+    [value, type, locale, humanizeLabels, leadingZero]
   )
 
   const onClick = useCallback(() => {

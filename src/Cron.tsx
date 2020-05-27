@@ -29,6 +29,7 @@ export default function Cron(props: CronProps) {
     humanizeValue = false,
     disabled = false,
     readOnly = false,
+    leadingZero = 'never',
   } = props
   const internalValueRef = useRef<string>(value)
   const [period, setPeriod] = useState<PeriodType | undefined>()
@@ -209,6 +210,7 @@ export default function Cron(props: CronProps) {
           weekDays={weekDays}
           disabled={disabled}
           readOnly={readOnly}
+          leadingZero={leadingZero}
         />
       )}
 
@@ -236,6 +238,7 @@ export default function Cron(props: CronProps) {
           className={className}
           disabled={disabled}
           readOnly={readOnly}
+          leadingZero={leadingZero}
         />
       )}
 
@@ -248,6 +251,7 @@ export default function Cron(props: CronProps) {
           className={className}
           disabled={disabled}
           readOnly={readOnly}
+          leadingZero={leadingZero}
         />
       )}
 

@@ -432,6 +432,51 @@ export function HumanizeLabelsAndValue() {
   )
 }
 
+export function LeadingZero() {
+  const inputRef = useRef<AntdInput>(null)
+  const defaultValue = '5 3 2-3,8 * *'
+  const [value, setValue] = useState(defaultValue)
+  const customSetValue = useCallback(
+    (newValue: string) => {
+      setValue(newValue)
+      inputRef.current?.setValue(newValue)
+    },
+    [inputRef]
+  )
+
+  return (
+    <div>
+      <p>Leading zero: &quot;always&quot;</p>
+      <p>Value: {value}</p>
+
+      <AntdInput
+        ref={inputRef}
+        onBlur={(event) => {
+          setValue(event.target.value)
+        }}
+      />
+
+      <Divider>OR</Divider>
+
+      <Cron value={value} setValue={customSetValue} leadingZero='always' />
+
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          You can set the prop to &quot;never&quot;, &quot;always&quot; or an
+          array [&quot;minutes&quot;, &quot;hours&quot;, &quot;month-days&quot;]
+        </span>
+      </div>
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          If not set, the prop &quot;leadingZero&quot; is &quot;never&quot;
+        </span>
+      </div>
+    </div>
+  )
+}
+
 export function TrackError() {
   const inputRef = useRef<AntdInput>(null)
   const defaultValue = ''

@@ -10,6 +10,7 @@ export interface CronProps {
   className?: string
   humanizeLabels?: boolean
   humanizeValue?: boolean
+  leadingZero?: LeadingZero
   defaultPeriod?: PeriodType
   disabled?: boolean
   readOnly?: boolean
@@ -65,6 +66,17 @@ export type SetError =
 export interface ClearButtonProps extends Omit<ButtonProps, 'onClick'> {}
 export type PeriodType = 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute'
 export type AllowEmpty = 'always' | 'never' | 'for-default-value'
+export type CronType =
+  | 'period'
+  | 'months'
+  | 'month-days'
+  | 'week-days'
+  | 'hours'
+  | 'minutes'
+export type LeadingZero =
+  | 'never'
+  | 'always'
+  | Omit<CronType, 'period' | 'months' | 'week-days'>[]
 
 // Internal props
 
@@ -85,14 +97,19 @@ export interface MonthsProps extends FieldProps {
 }
 export interface MonthDaysProps extends FieldProps {
   weekDays?: number[]
+  leadingZero: LeadingZero
 }
 export interface WeekDaysProps extends FieldProps {
   humanizeLabels: boolean
   period: PeriodType
   monthDays?: number[]
 }
+export interface HoursProps extends FieldProps {
+  leadingZero: LeadingZero
+}
 export interface MinutesProps extends FieldProps {
   period: PeriodType
+  leadingZero: LeadingZero
 }
 export interface CustomSelectProps
   extends Omit<
@@ -124,14 +141,8 @@ export interface CustomSelectProps
   humanizeLabels?: boolean
   disabled: boolean
   readOnly: boolean
+  leadingZero?: LeadingZero
 }
-export type CronType =
-  | 'period'
-  | 'months'
-  | 'month-days'
-  | 'week-days'
-  | 'hours'
-  | 'minutes'
 export type SetValueNumbersOrUndefined = Dispatch<
   SetStateAction<number[] | undefined>
 >

@@ -14,6 +14,7 @@ export default function MonthDays(props: MonthDaysProps) {
     weekDays,
     disabled,
     readOnly,
+    leadingZero,
   } = props
   const noWeekDays = !weekDays || weekDays.length === 0
 
@@ -55,6 +56,7 @@ export default function MonthDays(props: MonthDaysProps) {
         className={className}
         disabled={disabled}
         readOnly={readOnly}
+        leadingZero={leadingZero}
       />
     </div>
   )
