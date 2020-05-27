@@ -40,23 +40,27 @@ export default function Cron(props: CronProps) {
   const [minutes, setMinutes] = useState<number[] | undefined>()
   const [error, setInternalError] = useState<boolean>(false)
 
-  useEffect(() => {
-    setCron(
-      value,
-      setInternalError,
-      setError,
-      allowEmpty,
-      internalValueRef,
-      true,
-      locale,
-      setMinutes,
-      setHours,
-      setMonthDays,
-      setWeekDays,
-      setMonths,
-      setPeriod
-    )
-  }, []) // eslint-disable-line
+  useEffect(
+    () => {
+      setCron(
+        value,
+        setInternalError,
+        setError,
+        allowEmpty,
+        internalValueRef,
+        true,
+        locale,
+        setMinutes,
+        setHours,
+        setMonthDays,
+        setWeekDays,
+        setMonths,
+        setPeriod
+      )
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
 
   const localeJSON = JSON.stringify(locale)
   useEffect(
@@ -79,28 +83,58 @@ export default function Cron(props: CronProps) {
         )
       }
     },
-    // eslint-disable-next-line
-    [value, internalValueRef, setError, setValue, localeJSON, allowEmpty]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [value, internalValueRef, localeJSON, allowEmpty]
   )
 
-  useEffect(() => {
-    // Only change the value if a user touched a field
-    if (
-      period ||
-      minutes ||
-      months ||
-      monthDays ||
-      weekDays ||
-      hours ||
-      minutes
-    ) {
+  useEffect(
+    () => {
+      // Only change the value if a user touched a field
+      if (
+        period ||
+        minutes ||
+        months ||
+        monthDays ||
+        weekDays ||
+        hours ||
+        minutes
+      ) {
+        const cron = getCron(
+          period || defaultPeriod,
+          months,
+          monthDays,
+          weekDays,
+          hours,
+          minutes,
+          humanizeValue
+        )
+
+        setValue(cron)
+        internalValueRef.current = cron
+
+        setError && setError(undefined)
+        setInternalError(false)
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [period, monthDays, months, weekDays, hours, minutes, humanizeValue]
+  )
+
+  const handleClear = useCallback(
+    () => {
+      setMonthDays(undefined)
+      setMonths(undefined)
+      setWeekDays(undefined)
+      setHours(undefined)
+      setMinutes(undefined)
+
       const cron = getCron(
         period || defaultPeriod,
-        months,
-        monthDays,
-        weekDays,
-        hours,
-        minutes,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
         humanizeValue
       )
 
@@ -109,43 +143,10 @@ export default function Cron(props: CronProps) {
 
       setError && setError(undefined)
       setInternalError(false)
-    }
-  }, [
-    period,
-    monthDays,
-    months,
-    weekDays,
-    hours,
-    minutes,
-    setValue,
-    setError,
-    defaultPeriod,
-    humanizeValue,
-  ])
-
-  const handleClear = useCallback(() => {
-    setMonthDays(undefined)
-    setMonths(undefined)
-    setWeekDays(undefined)
-    setHours(undefined)
-    setMinutes(undefined)
-
-    const cron = getCron(
-      period || defaultPeriod,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      humanizeValue
-    )
-
-    setValue(cron)
-    internalValueRef.current = cron
-
-    setError && setError(undefined)
-    setInternalError(false)
-  }, [period, setError, setValue, defaultPeriod, humanizeValue])
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [period, humanizeValue, setValue, setError]
+  )
 
   const internalClassName = useMemo(
     () =>

@@ -66,6 +66,7 @@ export default function CustomSelect(props: CustomSelectProps) {
     })
   }, [optionsList, nbOptions, startAtZero])
 
+  const localeJSON = JSON.stringify(locale)
   const renderTag = useCallback(
     (props) => {
       const { value: itemValue } = props
@@ -92,7 +93,8 @@ export default function CustomSelect(props: CustomSelectProps) {
         </div>
       )
     },
-    [value, type, locale, humanizeLabels, leadingZero]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [value, type, localeJSON, humanizeLabels, leadingZero]
   )
 
   const onClick = useCallback(() => {
@@ -195,17 +197,6 @@ export default function CustomSelect(props: CustomSelectProps) {
     [clicksRef, simpleClick, doubleClick, readOnly]
   )
 
-  const onChange = useCallback(
-    (newValue: any) => {
-      if (!readOnly) {
-        if (newValue && newValue.length === 0) {
-          setValue([])
-        }
-      }
-    },
-    [setValue, readOnly]
-  )
-
   const internalClassName = useMemo(
     () =>
       classNames({
@@ -237,7 +228,6 @@ export default function CustomSelect(props: CustomSelectProps) {
       virtual={false}
       open={readOnly ? false : open}
       value={stringValue}
-      onChange={onChange}
       onClick={onClick}
       onBlur={onBlur}
       tagRender={renderTag}

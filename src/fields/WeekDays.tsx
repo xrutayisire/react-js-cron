@@ -31,13 +31,17 @@ export default function WeekDays(props: WeekDaysProps) {
   )
 
   const localeJSON = JSON.stringify(locale)
-  const placeholder = useMemo(() => {
-    if (noMonthDays) {
-      return locale.emptyWeekDays || DEFAULT_LOCALE_EN.emptyWeekDays
-    }
+  const placeholder = useMemo(
+    () => {
+      if (noMonthDays) {
+        return locale.emptyWeekDays || DEFAULT_LOCALE_EN.emptyWeekDays
+      }
 
-    return locale.emptyWeekDaysShort || DEFAULT_LOCALE_EN.emptyWeekDaysShort
-  }, [noMonthDays, localeJSON]) // eslint-disable-line
+      return locale.emptyWeekDaysShort || DEFAULT_LOCALE_EN.emptyWeekDaysShort
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [noMonthDays, localeJSON]
+  )
 
   return (
     <div className={internalClassName}>
