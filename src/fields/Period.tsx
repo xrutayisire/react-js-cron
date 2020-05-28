@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState, useEffect } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Select } from 'antd'
 
 import { PeriodProps } from '../types'
@@ -15,62 +15,42 @@ export default function Period(props: PeriodProps) {
     readOnly,
     shortcuts,
   } = props
-  const localeJSON = JSON.stringify(locale)
-  const defaultOptions = useMemo(
-    () => {
-      return [
-        {
-          value: 'year',
-          label: locale.yearOption || DEFAULT_LOCALE_EN.yearOption,
-        },
-        {
-          value: 'month',
-          label: locale.monthOption || DEFAULT_LOCALE_EN.monthOption,
-        },
-        {
-          value: 'week',
-          label: locale.weekOption || DEFAULT_LOCALE_EN.weekOption,
-        },
-        {
-          value: 'day',
-          label: locale.dayOption || DEFAULT_LOCALE_EN.dayOption,
-        },
-        {
-          value: 'hour',
-          label: locale.hourOption || DEFAULT_LOCALE_EN.hourOption,
-        },
-        {
-          value: 'minute',
-          label: locale.minuteOption || DEFAULT_LOCALE_EN.minuteOption,
-        },
-      ]
+  let options = [
+    {
+      value: 'year',
+      label: locale.yearOption || DEFAULT_LOCALE_EN.yearOption,
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [localeJSON]
-  )
-  const [options, setOptions] = useState(defaultOptions)
+    {
+      value: 'month',
+      label: locale.monthOption || DEFAULT_LOCALE_EN.monthOption,
+    },
+    {
+      value: 'week',
+      label: locale.weekOption || DEFAULT_LOCALE_EN.weekOption,
+    },
+    {
+      value: 'day',
+      label: locale.dayOption || DEFAULT_LOCALE_EN.dayOption,
+    },
+    {
+      value: 'hour',
+      label: locale.hourOption || DEFAULT_LOCALE_EN.hourOption,
+    },
+    {
+      value: 'minute',
+      label: locale.minuteOption || DEFAULT_LOCALE_EN.minuteOption,
+    },
+  ]
 
-  useEffect(
-    () => {
-      if (
-        shortcuts &&
-        options.length === 6 &&
-        (shortcuts === true || shortcuts.includes('@reboot'))
-      ) {
-        setOptions([
-          ...defaultOptions,
-          {
-            value: 'reboot',
-            label: locale.rebootOption || DEFAULT_LOCALE_EN.rebootOption,
-          },
-        ])
-      } else if (options.length === 7) {
-        setOptions(defaultOptions)
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [shortcuts, localeJSON]
-  )
+  if (shortcuts && (shortcuts === true || shortcuts.includes('@reboot'))) {
+    options = [
+      ...options,
+      {
+        value: 'reboot',
+        label: locale.rebootOption || DEFAULT_LOCALE_EN.rebootOption,
+      },
+    ]
+  }
 
   const handleChange = useCallback(
     (newValue) => {
@@ -118,8 +98,8 @@ export default function Period(props: PeriodProps) {
       {locale.prefixPeriod !== '' && (
         <span>{locale.prefixPeriod || DEFAULT_LOCALE_EN.prefixPeriod}</span>
       )}
-
       <Select
+        key={JSON.stringify(locale)}
         defaultValue={value}
         value={value}
         onChange={handleChange}

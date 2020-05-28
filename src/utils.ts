@@ -57,7 +57,11 @@ export function setCron(
     error = true
   }
 
-  if (stringValue === '@reboot') {
+  if (
+    shortcuts &&
+    (shortcuts === true || shortcuts.includes(stringValue as any)) &&
+    stringValue === '@reboot'
+  ) {
     setPeriod('reboot')
 
     return
@@ -520,9 +524,7 @@ export function getTransformedStringFromNumber(
 ) {
   let defaultStr = number.toString()
   const needLeadingZero =
-    leadingZero &&
-    (leadingZero === true ||
-      (Array.isArray(leadingZero) && leadingZero.includes(type as any)))
+    leadingZero && (leadingZero === true || leadingZero.includes(type as any))
   const need24HourClock =
     clockFormat === '24-hour-clock' && (type === 'hours' || type === 'minutes')
 

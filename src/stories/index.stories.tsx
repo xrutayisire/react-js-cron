@@ -69,7 +69,6 @@ export function Demo() {
 }
 
 export function DynamicSettings() {
-  // Dynamic settings
   const [displayInput, setDisplayInput] = useState<boolean>(true)
   const [changeValueOnBlur, setChangeValueOnBlur] = useState<boolean>(true)
   const [changeValueOnEnter, setChangeValueOnEnter] = useState<boolean>(true)
@@ -93,8 +92,6 @@ export function DynamicSettings() {
   const [defaultValue, setDefaultValue] = useState('@daily')
   const [leadingZero, setLeadingZero] = useState<boolean>(false)
   const [key, setKey] = useState('render')
-
-  // Render dependencies
   const inputRef = useRef<AntdInput>(null)
   const [value, setValue] = useState(defaultValue)
   const customSetValue = useCallback(
@@ -1087,7 +1084,7 @@ export function Shortcuts() {
         <span style={{ fontSize: 12 }}>
           If not set, the prop &quot;Shortcuts&quot; is [&quot;@yearly&quot;,
           &quot;@annually&quot;, &quot;@monthly&quot;, &quot;@weekly&quot;,
-          &quot;@daily&quot;, &quot;@midnight&quot;, &quot;hourly&quot;]
+          &quot;@daily&quot;, &quot;@midnight&quot;, &quot;@hourly&quot;]
         </span>
       </div>
       <div>

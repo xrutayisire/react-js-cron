@@ -63,7 +63,7 @@ export interface CronProps {
   disabled?: boolean
 
   /**
-   * Make the component read-only
+   * Make the cron component read-only
    *
    * Default: false
    */
@@ -96,7 +96,7 @@ export interface CronProps {
   clearButton?: boolean
 
   /**
-   * Antd button props to customize the clear button
+   * antd button props to customize the clear button
    */
   clearButtonProps?: ClearButtonProps
 
@@ -108,14 +108,14 @@ export interface CronProps {
   displayError?: boolean
 
   /**
-   * Triggered when the cron component detect an error with the value
+   * Triggered when the cron component detects an error with the value
    */
   onError?: OnError
 
   /**
    * Change the component language
    * Can also be used to remove prefix and suffix
-   * 
+   *
    * Default './locale.ts'
    */
   locale?: Locale

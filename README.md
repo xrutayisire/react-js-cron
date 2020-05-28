@@ -37,7 +37,7 @@ npm install --save react-js-cron
 
 ## Usage
 
-Learn more with [dynamics settings](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--dynamic-settings).
+Learn more with [dynamic settings](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--dynamic-settings).
 
 - [Two-way sync binding with input](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--input)
 - [Default value](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--default-value)
@@ -121,7 +121,7 @@ CronProps {
   disabled?: boolean
   
   /**
-   * Make the component read-only
+   * Make the cron component read-only
    * 
    * Default: false
    */
@@ -139,7 +139,7 @@ CronProps {
    * 
    * Default: ['@yearly', '@annually', '@monthly', '@weekly', '@daily', '@midnight', '@hourly']
    */
-  shortcuts?: boolean | ['@yearly', '@annually', '@monthly', '@weekly', '@daily', '@midnight', 'hourly', '@reboot']
+  shortcuts?: boolean | ['@yearly', '@annually', '@monthly', '@weekly', '@daily', '@midnight', '@hourly', '@reboot']
 
   /**
    * Define the clock format
@@ -154,7 +154,7 @@ CronProps {
   clearButton?: boolean
 
   /**
-   * Antd button props to customize the clear button
+   * antd button props to customize the clear button
    */
   clearButtonProps?: ButtonProps
 
@@ -166,7 +166,7 @@ CronProps {
   displayError?: boolean
 
   /**
-   * Triggered when the cron component detect an error with the value
+   * Triggered when the cron component detects an error with the value
    */
   onError?: 
     | (error: {

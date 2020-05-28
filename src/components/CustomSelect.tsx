@@ -277,7 +277,7 @@ export default function CustomSelect(props: CustomSelectProps) {
       onDeselect={onOptionClick}
       disabled={disabled}
       dropdownAlign={{
-        // Usage https://github.com/yiminghe/dom-align
+        // Usage: https://github.com/yiminghe/dom-align
         // Prevent dropdown to overlap window
         points: ['tr', 'br'],
       }}
