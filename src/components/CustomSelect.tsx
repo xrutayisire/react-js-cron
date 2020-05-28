@@ -214,6 +214,18 @@ export default function CustomSelect(props: CustomSelectProps) {
     [clicksRef, simpleClick, doubleClick, readOnly]
   )
 
+  // Used by the select clear icon
+  const onChange = useCallback(
+    (newValue: any) => {
+      if (!readOnly) {
+        if (newValue && newValue.length === 0) {
+          setValue([])
+        }
+      }
+    },
+    [setValue, readOnly]
+  )
+
   const internalClassName = useMemo(
     () =>
       classNames({
@@ -247,6 +259,7 @@ export default function CustomSelect(props: CustomSelectProps) {
       virtual={false}
       open={readOnly ? false : open}
       value={stringValue}
+      onChange={onChange}
       onClick={onClick}
       onBlur={onBlur}
       tagRender={renderTag}
