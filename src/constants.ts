@@ -1,3 +1,5 @@
+import { ShortcutsValues } from './types'
+
 export const HUMANIZED_WEEK_DAYS_LABELS = [
   'SUN',
   'MON',
@@ -23,7 +25,7 @@ export const HUMANIZED_MONTHS_LABELS = [
   'NOV',
   'DEC',
 ]
-export const SUPPORTED_SHORTCUTS = [
+export const SUPPORTED_SHORTCUTS: ShortcutsValues[] = [
   {
     name: '@yearly',
     value: '0 0 1 1 *',
@@ -51,5 +53,9 @@ export const SUPPORTED_SHORTCUTS = [
   {
     name: '@hourly',
     value: '0 * * * *',
+  },
+  {
+    name: '@reboot',
+    value: '@reboot',
   },
 ]

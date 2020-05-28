@@ -61,24 +61,114 @@ Learn more with [dynamics settings](https://xrutayisire.github.io/react-js-cron/
 
 ```
 CronProps {
+  /**
+   * Cron value, the component is by design a controlled component
+   * The first value will be the default value
+   * 
+   * required
+   */
   value: string
+
+  /**
+   * Set the cron value, similar to onChange
+   * The naming tells you that you have to set the value by yourself
+   * 
+   * required
+   */
   setValue: 
     | (value: string) => void
-    | Dispatch<SetStateAction<string>> 
+    | Dispatch<SetStateAction<string>>
+
+  /**
+   * Set the container className and used as a prefix for other selectors
+   * Available selectors: https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--custom-style
+   */
   className?: string
-  humanizeLabels?: boolean // Default: true
-  humanizeValue?: boolean // Default: false
-  leadingZero?: boolean | ['month-days', 'hours', 'minutes'] // Default: false
-  defaultPeriod?: 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute' // Default: 'day'
-  disabled?: boolean // Default: false
-  readOnly?: boolean // Default: false
-  allowEmpty?: 'always' | 'never' | 'for-default-value' // Default: 'for-default-value'
-  shortcuts?: boolean // Default: true
+
+  /**
+   * Humanize the labels in the cron component, SUN-SAT and JAN-DEC
+   * 
+   * Default: true
+   */
+  humanizeLabels?: boolean
+
+  /**
+   * Humanize the value, SUN-SAT and JAN-DEC
+   * 
+   * Default: false
+   */
+  humanizeValue?: boolean
+
+  /**
+   * Add a "0" before numbers lower than 10
+   * 
+   * Default: false
+   */
+  leadingZero?: boolean | ['month-days', 'hours', 'minutes']
+
+  /**
+   * Define the default period when the default value is empty
+   * 
+   * Default: 'day'
+   */
+  defaultPeriod?: 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'reboot'
+
+  /**
+   * Disable the cron component
+   *
+   * Default: false
+   */
+  disabled?: boolean
+  
+  /**
+   * Make the component read-only
+   * 
+   * Default: false
+   */
+  readOnly?: boolean
+
+  /**
+   * Define if empty should trigger an error
+   * 
+   * Default: 'for-default-value'
+   */
+  allowEmpty?: 'always' | 'never' | 'for-default-value'
+
+  /**
+   * Support cron shortcuts 
+   * 
+   * Default: ['@yearly', '@annually', '@monthly', '@weekly', '@daily', '@midnight', '@hourly']
+   */
+  shortcuts?: boolean | ['@yearly', '@annually', '@monthly', '@weekly', '@daily', '@midnight', 'hourly', '@reboot']
+
+  /**
+   * Define the clock format
+   */
   clockFormat?: '12-hour-clock' | '24-hour-clock'
-  clearButton?: boolean // Default: true
-  clearButtonProps?: ButtonProps // Extends antd button props without onClick
-  displayError?: boolean // Default: true
-  setError?: 
+
+  /**
+   * Display the clear button
+   * 
+   * Default: true
+   */
+  clearButton?: boolean
+
+  /**
+   * Antd button props to customize the clear button
+   */
+  clearButtonProps?: ButtonProps
+
+  /**
+   * Display error style (red border and background)
+   * 
+   * Display: true
+   */
+  displayError?: boolean
+
+  /**
+   * Triggered when the cron component detect an error with the value
+   */
+  onError?: 
     | (error: {
       type: 'invalid_cron'
       description: string
@@ -88,6 +178,11 @@ CronProps {
       description: string
     }>>
     | undefined
+
+  /**
+   * Change the component language
+   * Can also be used to remove prefix and suffix
+   */
   locale?: {
     everyText?: string
     emptyMonths?: string
@@ -104,6 +199,7 @@ CronProps {
     dayOption?: string
     hourOption?: string
     minuteOption?: string
+    rebootOption?: string
     prefixPeriod?: string
     prefixMonths?: string
     prefixMonthDays?: string
@@ -116,7 +212,7 @@ CronProps {
     errorInvalidCron?: string
     weekDays?: string[]
     months?: string[]
-  }  // Default: See file 'src/locale.ts'
+  }
 }
 ````
 

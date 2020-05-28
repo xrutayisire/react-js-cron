@@ -5,22 +5,117 @@ import { ButtonProps } from 'antd/lib/button'
 // External props
 
 export interface CronProps {
+  /**
+   * Cron value, the component is by design a controled component
+   * The first value will be the default value
+   *
+   * required
+   */
   value: string
+
+  /**
+   * Set the cron value, similar to onChange
+   * The naming tells you that you have to set the value by yourself
+   *
+   * required
+   */
   setValue: SetValue
+
+  /**
+   * Set the container className and used as a prefix for other selectors
+   * Available selectors: https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--custom-style
+   */
   className?: string
+
+  /**
+   * Humanize the labels in the cron component, SUN-SAT and JAN-DEC
+   *
+   * Default: true
+   */
   humanizeLabels?: boolean
+
+  /**
+   * Humanize the value, SUN-SAT and JAN-DEC
+   *
+   * Default: false
+   */
   humanizeValue?: boolean
+
+  /**
+   * Add a "0" before numbers lower than 10
+   *
+   * Default: false
+   */
   leadingZero?: LeadingZero
+
+  /**
+   * Define the default period when the default value is empty
+   *
+   * Default: 'day'
+   */
   defaultPeriod?: PeriodType
+
+  /**
+   * Disable the cron component
+   *
+   * Default: false
+   */
   disabled?: boolean
+
+  /**
+   * Make the component read-only
+   *
+   * Default: false
+   */
   readOnly?: boolean
+
+  /**
+   * Define if empty should trigger an error
+   *
+   * Default: 'for-default-value'
+   */
   allowEmpty?: AllowEmpty
-  shortcuts?: boolean
+
+  /**
+   * Support cron shortcuts
+   *
+   * Default: ['@yearly', '@annually', '@monthly', '@weekly', '@daily', '@midnight', '@hourly']
+   */
+  shortcuts?: Shortcuts
+
+  /**
+   * Define the clock format
+   */
   clockFormat?: ClockFormat
+
+  /**
+   * Display the clear button
+   *
+   * Default: true
+   */
   clearButton?: boolean
+
+  /**
+   * Antd button props to customize the clear button
+   */
   clearButtonProps?: ClearButtonProps
+
+  /**
+   * Display error style (red border and background)
+   *
+   * Display: true
+   */
   displayError?: boolean
-  setError?: SetError
+
+  /**
+   * Triggered when the cron component detect an error with the value
+   */
+  onError?: OnError
+
+  /**
+   * Change the component language
+   * Can also be used to remove prefix and suffix
+   */
   locale?: Locale
 }
 export interface Locale {
@@ -39,6 +134,7 @@ export interface Locale {
   dayOption?: string
   hourOption?: string
   minuteOption?: string
+  rebootOption?: string
   prefixPeriod?: string
   prefixMonths?: string
   prefixMonthDays?: string
@@ -61,13 +157,20 @@ export type CronError =
       description: string
     }
   | undefined
-export type SetErrorFunction = (error: CronError) => void
-export type SetError =
-  | SetErrorFunction
+export type OnErrorFunction = (error: CronError) => void
+export type OnError =
+  | OnErrorFunction
   | Dispatch<SetStateAction<CronError>>
   | undefined
 export interface ClearButtonProps extends Omit<ButtonProps, 'onClick'> {}
-export type PeriodType = 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute'
+export type PeriodType =
+  | 'year'
+  | 'month'
+  | 'week'
+  | 'day'
+  | 'hour'
+  | 'minute'
+  | 'reboot'
 export type AllowEmpty = 'always' | 'never' | 'for-default-value'
 export type CronType =
   | 'period'
@@ -76,10 +179,19 @@ export type CronType =
   | 'week-days'
   | 'hours'
   | 'minutes'
-export type LeadingZero =
-  | boolean
-  | Omit<CronType, 'period' | 'months' | 'week-days'>[]
+export type LeadingZeroType = 'month-days' | 'hours' | 'minutes'
+export type LeadingZero = boolean | LeadingZeroType[]
 export type ClockFormat = '24-hour-clock' | '12-hour-clock'
+export type ShortcutsType =
+  | '@yearly'
+  | '@annually'
+  | '@monthly'
+  | '@weekly'
+  | '@daily'
+  | '@midnight'
+  | '@hourly'
+  | '@reboot'
+export type Shortcuts = boolean | ShortcutsType[]
 
 // Internal props
 
@@ -96,6 +208,7 @@ export interface PeriodProps
   extends Omit<FieldProps, 'value' | 'setValue' | 'period'> {
   value: PeriodType
   setValue: SetValuePeriod
+  shortcuts: Shortcuts
 }
 export interface MonthsProps extends FieldProps {
   humanizeLabels: boolean
@@ -171,6 +284,7 @@ export interface DefaultLocale {
   dayOption: string
   hourOption: string
   minuteOption: string
+  rebootOption: string
   prefixPeriod: string
   prefixMonths: string
   prefixMonthDays: string
@@ -188,4 +302,8 @@ export interface DefaultLocale {
 export type CronValues = { [key in CronType]: number[] | string | undefined }
 export interface Classes {
   [key: string]: boolean
+}
+export interface ShortcutsValues {
+  name: ShortcutsType
+  value: string
 }

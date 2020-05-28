@@ -20,7 +20,7 @@ export default function Cron(props: CronProps) {
     value = '',
     setValue,
     displayError = true,
-    setError,
+    onError,
     className,
     defaultPeriod = 'day',
     clearButtonProps = {},
@@ -30,7 +30,15 @@ export default function Cron(props: CronProps) {
     disabled = false,
     readOnly = false,
     leadingZero = false,
-    shortcuts = true,
+    shortcuts = [
+      '@yearly',
+      '@annually',
+      '@monthly',
+      '@weekly',
+      '@daily',
+      '@midnight',
+      '@hourly',
+    ],
     clockFormat,
   } = props
   const internalValueRef = useRef<string>(value)
@@ -42,13 +50,14 @@ export default function Cron(props: CronProps) {
   const [hours, setHours] = useState<number[] | undefined>()
   const [minutes, setMinutes] = useState<number[] | undefined>()
   const [error, setInternalError] = useState<boolean>(false)
+  const localeJSON = JSON.stringify(locale)
 
   useEffect(
     () => {
       setCron(
         value,
         setInternalError,
-        setError,
+        onError,
         allowEmpty,
         internalValueRef,
         true,
@@ -66,14 +75,13 @@ export default function Cron(props: CronProps) {
     []
   )
 
-  const localeJSON = JSON.stringify(locale)
   useEffect(
     () => {
       if (value !== internalValueRef.current) {
         setCron(
           value,
           setInternalError,
-          setError,
+          onError,
           allowEmpty,
           internalValueRef,
           false,
@@ -117,7 +125,7 @@ export default function Cron(props: CronProps) {
         setValue(cron)
         internalValueRef.current = cron
 
-        setError && setError(undefined)
+        onError && onError(undefined)
         setInternalError(false)
       }
     },
@@ -146,11 +154,11 @@ export default function Cron(props: CronProps) {
       setValue(cron)
       internalValueRef.current = cron
 
-      setError && setError(undefined)
+      onError && onError(undefined)
       setInternalError(false)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [period, humanizeValue, setValue, setError]
+    [period, humanizeValue, setValue, onError]
   )
 
   const internalClassName = useMemo(
@@ -182,6 +190,38 @@ export default function Cron(props: CronProps) {
     [className, clearButtonClassNameProp]
   )
 
+  const otherClearButtonPropsJSON = JSON.stringify(otherClearButtonProps)
+  const clearButtonNode = useMemo(
+    () => {
+      if (clearButton && !readOnly) {
+        return (
+          <Button
+            className={clearButtonClassName}
+            danger
+            type='primary'
+            disabled={disabled}
+            {...otherClearButtonProps}
+            onClick={handleClear}
+          >
+            {locale.clearButtonText || DEFAULT_LOCALE_EN.clearButtonText}
+          </Button>
+        )
+      }
+
+      return null
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      clearButton,
+      readOnly,
+      localeJSON,
+      clearButtonClassName,
+      disabled,
+      otherClearButtonPropsJSON,
+      handleClear,
+    ]
+  )
+
   const periodForRender = period || defaultPeriodRef.current
 
   return (
@@ -193,93 +233,89 @@ export default function Cron(props: CronProps) {
         className={className}
         disabled={disabled}
         readOnly={readOnly}
+        shortcuts={shortcuts}
       />
 
-      {periodForRender === 'year' && (
-        <Months
-          value={months}
-          setValue={setMonths}
-          locale={locale}
-          className={className}
-          humanizeLabels={humanizeLabels}
-          disabled={disabled}
-          readOnly={readOnly}
-          period={periodForRender}
-        />
+      {periodForRender === 'reboot' ? (
+        clearButtonNode
+      ) : (
+        <>
+          {periodForRender === 'year' && (
+            <Months
+              value={months}
+              setValue={setMonths}
+              locale={locale}
+              className={className}
+              humanizeLabels={humanizeLabels}
+              disabled={disabled}
+              readOnly={readOnly}
+              period={periodForRender}
+            />
+          )}
+
+          {(periodForRender === 'year' || periodForRender === 'month') && (
+            <MonthDays
+              value={monthDays}
+              setValue={setMonthDays}
+              locale={locale}
+              className={className}
+              weekDays={weekDays}
+              disabled={disabled}
+              readOnly={readOnly}
+              leadingZero={leadingZero}
+              period={periodForRender}
+            />
+          )}
+
+          {(periodForRender === 'year' ||
+            periodForRender === 'month' ||
+            periodForRender === 'week') && (
+            <WeekDays
+              value={weekDays}
+              setValue={setWeekDays}
+              locale={locale}
+              className={className}
+              humanizeLabels={humanizeLabels}
+              monthDays={monthDays}
+              disabled={disabled}
+              readOnly={readOnly}
+              period={periodForRender}
+            />
+          )}
+
+          <div>
+            {periodForRender !== 'minute' && periodForRender !== 'hour' && (
+              <Hours
+                value={hours}
+                setValue={setHours}
+                locale={locale}
+                className={className}
+                disabled={disabled}
+                readOnly={readOnly}
+                leadingZero={leadingZero}
+                clockFormat={clockFormat}
+                period={periodForRender}
+              />
+            )}
+
+            {periodForRender !== 'minute' && (
+              <Minutes
+                value={minutes}
+                setValue={setMinutes}
+                locale={locale}
+                period={periodForRender}
+                className={className}
+                disabled={disabled}
+                readOnly={readOnly}
+                leadingZero={leadingZero}
+                clockFormat={clockFormat}
+              />
+            )}
+
+            {clearButtonNode}
+          </div>
+        </>
       )}
-
-      {(periodForRender === 'year' || periodForRender === 'month') && (
-        <MonthDays
-          value={monthDays}
-          setValue={setMonthDays}
-          locale={locale}
-          className={className}
-          weekDays={weekDays}
-          disabled={disabled}
-          readOnly={readOnly}
-          leadingZero={leadingZero}
-          period={periodForRender}
-        />
-      )}
-
-      {(periodForRender === 'year' ||
-        periodForRender === 'month' ||
-        periodForRender === 'week') && (
-        <WeekDays
-          value={weekDays}
-          setValue={setWeekDays}
-          locale={locale}
-          className={className}
-          humanizeLabels={humanizeLabels}
-          monthDays={monthDays}
-          disabled={disabled}
-          readOnly={readOnly}
-          period={periodForRender}
-        />
-      )}
-
-      <div>
-        {periodForRender !== 'minute' && periodForRender !== 'hour' && (
-          <Hours
-            value={hours}
-            setValue={setHours}
-            locale={locale}
-            className={className}
-            disabled={disabled}
-            readOnly={readOnly}
-            leadingZero={leadingZero}
-            clockFormat={clockFormat}
-            period={periodForRender}
-          />
-        )}
-
-        {periodForRender !== 'minute' && (
-          <Minutes
-            value={minutes}
-            setValue={setMinutes}
-            locale={locale}
-            period={periodForRender}
-            className={className}
-            disabled={disabled}
-            readOnly={readOnly}
-            leadingZero={leadingZero}
-            clockFormat={clockFormat}
-          />
-        )}
-
-        {clearButton && !readOnly && (
-          <Button
-            className={clearButtonClassName}
-            danger
-            type='primary'
-            disabled={disabled}
-            {...otherClearButtonProps}
-            onClick={handleClear}
-          >
-            {locale.clearButtonText || DEFAULT_LOCALE_EN.clearButtonText}
-          </Button>
-        )}
-      </div>
     </div>
   )
 }

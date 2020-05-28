@@ -5,7 +5,7 @@ import {
   CronType,
   SetValuePeriod,
   SetInternalError,
-  SetError,
+  OnError,
   Locale,
   PeriodType,
   CronValues,
@@ -13,6 +13,7 @@ import {
   AllowEmpty,
   LeadingZero,
   ClockFormat,
+  Shortcuts,
 } from './types'
 import { DEFAULT_LOCALE_EN } from './locale'
 import {
@@ -25,12 +26,12 @@ import {
 export function setCron(
   string: string,
   setInternalError: SetInternalError,
-  setError: SetError,
+  onError: OnError,
   allowEmpty: AllowEmpty,
   internalValueRef: MutableRefObject<string>,
   firstRender: boolean,
   locale: Locale,
-  shortcuts: boolean,
+  shortcuts: Shortcuts,
   setMinutes: SetValueNumbersOrUndefined,
   setHours: SetValueNumbersOrUndefined,
   setMonthDays: SetValueNumbersOrUndefined,
@@ -40,7 +41,7 @@ export function setCron(
 ) {
   let stringValue = string
 
-  setError && setError(undefined)
+  onError && onError(undefined)
   setInternalError(false)
 
   let error = false
@@ -54,6 +55,12 @@ export function setCron(
     }
 
     error = true
+  }
+
+  if (stringValue === '@reboot') {
+    setPeriod('reboot')
+
+    return
   }
 
   const values: CronValues = {
@@ -82,11 +89,22 @@ export function setCron(
     }
 
     if (shortcuts) {
-      SUPPORTED_SHORTCUTS.forEach((supportedShortcut) => {
-        if (stringValue === supportedShortcut.name) {
-          stringValue = supportedShortcut.value
-        }
-      })
+      if (Array.isArray(shortcuts)) {
+        SUPPORTED_SHORTCUTS.forEach((supportedShortcut) => {
+          if (
+            shortcuts.includes(stringValue as any) &&
+            stringValue === supportedShortcut.name
+          ) {
+            stringValue = supportedShortcut.value
+          }
+        })
+      } else {
+        SUPPORTED_SHORTCUTS.forEach((supportedShortcut) => {
+          if (stringValue === supportedShortcut.name) {
+            stringValue = supportedShortcut.value
+          }
+        })
+      }
     }
 
     try {
@@ -205,8 +223,8 @@ export function setCron(
   } else {
     internalValueRef.current = stringValue
     setInternalError(true)
-    setError &&
-      setError({
+    onError &&
+      onError({
         type: 'invalid_cron',
         description:
           locale.errorInvalidCron || DEFAULT_LOCALE_EN.errorInvalidCron,
@@ -371,6 +389,10 @@ export function getCron(
   minutes: number[] | undefined,
   humanizeValue: boolean
 ) {
+  if (period === 'reboot') {
+    return '@reboot'
+  }
+
   const items = ['*', '*', '*', '*', '*']
 
   if (period !== 'minute') {
@@ -500,7 +522,7 @@ export function getTransformedStringFromNumber(
   const needLeadingZero =
     leadingZero &&
     (leadingZero === true ||
-      (Array.isArray(leadingZero) && leadingZero.includes(type)))
+      (Array.isArray(leadingZero) && leadingZero.includes(type as any)))
   const need24HourClock =
     clockFormat === '24-hour-clock' && (type === 'hours' || type === 'minutes')
 

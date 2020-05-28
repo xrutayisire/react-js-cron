@@ -35,7 +35,7 @@ export function Demo() {
     },
     [inputRef]
   )
-  const [error, setError] = useState<CronError>()
+  const [error, onError] = useState<CronError>()
 
   return (
     <div>
@@ -51,7 +51,7 @@ export function Demo() {
 
       <Divider>OR</Divider>
 
-      <Cron value={value} setValue={customSetValue} setError={setError} />
+      <Cron value={value} setValue={customSetValue} onError={onError} />
 
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
@@ -81,7 +81,7 @@ export function DynamicSettings() {
   const [displayErrorText, setDisplayErrorText] = useState<boolean>(true)
   const [displayErrorStyle, setDisplayErrorStyle] = useState<boolean>(true)
   const [displayClearButton, setDisplayClearButton] = useState<boolean>(true)
-  const [supportShortuct, setSupportShortuct] = useState<boolean>(true)
+  const [supportShortcuts, setSupportShortcuts] = useState<boolean>(true)
   const [removePrefixSuffix, setRemovePrefixSuffix] = useState<boolean>(false)
   const [customStyle, setCustomStyle] = useState<boolean>(false)
   const [allowEmpty, setAllowEmpty] = useState<AllowEmpty>('for-default-value')
@@ -104,7 +104,7 @@ export function DynamicSettings() {
     },
     [inputRef]
   )
-  const [error, setError] = useState<CronError>()
+  const [error, onError] = useState<CronError>()
 
   const transformedLocale = useMemo(() => {
     let newLocale
@@ -211,10 +211,10 @@ export function DynamicSettings() {
             onChange={() => setDisplayClearButton((prevValue) => !prevValue)}
           />
         </Form.Item>
-        <Form.Item label='Support shortcut'>
+        <Form.Item label='Support shortcuts'>
           <Switch
-            checked={supportShortuct}
-            onChange={() => setSupportShortuct((prevValue) => !prevValue)}
+            checked={supportShortcuts}
+            onChange={() => setSupportShortcuts((prevValue) => !prevValue)}
           />
         </Form.Item>
         <Form.Item label='Remove prefix/suffix'>
@@ -329,14 +329,14 @@ export function DynamicSettings() {
         key={key}
         value={value}
         setValue={customSetValue}
-        setError={setError}
+        onError={onError}
         disabled={disabled}
         readOnly={readOnly}
         humanizeLabels={humanizeLabels}
         humanizeValue={humanizeValue}
         displayError={displayErrorStyle}
         clearButton={displayClearButton}
-        shortcuts={supportShortuct}
+        shortcuts={supportShortcuts}
         allowEmpty={allowEmpty}
         clockFormat={clockFormat === '' ? undefined : clockFormat}
         defaultPeriod={defaultPeriod}
@@ -555,7 +555,7 @@ export function HumanizeLabels() {
   const inputRef = useRef<AntdInput>(null)
   const defaultValue = '* * * * MON-WED,sat'
   const [value, setValue] = useState(defaultValue)
-  const [error, setError] = useState<CronError>()
+  const [error, onError] = useState<CronError>()
   const customSetValue = useCallback(
     (newValue: string) => {
       setValue(newValue)
@@ -580,7 +580,7 @@ export function HumanizeLabels() {
 
       <Divider>OR</Divider>
 
-      <Cron value={value} setValue={customSetValue} setError={setError} />
+      <Cron value={value} setValue={customSetValue} onError={onError} />
 
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
@@ -608,7 +608,7 @@ export function HumanizeValue() {
   const inputRef = useRef<AntdInput>(null)
   const defaultValue = '* * * * MON-WED,sat'
   const [value, setValue] = useState(defaultValue)
-  const [error, setError] = useState<CronError>()
+  const [error, onError] = useState<CronError>()
   const customSetValue = useCallback(
     (newValue: string) => {
       setValue(newValue)
@@ -637,7 +637,7 @@ export function HumanizeValue() {
       <Cron
         value={value}
         setValue={customSetValue}
-        setError={setError}
+        onError={onError}
         humanizeLabels={false}
         humanizeValue
       />
@@ -689,7 +689,7 @@ export function HumanizeLabelsAndValue() {
   const inputRef = useRef<AntdInput>(null)
   const defaultValue = '* * * * MON-WED,sat'
   const [value, setValue] = useState(defaultValue)
-  const [error, setError] = useState<CronError>()
+  const [error, onError] = useState<CronError>()
   const customSetValue = useCallback(
     (newValue: string) => {
       setValue(newValue)
@@ -718,7 +718,7 @@ export function HumanizeLabelsAndValue() {
       <Cron
         value={value}
         setValue={customSetValue}
-        setError={setError}
+        onError={onError}
         humanizeValue
       />
 
@@ -794,7 +794,7 @@ export function TrackError() {
     },
     [inputRef]
   )
-  const [error, setError] = useState<CronError>()
+  const [error, onError] = useState<CronError>()
 
   return (
     <div>
@@ -818,12 +818,12 @@ export function TrackError() {
 
       <Divider>OR</Divider>
 
-      <Cron value={value} setValue={customSetValue} setError={setError} />
+      <Cron value={value} setValue={customSetValue} onError={onError} />
 
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
-          Use prop &quot;setError&quot; to be able to know when the value is
+          Use prop &quot;onError&quot; to be able to know when the value is
           invalid
         </span>
       </div>
@@ -842,7 +842,7 @@ export function DisableErrorStyle() {
     },
     [inputRef]
   )
-  const [error, setError] = useState<CronError>()
+  const [error, onError] = useState<CronError>()
 
   return (
     <div>
@@ -861,7 +861,7 @@ export function DisableErrorStyle() {
       <Cron
         value={value}
         setValue={customSetValue}
-        setError={setError}
+        onError={onError}
         displayError={false}
       />
     </div>
@@ -885,7 +885,7 @@ export function NoClearButton() {
 export function InvalidDefaultValue() {
   const defaultValue = '*/2 */2 */2 1-6 */6 * *'
   const [value, setValue] = useState(defaultValue)
-  const [error, setError] = useState<CronError>()
+  const [error, onError] = useState<CronError>()
 
   return (
     <div>
@@ -893,7 +893,7 @@ export function InvalidDefaultValue() {
       <p>Value: {value}</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
-      <Cron value={value} setValue={setValue} setError={setError} />
+      <Cron value={value} setValue={setValue} onError={onError} />
     </div>
   )
 }
@@ -909,7 +909,7 @@ export function EmptyNeverAllowed() {
     },
     [inputRef]
   )
-  const [error, setError] = useState<CronError>()
+  const [error, onError] = useState<CronError>()
 
   return (
     <div>
@@ -930,7 +930,7 @@ export function EmptyNeverAllowed() {
       <Cron
         value={value}
         setValue={customSetValue}
-        setError={setError}
+        onError={onError}
         allowEmpty='never'
       />
 
@@ -956,7 +956,7 @@ export function EmptyAlwaysAllowed() {
     },
     [inputRef]
   )
-  const [error, setError] = useState<CronError>()
+  const [error, onError] = useState<CronError>()
 
   return (
     <div>
@@ -977,7 +977,7 @@ export function EmptyAlwaysAllowed() {
       <Cron
         value={value}
         setValue={customSetValue}
-        setError={setError}
+        onError={onError}
         allowEmpty='always'
       />
 
@@ -1003,7 +1003,7 @@ export function Shortcuts() {
     },
     [inputRef]
   )
-  const [error, setError] = useState<CronError>()
+  const [error, onError] = useState<CronError>()
 
   const columns = [
     {
@@ -1051,6 +1051,12 @@ export function Shortcuts() {
       description: 'Run once an hour at the beginning of the hour',
       value: '0 * * * *',
     },
+    {
+      key: '6',
+      name: '@reboot',
+      description: 'Run at startup',
+      value: '@reboot',
+    },
   ]
 
   return (
@@ -1069,12 +1075,25 @@ export function Shortcuts() {
 
       <Divider>OR</Divider>
 
-      <Cron value={value} setValue={customSetValue} setError={setError} />
+      <Cron
+        value={value}
+        setValue={customSetValue}
+        onError={onError}
+        shortcuts
+      />
 
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
-          If not set, the prop &quot;Shortcuts&quot; is true
+          If not set, the prop &quot;Shortcuts&quot; is [&quot;@yearly&quot;,
+          &quot;@annually&quot;, &quot;@monthly&quot;, &quot;@weekly&quot;,
+          &quot;@daily&quot;, &quot;@midnight&quot;, &quot;hourly&quot;]
+        </span>
+      </div>
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          Just pass true to activate all shortcuts including &quot;@reboot&quot;
         </span>
       </div>
 
@@ -1102,7 +1121,7 @@ export function TwelveHourClock() {
     },
     [inputRef]
   )
-  const [error, setError] = useState<CronError>()
+  const [error, onError] = useState<CronError>()
 
   return (
     <div>
@@ -1123,7 +1142,7 @@ export function TwelveHourClock() {
       <Cron
         value={value}
         setValue={customSetValue}
-        setError={setError}
+        onError={onError}
         clockFormat='12-hour-clock'
       />
     </div>
@@ -1141,7 +1160,7 @@ export function TwentyFourHourClock() {
     },
     [inputRef]
   )
-  const [error, setError] = useState<CronError>()
+  const [error, onError] = useState<CronError>()
 
   return (
     <div>
@@ -1162,7 +1181,7 @@ export function TwentyFourHourClock() {
       <Cron
         value={value}
         setValue={customSetValue}
-        setError={setError}
+        onError={onError}
         clockFormat='24-hour-clock'
       />
 
@@ -1188,7 +1207,7 @@ export function FrenchLocale() {
     },
     [inputRef]
   )
-  const [error, setError] = useState<CronError>()
+  const [error, onError] = useState<CronError>()
 
   return (
     <div>
@@ -1207,7 +1226,7 @@ export function FrenchLocale() {
         locale={FRENCH_LOCALE}
         value={value}
         setValue={customSetValue}
-        setError={setError}
+        onError={onError}
       />
 
       <div>
@@ -1285,7 +1304,7 @@ export function CustomStyle() {
     },
     [inputRef]
   )
-  const [error, setError] = useState<CronError>()
+  const [error, onError] = useState<CronError>()
 
   return (
     <div>
@@ -1303,7 +1322,7 @@ export function CustomStyle() {
       <Cron
         value={value}
         setValue={customSetValue}
-        setError={setError}
+        onError={onError}
         className='my-project-cron'
         clearButtonProps={{
           type: 'default',

@@ -14,6 +14,7 @@ export const FRENCH_LOCALE = {
   dayOption: 'jour',
   hourOption: 'heure',
   minuteOption: 'minute',
+  rebootOption: 'redémarrage',
   prefixPeriod: 'Chaque',
   prefixMonths: 'en',
   prefixMonthDays: 'le',
@@ -63,6 +64,7 @@ export const ENGLISH_VARIANT_LOCALE = {
   dayOption: 'days',
   hourOption: 'hours',
   minuteOption: 'minutes',
+  rebootOption: 'reboots',
   prefixPeriod: 'All',
 }
 export const NO_PREFIX_SUFFIX_LOCALE = {
