@@ -91,7 +91,7 @@ export function DynamicSettings() {
   >('english')
   const [defaultPeriod, setDefaultPeriod] = useState<PeriodType>('day')
   const [defaultValue, setDefaultValue] = useState('@daily')
-  const [leadingZero, setLeadingZero] = useState(false)
+  const [leadingZero, setLeadingZero] = useState<boolean>(false)
   const [key, setKey] = useState('render')
 
   // Render dependencies
@@ -340,7 +340,7 @@ export function DynamicSettings() {
         allowEmpty={allowEmpty}
         clockFormat={clockFormat === '' ? undefined : clockFormat}
         defaultPeriod={defaultPeriod}
-        leadingZero={leadingZero ? 'always' : 'never'}
+        leadingZero={leadingZero}
         className={customStyle ? 'my-project-cron' : undefined}
         locale={transformedLocale}
         clearButtonProps={
@@ -764,13 +764,13 @@ export function LeadingZero() {
 
       <Divider>OR</Divider>
 
-      <Cron value={value} setValue={customSetValue} leadingZero='always' />
+      <Cron value={value} setValue={customSetValue} leadingZero={true} />
 
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
-          You can set the prop to &quot;never&quot;, &quot;always&quot; or an
-          array [&quot;minutes&quot;, &quot;hours&quot;, &quot;month-days&quot;]
+          You can set the prop to a boolean or an array [&quot;minutes&quot;,
+          &quot;hours&quot;, &quot;month-days&quot;]
         </span>
       </div>
       <div>

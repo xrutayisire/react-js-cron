@@ -29,7 +29,7 @@ export default function Cron(props: CronProps) {
     humanizeValue = false,
     disabled = false,
     readOnly = false,
-    leadingZero = 'never',
+    leadingZero = false,
     shortcuts = true,
     clockFormat,
   } = props

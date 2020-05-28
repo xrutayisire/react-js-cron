@@ -499,7 +499,7 @@ export function getTransformedStringFromNumber(
   let defaultStr = number.toString()
   const needLeadingZero =
     leadingZero &&
-    (leadingZero === 'always' ||
+    (leadingZero === true ||
       (Array.isArray(leadingZero) && leadingZero.includes(type)))
   const need24HourClock =
     clockFormat === '24-hour-clock' && (type === 'hours' || type === 'minutes')

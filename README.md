@@ -68,7 +68,7 @@ CronProps {
   className?: string
   humanizeLabels?: boolean // Default: true
   humanizeValue?: boolean // Default: false
-  leadingZero?: 'never' | 'always' | ['month-days', 'hours', 'minutes'] // Default: 'never'
+  leadingZero?: boolean | ['month-days', 'hours', 'minutes'] // Default: false
   defaultPeriod?: 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute' // Default: 'day'
   disabled?: boolean // Default: false
   readOnly?: boolean // Default: false

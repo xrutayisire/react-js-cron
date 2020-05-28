@@ -77,8 +77,7 @@ export type CronType =
   | 'hours'
   | 'minutes'
 export type LeadingZero =
-  | 'never'
-  | 'always'
+  | boolean
   | Omit<CronType, 'period' | 'months' | 'week-days'>[]
 export type ClockFormat = '24-hour-clock' | '12-hour-clock'
 
