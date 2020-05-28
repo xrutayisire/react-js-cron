@@ -37,25 +37,25 @@ npm install --save react-js-cron
 
 ## Usage
 
-Learn more with [dynamics settings](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--dynamic-settings).
+Learn more with [dynamics settings](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--dynamic-settings).
 
-- [Two-way sync binding with input](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--input)
-- [Default value](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--default-value)
-- [Default period](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--default-period)
-- [Disabled mode](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--disabled)
-- [Read-Only mode](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--read-only)
-- [Humanized labels](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--humanize-labels)
-- [Humanized value](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--humanize-value)
-- [Leading zero for number](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--leading-zero)
-- [Error management with text and style](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--track-error)
-- ["Clear button" removal](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--no-clear-button)
-- [Empty value management](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--empty-never-allowed)
-- [Cron shortcuts](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--shortcuts)
-- [12-hour clock](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--twelve-hour-clock)
-- [24-hour clock](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--twenty-four-hour-clock)
-- [Locale customization](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--french-locale)
-- [Prefix and suffix removal](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--no-prefix-and-suffix)
-- [Style customization](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--custom-style)
+- [Two-way sync binding with input](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--input)
+- [Default value](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--default-value)
+- [Default period](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--default-period)
+- [Disabled mode](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--disabled)
+- [Read-Only mode](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--read-only)
+- [Humanized labels](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--humanize-labels)
+- [Humanized value](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--humanize-value)
+- [Leading zero for numbers](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--leading-zero)
+- [Error management with text and style](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--track-error)
+- ["Clear button" removal](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--no-clear-button)
+- [Empty value management](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--empty-never-allowed)
+- [Cron shortcuts](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--shortcuts)
+- [12-hour clock](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--twelve-hour-clock)
+- [24-hour clock](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--twenty-four-hour-clock)
+- [Locale customization](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--french-locale)
+- [Prefix and suffix removal](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--no-prefix-and-suffix)
+- [Style customization](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--custom-style)
 
 ## API
 
@@ -81,7 +81,7 @@ CronProps {
 
   /**
    * Set the container className and used as a prefix for other selectors
-   * Available selectors: https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--custom-style
+   * Available selectors: https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--custom-style
    */
   className?: string
 
@@ -182,6 +182,8 @@ CronProps {
   /**
    * Change the component language
    * Can also be used to remove prefix and suffix
+   *
+   * Default './src/locale.ts'
    */
   locale?: {
     everyText?: string

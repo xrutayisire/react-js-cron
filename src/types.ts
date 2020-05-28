@@ -23,7 +23,7 @@ export interface CronProps {
 
   /**
    * Set the container className and used as a prefix for other selectors
-   * Available selectors: https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--custom-style
+   * Available selectors: https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--custom-style
    */
   className?: string
 
@@ -115,6 +115,8 @@ export interface CronProps {
   /**
    * Change the component language
    * Can also be used to remove prefix and suffix
+   * 
+   * Default './locale.ts'
    */
   locale?: Locale
 }
