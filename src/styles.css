@@ -76,10 +76,13 @@ div.react-js-cron-custom-select .ant-select-selection-placeholder {
 .react-js-cron-custom-select-dropdown-hours-twelve-hour-clock {
   width: 260px !important;
 }
-.react-js-cron-custom-select-dropdown-minutes {
+.react-js-cron-custom-select-dropdown-minutes-not-hour-period {
   width: 340px !important;
 }
-.react-js-cron-custom-select-dropdown-minutes div:nth-child(2) > div > div {
+.react-js-cron-custom-select-dropdown-minutes-not-hour-period
+  div:nth-child(2)
+  > div
+  > div {
   grid-template-columns: repeat(8, 1fr);
 }
 .react-js-cron-period > span:first-child {

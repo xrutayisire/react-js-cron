@@ -14,6 +14,7 @@ export default function Months(props: MonthsProps) {
     humanizeLabels,
     disabled,
     readOnly,
+    period,
   } = props
   const optionsList = locale.months || DEFAULT_LOCALE_EN.months
 
@@ -47,6 +48,7 @@ export default function Months(props: MonthsProps) {
         humanizeLabels={humanizeLabels}
         disabled={disabled}
         readOnly={readOnly}
+        period={period}
       />
     </div>
   )

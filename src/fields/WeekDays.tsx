@@ -12,10 +12,10 @@ export default function WeekDays(props: WeekDaysProps) {
     locale,
     className,
     humanizeLabels,
-    period,
     monthDays,
     disabled,
     readOnly,
+    period,
   } = props
   const optionsList = locale.weekDays || DEFAULT_LOCALE_EN.weekDays
   const noMonthDays = period === 'week' || !monthDays || monthDays.length === 0
@@ -71,6 +71,7 @@ export default function WeekDays(props: WeekDaysProps) {
         humanizeLabels={humanizeLabels}
         disabled={disabled}
         readOnly={readOnly}
+        period={period}
       />
     </div>
   )

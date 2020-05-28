@@ -203,6 +203,7 @@ export default function Cron(props: CronProps) {
           humanizeLabels={humanizeLabels}
           disabled={disabled}
           readOnly={readOnly}
+          period={periodForRender}
         />
       )}
 
@@ -216,6 +217,7 @@ export default function Cron(props: CronProps) {
           disabled={disabled}
           readOnly={readOnly}
           leadingZero={leadingZero}
+          period={periodForRender}
         />
       )}
 
@@ -228,10 +230,10 @@ export default function Cron(props: CronProps) {
           locale={locale}
           className={className}
           humanizeLabels={humanizeLabels}
-          period={periodForRender}
           monthDays={monthDays}
           disabled={disabled}
           readOnly={readOnly}
+          period={periodForRender}
         />
       )}
 
@@ -246,6 +248,7 @@ export default function Cron(props: CronProps) {
             readOnly={readOnly}
             leadingZero={leadingZero}
             clockFormat={clockFormat}
+            period={periodForRender}
           />
         )}
 

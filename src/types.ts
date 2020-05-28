@@ -90,8 +90,10 @@ export interface FieldProps {
   className?: string
   disabled: boolean
   readOnly: boolean
+  period: PeriodType
 }
-export interface PeriodProps extends Omit<FieldProps, 'value' | 'setValue'> {
+export interface PeriodProps
+  extends Omit<FieldProps, 'value' | 'setValue' | 'period'> {
   value: PeriodType
   setValue: SetValuePeriod
 }
@@ -104,7 +106,6 @@ export interface MonthDaysProps extends FieldProps {
 }
 export interface WeekDaysProps extends FieldProps {
   humanizeLabels: boolean
-  period: PeriodType
   monthDays?: number[]
 }
 export interface HoursProps extends FieldProps {
@@ -112,7 +113,6 @@ export interface HoursProps extends FieldProps {
   clockFormat?: ClockFormat
 }
 export interface MinutesProps extends FieldProps {
-  period: PeriodType
   leadingZero: LeadingZero
   clockFormat?: ClockFormat
 }
@@ -148,6 +148,7 @@ export interface CustomSelectProps
   readOnly: boolean
   leadingZero?: LeadingZero
   clockFormat?: ClockFormat
+  period: PeriodType
 }
 export type SetValueNumbersOrUndefined = Dispatch<
   SetStateAction<number[] | undefined>

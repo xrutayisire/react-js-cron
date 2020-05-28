@@ -27,6 +27,7 @@ export default function CustomSelect(props: CustomSelectProps) {
     readOnly,
     leadingZero,
     clockFormat,
+    period,
     ...otherProps
   } = props
 
@@ -243,13 +244,15 @@ export default function CustomSelect(props: CustomSelectProps) {
         [`react-js-cron-select-dropdown-${type}`]: true,
         'react-js-cron-custom-select-dropdown': true,
         [`react-js-cron-custom-select-dropdown-${type}`]: true,
+        [`react-js-cron-custom-select-dropdown-minutes-not-hour-period`]:
+          type === 'minutes' && period !== 'hour',
         'react-js-cron-custom-select-dropdown-hours-twelve-hour-clock':
           type === 'hours' && clockFormat === '12-hour-clock',
         'react-js-cron-custom-select-dropdown-grid': !!grid,
         [`${className}-select-dropdown`]: !!className,
         [`${className}-select-dropdown-${type}`]: !!className,
       }),
-    [className, type, grid, clockFormat]
+    [className, type, grid, clockFormat, period]
   )
 
   return (
@@ -273,6 +276,11 @@ export default function CustomSelect(props: CustomSelectProps) {
       onSelect={onOptionClick}
       onDeselect={onOptionClick}
       disabled={disabled}
+      dropdownAlign={{
+        // Usage https://github.com/yiminghe/dom-align
+        // Prevent dropdown to overlap window
+        points: ['tr', 'br'],
+      }}
       {...otherProps}
     />
   )
