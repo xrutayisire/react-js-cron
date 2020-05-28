@@ -57,11 +57,10 @@ export function setCron(
     error = true
   }
 
-  if (
-    shortcuts &&
-    (shortcuts === true || shortcuts.includes(stringValue as any)) &&
-    stringValue === '@reboot'
-  ) {
+  const needShortcuts =
+    shortcuts && (shortcuts === true || shortcuts.includes(stringValue as any))
+
+  if (needShortcuts && stringValue === '@reboot') {
     setPeriod('reboot')
 
     return
@@ -92,22 +91,13 @@ export function setCron(
       }
     }
 
-    if (shortcuts) {
-      if (Array.isArray(shortcuts)) {
-        SUPPORTED_SHORTCUTS.forEach((supportedShortcut) => {
-          if (
-            shortcuts.includes(stringValue as any) &&
-            stringValue === supportedShortcut.name
-          ) {
-            stringValue = supportedShortcut.value
-          }
-        })
-      } else {
-        SUPPORTED_SHORTCUTS.forEach((supportedShortcut) => {
-          if (stringValue === supportedShortcut.name) {
-            stringValue = supportedShortcut.value
-          }
-        })
+    if (needShortcuts) {
+      const shortcutObject = SUPPORTED_SHORTCUTS.find(
+        (supportedShortcut) => supportedShortcut.name === stringValue
+      )
+
+      if (shortcutObject) {
+        stringValue = shortcutObject.value
       }
     }
 

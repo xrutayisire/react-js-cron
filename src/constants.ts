@@ -54,8 +54,4 @@ export const SUPPORTED_SHORTCUTS: ShortcutsValues[] = [
     name: '@hourly',
     value: '0 * * * *',
   },
-  {
-    name: '@reboot',
-    value: '@reboot',
-  },
 ]
