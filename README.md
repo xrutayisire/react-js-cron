@@ -4,7 +4,7 @@
 
 [![npm package](https://img.shields.io/npm/v/react-js-cron/latest.svg)](https://www.npmjs.com/package/react-js-cron)
 
-Live **demo** and **usage** at https://xrutayisire.github.io/react-js-cron/
+Live **demo** and **usage** at [https://xrutayisire.github.io/react-js-cron/](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example)
 
 ![react-js-cron example](https://raw.githubusercontent.com/xrutayisire/react-js-cron/master/react-js-cron-example.png)
 
@@ -37,7 +37,7 @@ npm install --save react-js-cron
 
 ## Usage
 
-Learn more at https://xrutayisire.github.io/react-js-cron/
+Learn more at [https://xrutayisire.github.io/react-js-cron/](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example)
 
 - [Two-way sync binding with input](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#input)
 - [Default value](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#default-value)
