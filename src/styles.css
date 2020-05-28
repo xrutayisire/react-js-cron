@@ -7,6 +7,8 @@
 .react-js-cron-field {
   display: flex;
   align-items: center;
+}
+.react-js-cron-field {
   margin-bottom: 10px;
 }
 .react-js-cron-field > span {
