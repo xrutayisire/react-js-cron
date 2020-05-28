@@ -328,10 +328,7 @@ export function getCronValueFromNumbers(
   const cron: string[] = getCronArrayOfString(arrayNumberValue)
 
   if (cron.length > 1) {
-    const multiple =
-      parseInt(cron[0], 10) === 0
-        ? parseInt(cron[1], 10)
-        : parseInt(cron[0], 10)
+    const multiple = Number(cron[0]) === 0 ? Number(cron[1]) : Number(cron[0])
 
     const total = getTotalItem(multiple, type)
 
@@ -342,10 +339,7 @@ export function getCronValueFromNumbers(
       for (let i = 1; i < cron.length; i++) {
         counter += multiple
 
-        if (
-          parseInt(cron[i], 10) % multiple !== 0 ||
-          multiple * i !== counter
-        ) {
+        if (Number(cron[i]) % multiple !== 0 || multiple * i !== counter) {
           valid = false
           break
         }
