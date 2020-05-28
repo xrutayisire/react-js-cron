@@ -73,6 +73,9 @@ div.react-js-cron-custom-select .ant-select-selection-placeholder {
   .ant-select-item-option-content {
   text-align: center;
 }
+.react-js-cron-custom-select-dropdown-hours-twelve-hour-clock {
+  width: 260px !important;
+}
 .react-js-cron-custom-select-dropdown-minutes {
   width: 340px !important;
 }

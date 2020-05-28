@@ -16,6 +16,7 @@ export interface CronProps {
   readOnly?: boolean
   allowEmpty?: AllowEmpty
   shortcuts?: boolean
+  clockFormat?: ClockFormat
   clearButton?: boolean
   clearButtonProps?: ClearButtonProps
   displayError?: boolean
@@ -78,6 +79,7 @@ export type LeadingZero =
   | 'never'
   | 'always'
   | Omit<CronType, 'period' | 'months' | 'week-days'>[]
+export type ClockFormat = '24-hour-clock' | '12-hour-clock'
 
 // Internal props
 
@@ -107,10 +109,12 @@ export interface WeekDaysProps extends FieldProps {
 }
 export interface HoursProps extends FieldProps {
   leadingZero: LeadingZero
+  clockFormat?: ClockFormat
 }
 export interface MinutesProps extends FieldProps {
   period: PeriodType
   leadingZero: LeadingZero
+  clockFormat?: ClockFormat
 }
 export interface CustomSelectProps
   extends Omit<
@@ -143,6 +147,7 @@ export interface CustomSelectProps
   disabled: boolean
   readOnly: boolean
   leadingZero?: LeadingZero
+  clockFormat?: ClockFormat
 }
 export type SetValueNumbersOrUndefined = Dispatch<
   SetStateAction<number[] | undefined>

@@ -12,6 +12,7 @@ import {
   Classes,
   AllowEmpty,
   LeadingZero,
+  ClockFormat,
 } from './types'
 import { DEFAULT_LOCALE_EN } from './locale'
 import {
@@ -317,50 +318,25 @@ export function getCronValueFromNumbers(
   arrayNumberValue: number[] | undefined,
   type: CronType,
   humanize?: boolean,
-  leadingZero?: LeadingZero
+  leadingZero?: LeadingZero,
+  clockFormat?: ClockFormat
 ) {
   if (!arrayNumberValue || arrayNumberValue.length === 0) {
     return '*'
   }
 
-  const cron: string[] = [
-    getHumanizedStringFromNumber(
-      arrayNumberValue[0],
-      type,
-      humanize,
-      leadingZero
-    ),
-  ]
-  let s = arrayNumberValue[0]
-  let c = arrayNumberValue[0]
-  const n = arrayNumberValue.length
-
-  for (let i = 1; i < n; i++) {
-    if (arrayNumberValue[i] === c + 1) {
-      c = arrayNumberValue[i]
-
-      cron[cron.length - 1] = `${getHumanizedStringFromNumber(
-        s,
-        type,
-        humanize,
-        leadingZero
-      )}-${getHumanizedStringFromNumber(c, type, humanize, leadingZero)}`
-    } else {
-      s = c = arrayNumberValue[i]
-
-      cron.push(getHumanizedStringFromNumber(c, type, humanize, leadingZero))
-    }
-  }
+  const cron: string[] = getCronArrayOfString(arrayNumberValue)
 
   if (cron.length > 1) {
     const multiple =
       parseInt(cron[0], 10) === 0
         ? parseInt(cron[1], 10)
         : parseInt(cron[0], 10)
+
     const total = getTotalItem(multiple, type)
-    let valid = true
 
     if (total === cron.length) {
+      let valid = true
       let counter = 0
 
       for (let i = 1; i < cron.length; i++) {
@@ -381,7 +357,15 @@ export function getCronValueFromNumbers(
     }
   }
 
-  return cron.join(',')
+  const transformedCron: string[] = getTransformedCronArrayOfString(
+    arrayNumberValue,
+    type,
+    humanize,
+    leadingZero,
+    clockFormat
+  )
+
+  return transformedCron.join(',')
 }
 
 export function getCron(
@@ -511,26 +495,117 @@ function getHumanizedStringFromArray(
   return humanizedString
 }
 
-function getHumanizedStringFromNumber(
+export function getTransformedStringFromNumber(
   number: number,
   type: CronType,
   humanize?: boolean,
-  leadingZero?: LeadingZero
+  leadingZero?: LeadingZero,
+  clockFormat?: ClockFormat
 ) {
   let defaultStr = number.toString()
+  const needLeadingZero =
+    leadingZero &&
+    (leadingZero === 'always' ||
+      (Array.isArray(leadingZero) && leadingZero.includes(type)))
+  const need24HourClock =
+    clockFormat === '24-hour-clock' && (type === 'hours' || type === 'minutes')
 
   if (type === 'week-days' && humanize) {
     defaultStr = HUMANIZED_WEEK_DAYS_LABELS[number]
   } else if (type === 'months' && humanize) {
     defaultStr = HUMANIZED_MONTHS_LABELS[number]
-  } else if (
-    number < 10 &&
-    leadingZero &&
-    (leadingZero === 'always' ||
-      (Array.isArray(leadingZero) && leadingZero.includes(type)))
-  ) {
+  } else if (number < 10 && (needLeadingZero || need24HourClock)) {
     defaultStr = defaultStr.padStart(2, '0')
   }
 
+  if (type === 'hours' && clockFormat === '12-hour-clock') {
+    const suffix = number >= 12 ? 'PM' : 'AM'
+    let hour: number | string = number % 12 || 12
+
+    if (hour < 10 && needLeadingZero) {
+      hour = hour.toString().padStart(2, '0')
+    }
+
+    defaultStr = `${hour}${suffix}`
+  }
+
   return defaultStr
+}
+
+function getCronArrayOfString(arrayNumberValue: number[]) {
+  const cron: string[] = [arrayNumberValue[0].toString()]
+
+  let s = arrayNumberValue[0]
+  let c = arrayNumberValue[0]
+  const n = arrayNumberValue.length
+
+  for (let i = 1; i < n; i++) {
+    if (arrayNumberValue[i] === c + 1) {
+      c = arrayNumberValue[i]
+
+      cron[cron.length - 1] = `${s}-${c}`
+    } else {
+      s = c = arrayNumberValue[i]
+
+      cron.push(c.toString())
+    }
+  }
+
+  return cron
+}
+
+function getTransformedCronArrayOfString(
+  arrayNumberValue: number[],
+  type: CronType,
+  humanize?: boolean,
+  leadingZero?: LeadingZero,
+  clockFormat?: ClockFormat
+) {
+  const cron: string[] = [
+    getTransformedStringFromNumber(
+      arrayNumberValue[0],
+      type,
+      humanize,
+      leadingZero,
+      clockFormat
+    ),
+  ]
+
+  let s = arrayNumberValue[0]
+  let c = arrayNumberValue[0]
+  const n = arrayNumberValue.length
+
+  for (let i = 1; i < n; i++) {
+    if (arrayNumberValue[i] === c + 1) {
+      c = arrayNumberValue[i]
+
+      cron[cron.length - 1] = `${getTransformedStringFromNumber(
+        s,
+        type,
+        humanize,
+        leadingZero,
+        clockFormat
+      )}-${getTransformedStringFromNumber(
+        c,
+        type,
+        humanize,
+        leadingZero,
+        clockFormat
+      )}`
+    } else {
+      s = c = arrayNumberValue[i]
+
+      cron.push(
+        getTransformedStringFromNumber(
+          c,
+          type,
+          humanize,
+          leadingZero,
+          clockFormat
+        )
+      )
+    }
+  }
+
+  return cron
 }

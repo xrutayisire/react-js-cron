@@ -31,6 +31,7 @@ export default function Cron(props: CronProps) {
     readOnly = false,
     leadingZero = 'never',
     shortcuts = true,
+    clockFormat,
   } = props
   const internalValueRef = useRef<string>(value)
   const [period, setPeriod] = useState<PeriodType | undefined>()
@@ -244,6 +245,7 @@ export default function Cron(props: CronProps) {
             disabled={disabled}
             readOnly={readOnly}
             leadingZero={leadingZero}
+            clockFormat={clockFormat}
           />
         )}
 
@@ -257,6 +259,7 @@ export default function Cron(props: CronProps) {
             disabled={disabled}
             readOnly={readOnly}
             leadingZero={leadingZero}
+            clockFormat={clockFormat}
           />
         )}
 

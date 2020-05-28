@@ -18,7 +18,7 @@ Live **demo** and **usage** at https://xrutayisire.github.io/react-js-cron/
 - Supports two-way sync binding with input
 - Supports locale customization
 - Supports multiple selection by double-clicking on an option
-- And many more (disabled, read-only, leading zero for number...)
+- And many more (disabled, read-only, 12-hour clock...)
 
 ## Installation
 
@@ -51,6 +51,8 @@ Learn more at https://xrutayisire.github.io/react-js-cron/
 - ["Clear button" removal](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#no-clear-button)
 - [Empty value management](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#empty-never-allowed)
 - [Cron shortcuts](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#shortcuts)
+- [12-hour clock](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#twelve-hour-clock)
+- [24-hour clock](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#twenty-four-hour-clock)
 - [Locale customization](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#french-locale)
 - [Prefix and suffix removal](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#no-prefix-and-suffix)
 - [Style customization](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#custom-style)
@@ -72,6 +74,7 @@ CronProps {
   readOnly?: boolean // Default: false
   allowEmpty?: 'always' | 'never' | 'for-default-value' // Default: 'for-default-value'
   shortcuts?: boolean // Default: true
+  clockFormat?: '12-hour-clock' | '24-hour-clock'
   clearButton?: boolean // Default: true
   clearButtonProps?: ButtonProps // Extends antd button props without onClick
   displayError?: boolean // Default: true

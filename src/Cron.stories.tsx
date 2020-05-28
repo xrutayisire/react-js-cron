@@ -785,6 +785,92 @@ export function Shortcuts() {
   )
 }
 
+export function TwelveHourClock() {
+  const inputRef = useRef<AntdInput>(null)
+  const defaultValue = '2 5,7,18 * * SUN'
+  const [value, setValue] = useState(defaultValue)
+  const customSetValue = useCallback(
+    (newValue: string) => {
+      setValue(newValue)
+      inputRef.current?.setValue(newValue)
+    },
+    [inputRef]
+  )
+  const [error, setError] = useState<CronError>()
+
+  return (
+    <div>
+      <p>Clock format: &quot;12-hour-clock&quot;</p>
+      <p>Default value: {defaultValue}</p>
+      <p>Value: {value}</p>
+      <p>Error: {error ? error.description : 'undefined'}</p>
+
+      <AntdInput
+        ref={inputRef}
+        onBlur={(event) => {
+          setValue(event.target.value)
+        }}
+      />
+
+      <Divider>OR</Divider>
+
+      <Cron
+        value={value}
+        setValue={customSetValue}
+        setError={setError}
+        clockFormat='12-hour-clock'
+      />
+    </div>
+  )
+}
+
+export function TwentyFourHourClock() {
+  const inputRef = useRef<AntdInput>(null)
+  const defaultValue = '2 5,7,18 * * SUN'
+  const [value, setValue] = useState(defaultValue)
+  const customSetValue = useCallback(
+    (newValue: string) => {
+      setValue(newValue)
+      inputRef.current?.setValue(newValue)
+    },
+    [inputRef]
+  )
+  const [error, setError] = useState<CronError>()
+
+  return (
+    <div>
+      <p>Clock format: &quot;24-hour-clock&quot;</p>
+      <p>Default value: {defaultValue}</p>
+      <p>Value: {value}</p>
+      <p>Error: {error ? error.description : 'undefined'}</p>
+
+      <AntdInput
+        ref={inputRef}
+        onBlur={(event) => {
+          setValue(event.target.value)
+        }}
+      />
+
+      <Divider>OR</Divider>
+
+      <Cron
+        value={value}
+        setValue={customSetValue}
+        setError={setError}
+        clockFormat='24-hour-clock'
+      />
+
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          This prop override the prop &quot;leadingZero&quot; for
+          &quot;hours&quot; and &quot;minutes&quot;
+        </span>
+      </div>
+    </div>
+  )
+}
+
 export function FrenchLocale() {
   const inputRef = useRef<AntdInput>(null)
   const defaultValue = '30 14 22 * *'

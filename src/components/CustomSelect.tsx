@@ -7,6 +7,7 @@ import {
   itemMaxNumber,
   itemStartAt,
   classNames,
+  getTransformedStringFromNumber,
 } from '../utils'
 import { DEFAULT_LOCALE_EN } from '../locale'
 
@@ -25,6 +26,7 @@ export default function CustomSelect(props: CustomSelectProps) {
     disabled,
     readOnly,
     leadingZero,
+    clockFormat,
     ...otherProps
   } = props
 
@@ -61,10 +63,24 @@ export default function CustomSelect(props: CustomSelectProps) {
 
       return {
         value: number.toString(),
-        label: number.toString(),
+        label: getTransformedStringFromNumber(
+          number,
+          type,
+          humanizeLabels,
+          leadingZero,
+          clockFormat
+        ),
       }
     })
-  }, [optionsList, nbOptions, startAtZero])
+  }, [
+    optionsList,
+    nbOptions,
+    startAtZero,
+    type,
+    leadingZero,
+    humanizeLabels,
+    clockFormat,
+  ])
 
   const localeJSON = JSON.stringify(locale)
   const renderTag = useCallback(
@@ -79,7 +95,8 @@ export default function CustomSelect(props: CustomSelectProps) {
         value,
         type,
         humanizeLabels,
-        leadingZero
+        leadingZero,
+        clockFormat
       )
       const testEveryValue = cronValue.match(/^\*\/([0-9]+),?/) || []
 
@@ -94,7 +111,7 @@ export default function CustomSelect(props: CustomSelectProps) {
       )
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [value, type, localeJSON, humanizeLabels, leadingZero]
+    [value, type, localeJSON, humanizeLabels, leadingZero, clockFormat]
   )
 
   const onClick = useCallback(() => {
@@ -214,11 +231,13 @@ export default function CustomSelect(props: CustomSelectProps) {
         [`react-js-cron-select-dropdown-${type}`]: true,
         'react-js-cron-custom-select-dropdown': true,
         [`react-js-cron-custom-select-dropdown-${type}`]: true,
+        'react-js-cron-custom-select-dropdown-hours-twelve-hour-clock':
+          type === 'hours' && clockFormat === '12-hour-clock',
         'react-js-cron-custom-select-dropdown-grid': !!grid,
         [`${className}-select-dropdown`]: !!className,
         [`${className}-select-dropdown-${type}`]: !!className,
       }),
-    [className, type, grid]
+    [className, type, grid, clockFormat]
   )
 
   return (

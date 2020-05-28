@@ -14,6 +14,7 @@ export default function Hours(props: HoursProps) {
     disabled,
     readOnly,
     leadingZero,
+    clockFormat,
   } = props
 
   const internalClassName = useMemo(
@@ -44,6 +45,7 @@ export default function Hours(props: HoursProps) {
         disabled={disabled}
         readOnly={readOnly}
         leadingZero={leadingZero}
+        clockFormat={clockFormat}
       />
     </div>
   )
