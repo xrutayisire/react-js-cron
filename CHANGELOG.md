@@ -1,10 +1,22 @@
 ## Changelog
 
+#### 1.0.6
+
+- Fix regression on multiple detection
+- Add a prop to choose a clock format, 12-hour clock or 24-hour clock
+- Fix bug with multiple on months and week days
+- Fix display of dropdown options when leadingZero is active
+- Update README to add features info and usage
+- Improve responsive design management
+- Add support for cron shortcuts by default
+- Update hooks dependencies to prevent multiple re-render
+- Support import with an alias
+
 #### 1.0.5
 
 - Update README image with new features
 - Add a prop leadingZero to add a '0' before number lower than 10
-- Add a prop to make read only the component
+- Add a prop to make the component read only 
 - Add a prop to disable the component
 - Set day as default period
 - Add missing support for mixing week days with month and month days
