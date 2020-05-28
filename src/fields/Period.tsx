@@ -58,7 +58,7 @@ export default function Period(props: PeriodProps) {
     () =>
       classNames({
         'react-js-cron-select': true,
-        'react-js-cron-select-no-prefix': !locale.prefixPeriod,
+        'react-js-cron-select-no-prefix': locale.prefixPeriod === '',
         [`${className}-select`]: !!className,
       }),
     [className, locale.prefixPeriod]
