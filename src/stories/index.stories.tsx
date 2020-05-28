@@ -1,17 +1,30 @@
-import React, { useState, useCallback, useRef } from 'react'
-import { Input as AntdInput, Divider, Table } from 'antd'
+import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react'
+import {
+  Input as AntdInput,
+  Divider,
+  Table,
+  Form,
+  Radio,
+  Switch,
+  Button,
+} from 'antd'
 import { InfoCircleOutlined } from '@ant-design/icons'
 
-import Cron, { CronError } from './index'
+import Cron, { CronError, AllowEmpty, ClockFormat, PeriodType } from '../index'
+import {
+  FRENCH_LOCALE,
+  ENGLISH_VARIANT_LOCALE,
+  NO_PREFIX_SUFFIX_LOCALE,
+} from './constants.stories'
 
 import './styles.stories.css'
 
 export default {
   title: 'ReactJS Cron',
-  component: Example,
+  component: Demo,
 }
 
-export function Example() {
+export function Demo() {
   const inputRef = useRef<AntdInput>(null)
   const defaultValue = '30 5 * * 1,6'
   const [value, setValue] = useState(defaultValue)
@@ -51,6 +64,299 @@ export function Example() {
       <p style={{ marginTop: 20 }}>
         Error: {error ? error.description : 'undefined'}
       </p>
+    </div>
+  )
+}
+
+export function DynamicSettings() {
+  // Dynamic settings
+  const [displayInput, setDisplayInput] = useState<boolean>(true)
+  const [changeValueOnBlur, setChangeValueOnBlur] = useState<boolean>(true)
+  const [changeValueOnEnter, setChangeValueOnEnter] = useState<boolean>(true)
+  const [readOnlyInput, setReadOnlyInput] = useState<boolean>(false)
+  const [disabled, setDisabled] = useState<boolean>(false)
+  const [readOnly, setReadOnly] = useState<boolean>(false)
+  const [humanizeLabels, setHumanizeLabels] = useState<boolean>(true)
+  const [humanizeValue, setHumanizeValue] = useState<boolean>(false)
+  const [displayErrorText, setDisplayErrorText] = useState<boolean>(true)
+  const [displayErrorStyle, setDisplayErrorStyle] = useState<boolean>(true)
+  const [displayClearButton, setDisplayClearButton] = useState<boolean>(true)
+  const [supportShortuct, setSupportShortuct] = useState<boolean>(true)
+  const [removePrefixSuffix, setRemovePrefixSuffix] = useState<boolean>(false)
+  const [customStyle, setCustomStyle] = useState<boolean>(false)
+  const [allowEmpty, setAllowEmpty] = useState<AllowEmpty>('for-default-value')
+  const [clockFormat, setClockFormat] = useState<ClockFormat | ''>('')
+  const [locale, setLocale] = useState<
+    'english' | 'french' | 'english-variant'
+  >('english')
+  const [defaultPeriod, setDefaultPeriod] = useState<PeriodType>('day')
+  const [defaultValue, setDefaultValue] = useState('@daily')
+  const [leadingZero, setLeadingZero] = useState(false)
+  const [key, setKey] = useState('render')
+
+  // Render dependencies
+  const inputRef = useRef<AntdInput>(null)
+  const [value, setValue] = useState(defaultValue)
+  const customSetValue = useCallback(
+    (newValue: string) => {
+      setValue(newValue)
+      inputRef.current?.setValue(newValue)
+    },
+    [inputRef]
+  )
+  const [error, setError] = useState<CronError>()
+
+  const transformedLocale = useMemo(() => {
+    let newLocale
+
+    switch (locale) {
+      case 'french':
+        newLocale = FRENCH_LOCALE
+        break
+      case 'english-variant':
+        newLocale = ENGLISH_VARIANT_LOCALE
+        break
+
+      default:
+        newLocale = {}
+        break
+    }
+
+    if (removePrefixSuffix) {
+      newLocale = {
+        ...newLocale,
+        ...NO_PREFIX_SUFFIX_LOCALE,
+      }
+    }
+
+    return newLocale
+  }, [locale, removePrefixSuffix])
+
+  useEffect(
+    () => {
+      if (displayInput) {
+        inputRef.current?.setValue(value)
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [displayInput]
+  )
+
+  return (
+    <div>
+      <Form layout='inline' className='demo-dynamic-settings'>
+        <Form.Item label='Display input'>
+          <Switch
+            checked={displayInput}
+            onChange={() => setDisplayInput((prevValue) => !prevValue)}
+          />
+        </Form.Item>
+        <Form.Item label='Change input value on blur'>
+          <Switch
+            checked={changeValueOnBlur}
+            onChange={() => setChangeValueOnBlur((prevValue) => !prevValue)}
+          />
+        </Form.Item>
+        <Form.Item label='Change input value on enter'>
+          <Switch
+            checked={changeValueOnEnter}
+            onChange={() => setChangeValueOnEnter((prevValue) => !prevValue)}
+          />
+        </Form.Item>
+        <Form.Item label='Read-Only input'>
+          <Switch
+            checked={readOnlyInput}
+            onChange={() => setReadOnlyInput((prevValue) => !prevValue)}
+          />
+        </Form.Item>
+        <Form.Item label='Disabled'>
+          <Switch
+            checked={disabled}
+            onChange={() => setDisabled((prevValue) => !prevValue)}
+          />
+        </Form.Item>
+        <Form.Item label='Read-Only'>
+          <Switch
+            checked={readOnly}
+            onChange={() => setReadOnly((prevValue) => !prevValue)}
+          />
+        </Form.Item>
+        <Form.Item label='Humainze labels'>
+          <Switch
+            checked={humanizeLabels}
+            onChange={() => setHumanizeLabels((prevValue) => !prevValue)}
+          />
+        </Form.Item>
+        <Form.Item label='Humanize value'>
+          <Switch
+            checked={humanizeValue}
+            onChange={() => setHumanizeValue((prevValue) => !prevValue)}
+          />
+        </Form.Item>
+        <Form.Item label='Display error text'>
+          <Switch
+            checked={displayErrorText}
+            onChange={() => setDisplayErrorText((prevValue) => !prevValue)}
+          />
+        </Form.Item>
+        <Form.Item label='Display error style'>
+          <Switch
+            checked={displayErrorStyle}
+            onChange={() => setDisplayErrorStyle((prevValue) => !prevValue)}
+          />
+        </Form.Item>
+        <Form.Item label='Display clear button'>
+          <Switch
+            checked={displayClearButton}
+            onChange={() => setDisplayClearButton((prevValue) => !prevValue)}
+          />
+        </Form.Item>
+        <Form.Item label='Support shortcut'>
+          <Switch
+            checked={supportShortuct}
+            onChange={() => setSupportShortuct((prevValue) => !prevValue)}
+          />
+        </Form.Item>
+        <Form.Item label='Remove prefix/suffix'>
+          <Switch
+            checked={removePrefixSuffix}
+            onChange={() => setRemovePrefixSuffix((prevValue) => !prevValue)}
+          />
+        </Form.Item>
+        <Form.Item label='Set custom style'>
+          <Switch
+            checked={customStyle}
+            onChange={() => setCustomStyle((prevValue) => !prevValue)}
+          />
+        </Form.Item>
+        <Form.Item label='Leading zero'>
+          <Switch
+            checked={leadingZero}
+            onChange={() => setLeadingZero((prevValue) => !prevValue)}
+          />
+        </Form.Item>
+        <Form.Item label='Clock format'>
+          <Radio.Group
+            value={clockFormat}
+            onChange={(e) => setClockFormat(e.target.value)}
+          >
+            <Radio.Button value=''>None</Radio.Button>
+            <Radio.Button value='12-hour-clock'>12-hour clock</Radio.Button>
+            <Radio.Button value='24-hour-clock'>24-hour-clock</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item label='Locale'>
+          <Radio.Group
+            value={locale}
+            onChange={(e) => setLocale(e.target.value)}
+          >
+            <Radio.Button value='english'>English</Radio.Button>
+            <Radio.Button value='french'>French</Radio.Button>
+            <Radio.Button value='english-variant'>English variant</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item label='Empty value management *'>
+          <Radio.Group
+            value={allowEmpty}
+            onChange={(e) => setAllowEmpty(e.target.value)}
+          >
+            <Radio.Button value='for-default-value'>
+              For default value
+            </Radio.Button>
+            <Radio.Button value='always'>Always</Radio.Button>
+            <Radio.Button value='never'>Never</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item label='Default value *'>
+          <AntdInput
+            value={defaultValue}
+            onChange={(e) => setDefaultValue(e.target.value)}
+          />
+        </Form.Item>
+        <Form.Item label='Default period **'>
+          <Radio.Group
+            value={defaultPeriod}
+            onChange={(e) => setDefaultPeriod(e.target.value)}
+          >
+            <Radio.Button value='year'>Year</Radio.Button>
+            <Radio.Button value='month'>Month</Radio.Button>
+            <Radio.Button value='week'>Week</Radio.Button>
+            <Radio.Button value='day'>Day</Radio.Button>
+            <Radio.Button value='hour'>Hour</Radio.Button>
+            <Radio.Button value='minute'>Minute</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
+        <p>(*) Need to reset the component to see the changes</p>
+        <p>
+          (**) Need to reset the component and to have an empty default value to
+          see the changes
+        </p>
+      </Form>
+
+      <div>
+        <p>Value: {value}</p>
+
+        <Button
+          type='primary'
+          onClick={() => {
+            customSetValue(defaultValue)
+            setKey(Math.random().toString(36).substring(7))
+          }}
+        >
+          Reset cron component
+        </Button>
+      </div>
+
+      {displayInput && (
+        <>
+          <AntdInput
+            ref={inputRef}
+            readOnly={readOnlyInput}
+            onBlur={(event) => {
+              changeValueOnBlur && setValue(event.target.value)
+            }}
+            onPressEnter={() => {
+              changeValueOnEnter &&
+                setValue(inputRef.current?.input.value || '')
+            }}
+          />
+
+          <Divider>OR</Divider>
+        </>
+      )}
+
+      <Cron
+        key={key}
+        value={value}
+        setValue={customSetValue}
+        setError={setError}
+        disabled={disabled}
+        readOnly={readOnly}
+        humanizeLabels={humanizeLabels}
+        humanizeValue={humanizeValue}
+        displayError={displayErrorStyle}
+        clearButton={displayClearButton}
+        shortcuts={supportShortuct}
+        allowEmpty={allowEmpty}
+        clockFormat={clockFormat === '' ? undefined : clockFormat}
+        defaultPeriod={defaultPeriod}
+        leadingZero={leadingZero ? 'always' : 'never'}
+        className={customStyle ? 'my-project-cron' : undefined}
+        locale={transformedLocale}
+        clearButtonProps={
+          customStyle
+            ? {
+                type: 'default',
+              }
+            : undefined
+        }
+      />
+
+      {displayErrorText && (
+        <p style={{ marginTop: 20 }}>
+          Error: {error ? error.description : 'undefined'}
+        </p>
+      )}
     </div>
   )
 }
@@ -245,7 +551,7 @@ export function ReadOnly() {
   )
 }
 
-export function OnlyHumanizeLabels() {
+export function HumanizeLabels() {
   const inputRef = useRef<AntdInput>(null)
   const defaultValue = '* * * * MON-WED,sat'
   const [value, setValue] = useState(defaultValue)
@@ -298,7 +604,7 @@ export function OnlyHumanizeLabels() {
   )
 }
 
-export function OnlyHumanizeValue() {
+export function HumanizeValue() {
   const inputRef = useRef<AntdInput>(null)
   const defaultValue = '* * * * MON-WED,sat'
   const [value, setValue] = useState(defaultValue)
@@ -898,56 +1204,7 @@ export function FrenchLocale() {
       <Divider>OU</Divider>
 
       <Cron
-        locale={{
-          everyText: 'chaque',
-          emptyMonths: 'chaque mois',
-          emptyMonthDays: 'chaque jour du mois',
-          emptyMonthDaysShort: 'jour du mois',
-          emptyWeekDays: 'chaque jour de la semaine',
-          emptyWeekDaysShort: 'jour de la semaine',
-          emptyHours: 'chaque heure',
-          emptyMinutes: 'chaque minute',
-          emptyMinutesForHourPeriod: 'chaque',
-          yearOption: 'année',
-          monthOption: 'mois',
-          weekOption: 'semaine',
-          dayOption: 'jour',
-          hourOption: 'heure',
-          minuteOption: 'minute',
-          prefixPeriod: 'Chaque',
-          prefixMonths: 'en',
-          prefixMonthDays: 'le',
-          prefixWeekDays: 'le',
-          prefixWeekDaysForMonthAndYearPeriod: 'et',
-          prefixHours: 'à',
-          prefixMinutes: ':',
-          prefixMinutesForHourPeriod: 'à',
-          suffixMinutesForHourPeriod: 'minute(s)',
-          errorInvalidCron: 'Expression cron invalide',
-          months: [
-            'janvier',
-            'février',
-            'mars',
-            'avril',
-            'mai',
-            'juin',
-            'juillet',
-            'août',
-            'septembre',
-            'octobre',
-            'novembre',
-            'décembre',
-          ],
-          weekDays: [
-            'dimanche',
-            'lundi',
-            'mardi',
-            'mercredi',
-            'jeudi',
-            'vendredi',
-            'samedi',
-          ],
-        }}
+        locale={FRENCH_LOCALE}
         value={value}
         setValue={customSetValue}
         setError={setError}
@@ -979,26 +1236,7 @@ export function CustomENLocale() {
     <div>
       <p>Value: {value}</p>
 
-      <Cron
-        locale={{
-          everyText: 'all',
-          emptyHours: 'all hours',
-          emptyWeekDays: 'all days of the week',
-          emptyMonthDays: 'all days of the month',
-          emptyMonths: 'all months',
-          emptyMinutes: 'all minutes',
-          emptyMinutesForHourPeriod: 'all',
-          yearOption: 'years',
-          monthOption: 'months',
-          weekOption: 'weeks',
-          dayOption: 'days',
-          hourOption: 'hours',
-          minuteOption: 'minutes',
-          prefixPeriod: 'All',
-        }}
-        value={value}
-        setValue={setValue}
-      />
+      <Cron locale={ENGLISH_VARIANT_LOCALE} value={value} setValue={setValue} />
 
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
@@ -1020,17 +1258,7 @@ export function NoPrefixAndSuffix() {
       <p>Value: {value}</p>
 
       <Cron
-        locale={{
-          prefixPeriod: '',
-          prefixMonths: '',
-          prefixMonthDays: '',
-          prefixWeekDays: '',
-          prefixWeekDaysForMonthAndYearPeriod: '',
-          prefixHours: '',
-          prefixMinutes: '',
-          prefixMinutesForHourPeriod: '',
-          suffixMinutesForHourPeriod: '',
-        }}
+        locale={NO_PREFIX_SUFFIX_LOCALE}
         value={value}
         setValue={setValue}
       />

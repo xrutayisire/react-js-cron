@@ -4,7 +4,7 @@
 
 [![npm package](https://img.shields.io/npm/v/react-js-cron/latest.svg)](https://www.npmjs.com/package/react-js-cron)
 
-Live **demo** and **usage** at [https://xrutayisire.github.io/react-js-cron/](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example)
+Live **demo** and **usage** at [https://xrutayisire.github.io/react-js-cron/](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--demo)
 
 ![react-js-cron example](https://raw.githubusercontent.com/xrutayisire/react-js-cron/master/react-js-cron-example.png)
 
@@ -37,25 +37,25 @@ npm install --save react-js-cron
 
 ## Usage
 
-Learn more at [https://xrutayisire.github.io/react-js-cron/](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example)
+Learn more with [dynamics settings](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--dynamic-settings).
 
-- [Two-way sync binding with input](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#input)
-- [Default value](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#default-value)
-- [Default period](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#default-period)
-- [Disabled mode](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#disabled)
-- [Read-Only mode](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#read-only)
-- [Humanized labels](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#only-humanize-labels)
-- [Humanized value](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#only-humanize-value)
-- [Leading zero for number](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#leading-zero)
-- [Error management with text and style](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#track-error)
-- ["Clear button" removal](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#no-clear-button)
-- [Empty value management](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#empty-never-allowed)
-- [Cron shortcuts](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#shortcuts)
-- [12-hour clock](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#twelve-hour-clock)
-- [24-hour clock](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#twenty-four-hour-clock)
-- [Locale customization](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#french-locale)
-- [Prefix and suffix removal](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#no-prefix-and-suffix)
-- [Style customization](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--example#custom-style)
+- [Two-way sync binding with input](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--input)
+- [Default value](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--default-value)
+- [Default period](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--default-period)
+- [Disabled mode](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--disabled)
+- [Read-Only mode](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--read-only)
+- [Humanized labels](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--humanize-labels)
+- [Humanized value](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--humanize-value)
+- [Leading zero for number](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--leading-zero)
+- [Error management with text and style](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--track-error)
+- ["Clear button" removal](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--no-clear-button)
+- [Empty value management](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--empty-never-allowed)
+- [Cron shortcuts](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--shortcuts)
+- [12-hour clock](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--twelve-hour-clock)
+- [24-hour clock](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--twenty-four-hour-clock)
+- [Locale customization](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--french-locale)
+- [Prefix and suffix removal](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--no-prefix-and-suffix)
+- [Style customization](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--custom-style)
 
 ## API
 

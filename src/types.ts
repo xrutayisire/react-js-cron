@@ -49,6 +49,7 @@ export interface Locale {
   prefixMinutesForHourPeriod?: string
   suffixMinutesForHourPeriod?: string
   errorInvalidCron?: string
+  clearButtonText?: string
   weekDays?: string[]
   months?: string[]
 }
@@ -181,6 +182,7 @@ export interface DefaultLocale {
   prefixMinutesForHourPeriod: string
   suffixMinutesForHourPeriod: string
   errorInvalidCron: string
+  clearButtonText: string
   weekDays: string[]
   months: string[]
 }

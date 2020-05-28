@@ -276,7 +276,7 @@ export default function Cron(props: CronProps) {
             {...otherClearButtonProps}
             onClick={handleClear}
           >
-            Clear
+            {locale.clearButtonText || DEFAULT_LOCALE_EN.clearButtonText}
           </Button>
         )}
       </div>

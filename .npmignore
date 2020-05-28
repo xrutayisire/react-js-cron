@@ -1,5 +1,5 @@
 /*
 !/dist
-/dist/**/*.stories.*
+/dist/**/stories
 !/src
-/src/**/*.stories.*
+/src/**/stories

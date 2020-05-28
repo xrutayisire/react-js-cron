@@ -26,6 +26,7 @@ export const DEFAULT_LOCALE_EN: DefaultLocale = {
   prefixMinutesForHourPeriod: 'at',
   suffixMinutesForHourPeriod: 'minute(s)',
   errorInvalidCron: 'Invalid cron expression',
+  clearButtonText: 'Clear',
   weekDays: [
     // Order is important, the index will be used as value
     'Sunday', // Sunday must always be first, it's "0"
