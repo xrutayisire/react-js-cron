@@ -34,6 +34,7 @@ export default function Cron(props: CronProps) {
     clockFormat,
   } = props
   const internalValueRef = useRef<string>(value)
+  const defaultPeriodRef = useRef<PeriodType>(defaultPeriod)
   const [period, setPeriod] = useState<PeriodType | undefined>()
   const [monthDays, setMonthDays] = useState<number[] | undefined>()
   const [months, setMonths] = useState<number[] | undefined>()
@@ -104,7 +105,7 @@ export default function Cron(props: CronProps) {
         minutes
       ) {
         const cron = getCron(
-          period || defaultPeriod,
+          period || defaultPeriodRef.current,
           months,
           monthDays,
           weekDays,
@@ -133,7 +134,7 @@ export default function Cron(props: CronProps) {
       setMinutes(undefined)
 
       const cron = getCron(
-        period || defaultPeriod,
+        period || defaultPeriodRef.current,
         undefined,
         undefined,
         undefined,
@@ -181,7 +182,7 @@ export default function Cron(props: CronProps) {
     [className, clearButtonClassNameProp]
   )
 
-  const periodForRender = period || defaultPeriod
+  const periodForRender = period || defaultPeriodRef.current
 
   return (
     <div className={internalClassName}>
