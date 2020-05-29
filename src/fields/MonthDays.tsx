@@ -40,7 +40,12 @@ export default function MonthDays(props: MonthDaysProps) {
     return locale.emptyMonthDaysShort || DEFAULT_LOCALE_EN.emptyMonthDaysShort
   }, [noWeekDays, localeJSON]) // eslint-disable-line
 
-  return (
+  const displayMonthDays =
+    !readOnly ||
+    (value && value.length > 0) ||
+    ((!value || value.length === 0) && (!weekDays || weekDays.length === 0))
+
+  return displayMonthDays ? (
     <div className={internalClassName}>
       {locale.prefixMonthDays !== '' && (
         <span>
@@ -63,5 +68,5 @@ export default function MonthDays(props: MonthDaysProps) {
         period={period}
       />
     </div>
-  )
+  ) : null
 }

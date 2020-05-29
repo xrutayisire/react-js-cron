@@ -45,14 +45,29 @@ export default function WeekDays(props: WeekDaysProps) {
     [noMonthDays, localeJSON]
   )
 
-  return (
+  const displayWeekDays =
+    period === 'week' ||
+    !readOnly ||
+    (value && value.length > 0) ||
+    ((!value || value.length === 0) && (!monthDays || monthDays.length === 0))
+
+  const monthDaysIsDisplayed =
+    !readOnly ||
+    (monthDays && monthDays.length > 0) ||
+    ((!monthDays || monthDays.length === 0) && (!value || value.length === 0))
+
+  return displayWeekDays ? (
     <div className={internalClassName}>
-      {locale.prefixWeekDays !== '' && period === 'week' && (
-        <span>{locale.prefixWeekDays || DEFAULT_LOCALE_EN.prefixWeekDays}</span>
-      )}
+      {locale.prefixWeekDays !== '' &&
+        (period === 'week' || !monthDaysIsDisplayed) && (
+          <span>
+            {locale.prefixWeekDays || DEFAULT_LOCALE_EN.prefixWeekDays}
+          </span>
+        )}
 
       {locale.prefixWeekDaysForMonthAndYearPeriod !== '' &&
-        period !== 'week' && (
+        period !== 'week' &&
+        monthDaysIsDisplayed && (
           <span>
             {locale.prefixWeekDaysForMonthAndYearPeriod ||
               DEFAULT_LOCALE_EN.prefixWeekDaysForMonthAndYearPeriod}
@@ -74,5 +89,5 @@ export default function WeekDays(props: WeekDaysProps) {
         period={period}
       />
     </div>
-  )
+  ) : null
 }
