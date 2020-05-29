@@ -41,7 +41,7 @@
   "peerDependencies": {
     "antd": ">=4.1.0",
     "react": ">=16.8.0",
-    "react-dom": "^>=16.8.0"
+    "react-dom": ">=16.8.0"
   },
   "devDependencies": {
     "@ant-design/icons": "^4.1.0",
