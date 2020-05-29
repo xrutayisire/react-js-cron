@@ -1,5 +1,20 @@
 ## Changelog
 
+#### 1.0.7
+
+- Improve rendering problems caused by the new responsive management
+- Fix locale update not changing some labels
+- Rename setError to onError to improve naming
+- Update README API section
+- Add @reboot to the supported shortcuts
+- Change leading zero prop type to be easy to use
+- Fix missing locale property for clear button text
+- Fix no-prefix class on period field
+- The default period should only be read once
+- Fix double margin-bottom on fields
+- Prevent select dropdown to overlap window by changing dropdown popup direction
+- Update demo links in README
+
 #### 1.0.6
 
 - Fix regression on multiple detection
