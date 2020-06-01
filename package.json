@@ -16,6 +16,7 @@
     "antd",
     "ant-design"
   ],
+  "homepage": "https://github.com/xrutayisire/react-js-cron#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/xrutayisire/react-js-cron.git"
@@ -34,7 +35,6 @@
     "build:types": "tsc",
     "storybook": "start-storybook -p 9009",
     "build-storybook": "build-storybook",
-    "build-storybook:docs": "build-storybook --docs",
     "lint": "eslint 'src/**/*.ts?(x)'",
     "prettier": "prettier --write 'src/**/*.{ts?(x),css}'"
   },
