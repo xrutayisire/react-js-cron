@@ -4,6 +4,7 @@ import CustomSelect from '../components/CustomSelect'
 import { HoursProps } from '../types'
 import { DEFAULT_LOCALE_EN } from '../locale'
 import { classNames } from '../utils'
+import { UNITS } from '../constants'
 
 export default function Hours(props: HoursProps) {
   const {
@@ -17,7 +18,6 @@ export default function Hours(props: HoursProps) {
     clockFormat,
     period,
   } = props
-
   const internalClassName = useMemo(
     () =>
       classNames({
@@ -38,8 +38,7 @@ export default function Hours(props: HoursProps) {
       <CustomSelect
         placeholder={locale.emptyHours || DEFAULT_LOCALE_EN.emptyHours}
         value={value}
-        nbOptions={24}
-        type='hours'
+        unit={UNITS[1]}
         setValue={setValue}
         locale={locale}
         className={className}

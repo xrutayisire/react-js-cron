@@ -4,6 +4,7 @@ import { MonthsProps } from '../types'
 import CustomSelect from '../components/CustomSelect'
 import { DEFAULT_LOCALE_EN } from '../locale'
 import { classNames } from '../utils'
+import { UNITS } from '../constants'
 
 export default function Months(props: MonthsProps) {
   const {
@@ -40,9 +41,8 @@ export default function Months(props: MonthsProps) {
         optionsList={optionsList}
         grid={false}
         value={value}
-        type='months'
+        unit={UNITS[3]}
         setValue={setValue}
-        startAtZero={false}
         locale={locale}
         className={className}
         humanizeLabels={humanizeLabels}

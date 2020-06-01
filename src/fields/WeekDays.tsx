@@ -4,6 +4,7 @@ import { WeekDaysProps } from '../types'
 import CustomSelect from '../components/CustomSelect'
 import { DEFAULT_LOCALE_EN } from '../locale'
 import { classNames } from '../utils'
+import { UNITS } from '../constants'
 
 export default function WeekDays(props: WeekDaysProps) {
   const {
@@ -79,7 +80,7 @@ export default function WeekDays(props: WeekDaysProps) {
         optionsList={optionsList}
         grid={false}
         value={value}
-        type='week-days'
+        unit={UNITS[4]}
         setValue={setValue}
         locale={locale}
         className={className}

@@ -1,6 +1,6 @@
 ## ReactJS Cron
 
-> A React cron editor with [antd](https://github.com/ant-design/ant-design) inspired by [jqCron](https://github.com/arnapou/jqcron)
+> A React cron editor with [antd](https://github.com/ant-design/ant-design)
 
 [![npm package](https://img.shields.io/npm/v/react-js-cron/latest.svg)](https://www.npmjs.com/package/react-js-cron)
 
@@ -19,6 +19,11 @@ Live **demo** and **usage** at [https://xrutayisire.github.io/react-js-cron/](ht
 - Supports locale customization
 - Supports multiple selection by double-clicking on an option
 - And many more (disabled, read-only, 12-hour clock...)
+
+## Inspired by
+
+- [jqCron](https://github.com/arnapou/jqcron)
+- [cron-converter](https://github.com/roccivic/cron-converter)
 
 ## Installation
 

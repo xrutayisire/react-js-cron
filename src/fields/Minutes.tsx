@@ -4,6 +4,7 @@ import CustomSelect from '../components/CustomSelect'
 import { MinutesProps } from '../types'
 import { DEFAULT_LOCALE_EN } from '../locale'
 import { classNames } from '../utils'
+import { UNITS } from '../constants'
 
 export default function Minutes(props: MinutesProps) {
   const {
@@ -17,7 +18,6 @@ export default function Minutes(props: MinutesProps) {
     clockFormat,
     period,
   } = props
-
   const internalClassName = useMemo(
     () =>
       classNames({
@@ -52,8 +52,7 @@ export default function Minutes(props: MinutesProps) {
             : locale.emptyMinutes || DEFAULT_LOCALE_EN.emptyMinutes
         }
         value={value}
-        nbOptions={60}
-        type='minutes'
+        unit={UNITS[0]}
         setValue={setValue}
         locale={locale}
         className={className}

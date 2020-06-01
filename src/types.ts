@@ -250,10 +250,7 @@ export interface CustomSelectProps
     | 'onSelect'
     | 'onDeselect'
   > {
-  nbOptions?: number
   grid?: boolean
-  startAtZero?: boolean
-  type: CronType
   setValue: SetValueNumbersOrUndefined
   optionsList?: string[]
   locale: Locale
@@ -264,6 +261,7 @@ export interface CustomSelectProps
   leadingZero?: LeadingZero
   clockFormat?: ClockFormat
   period: PeriodType
+  unit: Unit
 }
 export type SetValueNumbersOrUndefined = Dispatch<
   SetStateAction<number[] | undefined>
@@ -308,4 +306,15 @@ export interface Classes {
 export interface ShortcutsValues {
   name: ShortcutsType
   value: string
+}
+export interface Unit {
+  type: CronType
+  min: number
+  max: number
+  total: number
+  alt?: string[]
+}
+export interface Clicks {
+  time: number
+  value: number
 }

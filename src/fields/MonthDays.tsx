@@ -4,6 +4,7 @@ import CustomSelect from '../components/CustomSelect'
 import { MonthDaysProps } from '../types'
 import { DEFAULT_LOCALE_EN } from '../locale'
 import { classNames } from '../utils'
+import { UNITS } from '../constants'
 
 export default function MonthDays(props: MonthDaysProps) {
   const {
@@ -32,13 +33,17 @@ export default function MonthDays(props: MonthDaysProps) {
   )
 
   const localeJSON = JSON.stringify(locale)
-  const placeholder = useMemo(() => {
-    if (noWeekDays) {
-      return locale.emptyMonthDays || DEFAULT_LOCALE_EN.emptyMonthDays
-    }
+  const placeholder = useMemo(
+    () => {
+      if (noWeekDays) {
+        return locale.emptyMonthDays || DEFAULT_LOCALE_EN.emptyMonthDays
+      }
 
-    return locale.emptyMonthDaysShort || DEFAULT_LOCALE_EN.emptyMonthDaysShort
-  }, [noWeekDays, localeJSON]) // eslint-disable-line
+      return locale.emptyMonthDaysShort || DEFAULT_LOCALE_EN.emptyMonthDaysShort
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [noWeekDays, localeJSON]
+  )
 
   const displayMonthDays =
     !readOnly ||
@@ -57,9 +62,7 @@ export default function MonthDays(props: MonthDaysProps) {
         placeholder={placeholder}
         value={value}
         setValue={setValue}
-        nbOptions={31}
-        startAtZero={false}
-        type='month-days'
+        unit={UNITS[2]}
         locale={locale}
         className={className}
         disabled={disabled}

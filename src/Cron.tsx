@@ -8,8 +8,9 @@ import Months from './fields/Months'
 import Hours from './fields/Hours'
 import Minutes from './fields/Minutes'
 import WeekDays from './fields/WeekDays'
-import { setCron, getCron, classNames } from './utils'
+import { classNames } from './utils'
 import { DEFAULT_LOCALE_EN } from './locale'
+import { setValuesFromCronString, getCronStringFromValues } from './converter'
 
 import './styles.css'
 
@@ -54,7 +55,7 @@ export default function Cron(props: CronProps) {
 
   useEffect(
     () => {
-      setCron(
+      setValuesFromCronString(
         value,
         setInternalError,
         onError,
@@ -66,8 +67,8 @@ export default function Cron(props: CronProps) {
         setMinutes,
         setHours,
         setMonthDays,
-        setWeekDays,
         setMonths,
+        setWeekDays,
         setPeriod
       )
     },
@@ -78,7 +79,7 @@ export default function Cron(props: CronProps) {
   useEffect(
     () => {
       if (value !== internalValueRef.current) {
-        setCron(
+        setValuesFromCronString(
           value,
           setInternalError,
           onError,
@@ -90,8 +91,8 @@ export default function Cron(props: CronProps) {
           setMinutes,
           setHours,
           setMonthDays,
-          setWeekDays,
           setMonths,
+          setWeekDays,
           setPeriod
         )
       }
@@ -112,7 +113,7 @@ export default function Cron(props: CronProps) {
         hours ||
         minutes
       ) {
-        const cron = getCron(
+        const cron = getCronStringFromValues(
           period || defaultPeriodRef.current,
           months,
           monthDays,
@@ -140,15 +141,13 @@ export default function Cron(props: CronProps) {
       setWeekDays(undefined)
       setHours(undefined)
       setMinutes(undefined)
-
-      const cron = getCron(
+      const cron = getCronStringFromValues(
         period || defaultPeriodRef.current,
         undefined,
         undefined,
         undefined,
         undefined,
-        undefined,
-        humanizeValue
+        undefined
       )
 
       setValue(cron)
@@ -158,7 +157,7 @@ export default function Cron(props: CronProps) {
       setInternalError(false)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [period, humanizeValue, setValue, onError]
+    [period, setValue, onError]
   )
 
   const internalClassName = useMemo(

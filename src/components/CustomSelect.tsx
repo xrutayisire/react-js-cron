@@ -1,23 +1,15 @@
 import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react'
 import { Select } from 'antd'
 
-import { CustomSelectProps } from '../types'
-import {
-  getCronValueFromNumbers,
-  itemMaxNumber,
-  itemStartAt,
-  classNames,
-  getTransformedStringFromNumber,
-} from '../utils'
+import { CustomSelectProps, Clicks } from '../types'
 import { DEFAULT_LOCALE_EN } from '../locale'
+import { classNames, sort } from '../utils'
+import { parsePartArray, partToString, formatValue } from '../converter'
 
 export default function CustomSelect(props: CustomSelectProps) {
   const {
     value,
-    nbOptions,
     grid = true,
-    startAtZero = true,
-    type,
     optionsList,
     setValue,
     locale,
@@ -28,16 +20,10 @@ export default function CustomSelect(props: CustomSelectProps) {
     leadingZero,
     clockFormat,
     period,
+    unit,
     ...otherProps
   } = props
-
   const [open, setOpen] = useState(false)
-
-  const stringValue = useMemo(() => {
-    if (value && Array.isArray(value)) {
-      return value.map((value: number) => value.toString())
-    }
-  }, [value])
 
   useEffect(() => {
     Array.from(
@@ -47,42 +33,43 @@ export default function CustomSelect(props: CustomSelectProps) {
     })
   }, [])
 
-  const options = useMemo(() => {
-    if (optionsList) {
-      return optionsList.map((option, index) => {
-        const number = startAtZero ? index : index + 1
+  const stringValue = useMemo(() => {
+    if (value && Array.isArray(value)) {
+      return value.map((value: number) => value.toString())
+    }
+  }, [value])
+
+  const options = useMemo(
+    () => {
+      if (optionsList) {
+        return optionsList.map((option, index) => {
+          const number = unit.min === 0 ? index : index + 1
+
+          return {
+            value: number.toString(),
+            label: option,
+          }
+        })
+      }
+
+      return [...Array(unit.total)].map((e, index) => {
+        const number = unit.min === 0 ? index : index + 1
 
         return {
           value: number.toString(),
-          label: option,
+          label: formatValue(
+            number,
+            unit,
+            humanizeLabels,
+            leadingZero,
+            clockFormat
+          ),
         }
       })
-    }
-
-    return [...Array(nbOptions)].map((e, index) => {
-      const number = startAtZero ? index : index + 1
-
-      return {
-        value: number.toString(),
-        label: getTransformedStringFromNumber(
-          number,
-          type,
-          humanizeLabels,
-          leadingZero,
-          clockFormat
-        ),
-      }
-    })
-  }, [
-    optionsList,
-    nbOptions,
-    startAtZero,
-    type,
-    leadingZero,
-    humanizeLabels,
-    clockFormat,
-  ])
-
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [optionsList, leadingZero, humanizeLabels, clockFormat]
+  )
   const localeJSON = JSON.stringify(locale)
   const renderTag = useCallback(
     (props) => {
@@ -92,9 +79,10 @@ export default function CustomSelect(props: CustomSelectProps) {
         return <></>
       }
 
-      const cronValue = getCronValueFromNumbers(
-        value,
-        type,
+      const parsedArray = parsePartArray(value, unit)
+      const cronValue = partToString(
+        parsedArray,
+        unit,
         humanizeLabels,
         leadingZero,
         clockFormat
@@ -112,7 +100,7 @@ export default function CustomSelect(props: CustomSelectProps) {
       )
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [value, type, localeJSON, humanizeLabels, leadingZero, clockFormat]
+    [value, localeJSON, humanizeLabels, leadingZero, clockFormat]
   )
 
   const onClick = useCallback(() => {
@@ -124,84 +112,100 @@ export default function CustomSelect(props: CustomSelectProps) {
   }, [])
 
   const simpleClick = useCallback(
-    (newValueOption: string) => {
-      const newValueOptionNumber = Number(newValueOption)
-      let newValue
+    (newValueOption: number | number[]) => {
+      const newValueOptions = Array.isArray(newValueOption)
+        ? sort(newValueOption)
+        : [newValueOption]
+      let newValue: number[] = newValueOptions
 
       if (value) {
-        if (value.some((v) => v === newValueOptionNumber)) {
-          newValue = value.filter((v) => v !== newValueOptionNumber)
-        } else {
-          newValue = [...value, newValueOptionNumber].sort(
-            (a: number, b: number) => a - b
-          )
-        }
-      } else {
-        newValue = [newValueOptionNumber]
+        newValue = [...value]
+
+        newValueOptions.forEach((o) => {
+          const newValueOptionNumber = Number(o)
+
+          if (value.some((v) => v === newValueOptionNumber)) {
+            newValue = newValue.filter((v) => v !== newValueOptionNumber)
+          } else {
+            newValue = sort([...newValue, newValueOptionNumber])
+          }
+        })
       }
 
-      setValue(newValue)
-    },
-    [setValue, value]
-  )
-
-  const doubleClick = useCallback(
-    (newValueOption: string) => {
-      const startValue = itemStartAt(type)
-      let maxNumber = itemMaxNumber(type)
-
-      // Internally "7" means nothing for "week-days" so itemMaxNumber should
-      // be 7, not 8
-      if (type === 'week-days') {
-        maxNumber = 7
-      }
-
-      const limit = maxNumber + startValue
-      const multiple = +newValueOption
-      const newValue: number[] = []
-
-      for (let i = startValue; i < limit; i++) {
-        if (i % multiple === 0) {
-          newValue.push(i)
-        }
-      }
-
-      const oldValueEqualNewValue =
-        value &&
-        newValue &&
-        value.length === newValue.length &&
-        value.every((v: number, i: number) => v === newValue[i])
-
-      const allValuesSelected = newValue.length === options.length
-
-      if (allValuesSelected) {
-        setValue([])
-      } else if (oldValueEqualNewValue) {
+      if (newValue.length === unit.total) {
         setValue([])
       } else {
         setValue(newValue)
       }
     },
-    [type, value, options, setValue]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [setValue, value]
   )
 
-  const clicksRef = useRef<number[]>([])
+  const doubleClick = useCallback(
+    (newValueOption: number) => {
+      if (newValueOption !== 0 && newValueOption !== 1) {
+        const limit = unit.total + unit.min
+        const newValue: number[] = []
+
+        for (let i = unit.min; i < limit; i++) {
+          if (i % newValueOption === 0) {
+            newValue.push(i)
+          }
+        }
+        const oldValueEqualNewValue =
+          value &&
+          newValue &&
+          value.length === newValue.length &&
+          value.every((v: number, i: number) => v === newValue[i])
+        const allValuesSelected = newValue.length === options.length
+
+        if (allValuesSelected) {
+          setValue([])
+        } else if (oldValueEqualNewValue) {
+          setValue([])
+        } else {
+          setValue(newValue)
+        }
+      } else {
+        setValue([])
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [value, options, setValue]
+  )
+
+  const clicksRef = useRef<Clicks[]>([])
   const onOptionClick = useCallback(
     (newValueOption: string) => {
       if (!readOnly) {
         const doubleClickTimeout = 300
         const clicks = clicksRef.current
-        clicks.push(new Date().getTime())
+
+        clicks.push({
+          time: new Date().getTime(),
+          value: Number(newValueOption),
+        })
 
         const id = window.setTimeout(() => {
           if (
             clicks.length > 1 &&
-            clicks[clicks.length - 1] - clicks[clicks.length - 2] <
+            clicks[clicks.length - 1].time - clicks[clicks.length - 2].time <
               doubleClickTimeout
           ) {
-            doubleClick(newValueOption)
+            if (
+              clicks[clicks.length - 1].value ===
+              clicks[clicks.length - 2].value
+            ) {
+              doubleClick(Number(newValueOption))
+            } else {
+              simpleClick([
+                clicks[clicks.length - 2].value,
+                clicks[clicks.length - 1].value,
+              ])
+            }
           } else {
-            simpleClick(newValueOption)
+            simpleClick(Number(newValueOption))
           }
 
           clicksRef.current = []
@@ -241,20 +245,21 @@ export default function CustomSelect(props: CustomSelectProps) {
     () =>
       classNames({
         'react-js-cron-select-dropdown': true,
-        [`react-js-cron-select-dropdown-${type}`]: true,
+        [`react-js-cron-select-dropdown-${unit.type}`]: true,
         'react-js-cron-custom-select-dropdown': true,
-        [`react-js-cron-custom-select-dropdown-${type}`]: true,
+        [`react-js-cron-custom-select-dropdown-${unit.type}`]: true,
         [`react-js-cron-custom-select-dropdown-minutes-large`]:
-          type === 'minutes' && period !== 'hour' && period !== 'day',
+          unit.type === 'minutes' && period !== 'hour' && period !== 'day',
         [`react-js-cron-custom-select-dropdown-minutes-medium`]:
-          type === 'minutes' && (period === 'day' || period === 'hour'),
+          unit.type === 'minutes' && (period === 'day' || period === 'hour'),
         'react-js-cron-custom-select-dropdown-hours-twelve-hour-clock':
-          type === 'hours' && clockFormat === '12-hour-clock',
+          unit.type === 'hours' && clockFormat === '12-hour-clock',
         'react-js-cron-custom-select-dropdown-grid': !!grid,
         [`${className}-select-dropdown`]: !!className,
-        [`${className}-select-dropdown-${type}`]: !!className,
+        [`${className}-select-dropdown-${unit.type}`]: !!className,
       }),
-    [className, type, grid, clockFormat, period]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [className, grid, clockFormat, period]
   )
 
   return (
@@ -279,7 +284,7 @@ export default function CustomSelect(props: CustomSelectProps) {
       onDeselect={onOptionClick}
       disabled={disabled}
       dropdownAlign={
-        (type === 'minutes' || type === 'hours') &&
+        (unit.type === 'minutes' || unit.type === 'hours') &&
         period !== 'day' &&
         period !== 'hour'
           ? {

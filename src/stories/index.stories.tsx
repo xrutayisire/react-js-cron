@@ -281,6 +281,7 @@ export function DynamicSettings() {
             <Radio.Button value='day'>Day</Radio.Button>
             <Radio.Button value='hour'>Hour</Radio.Button>
             <Radio.Button value='minute'>Minute</Radio.Button>
+            <Radio.Button value='reboot'>Reboot</Radio.Button>
           </Radio.Group>
         </Form.Item>
         <p>(*) Need to reset the component to see the changes</p>

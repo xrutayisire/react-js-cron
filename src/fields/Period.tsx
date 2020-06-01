@@ -98,6 +98,7 @@ export default function Period(props: PeriodProps) {
       {locale.prefixPeriod !== '' && (
         <span>{locale.prefixPeriod || DEFAULT_LOCALE_EN.prefixPeriod}</span>
       )}
+
       <Select
         key={JSON.stringify(locale)}
         defaultValue={value}
