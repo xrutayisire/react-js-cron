@@ -1,5 +1,12 @@
 ## Changelog
 
+#### 1.0.8
+
+- Fix double-click wrong output
+- Rewrite the entire cron converter to support some missing cron expressions
+- Fix typo in peer dependencies
+- Improve read-only mode by hiding week days or month days if not needed
+
 #### 1.0.7
 
 - Improve rendering problems caused by the new responsive management
