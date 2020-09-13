@@ -1,5 +1,16 @@
 ## Changelog
 
+#### 1.1.0
+
+- **(Breaking change!)** Drop support of antd version anterior to 4.6.0 due to
+  change on rc-virtual-list
+- **(Breaking change!)** Fix period change not handling new value, changing
+  period now change the value
+- Add the possibility to choose clear button action, empty or fill-with-every
+- Fix issue [#1] "Styling of popovers breaks with latest antd version"
+- Fix a problem with the onBlur function not triggered by Select component
+- Fix antd automatic tree-shaking not working in many cases
+
 #### 1.0.8
 
 - Fix double-click wrong output
@@ -38,7 +49,7 @@
 
 - Update README image with new features
 - Add a prop leadingZero to add a '0' before number lower than 10
-- Add a prop to make the component read only 
+- Add a prop to make the component read only
 - Add a prop to disable the component
 - Set day as default period
 - Add missing support for mixing week days with month and month days
@@ -59,7 +70,7 @@
 - Add a prop 'defaultPeriod' used when the default value is an empty string
 - Empty string and invalid string should not change the value
 - Fix a bug accepting string like '5-0'
-- Fix infinite loop for bad string like '*/0' or '1-2/0'
+- Fix infinite loop for bad string like '\*/0' or '1-2/0'
 - Always use 0 for Sunday
 - Fix a bug when using 0 for Sunday
 
