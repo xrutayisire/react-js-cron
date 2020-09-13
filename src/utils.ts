@@ -1,4 +1,5 @@
-import { Classes } from './types'
+import { Classes, OnError, Locale } from './types'
+import { DEFAULT_LOCALE_EN } from './locale'
 
 /**
  * Creates an array of integers from start to end, inclusive
@@ -47,4 +48,16 @@ export function classNames(classes: Classes) {
     .filter(([key, value]) => key && value)
     .map(([key]) => key)
     .join(' ')
+}
+
+/**
+ *
+ */
+export function setError(onError: OnError, locale: Locale) {
+  onError &&
+    onError({
+      type: 'invalid_cron',
+      description:
+        locale.errorInvalidCron || DEFAULT_LOCALE_EN.errorInvalidCron,
+    })
 }

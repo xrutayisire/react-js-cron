@@ -169,6 +169,13 @@ CronProps {
   clearButtonProps?: ButtonProps
 
   /**
+   * Define the clear button action
+   *
+   * Default: 'fill-with-every'
+   */
+  clearButtonAction?: 'empty' | 'fill-with-every'
+
+  /**
    * Display error style (red border and background)
    * 
    * Display: true

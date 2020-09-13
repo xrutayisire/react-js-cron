@@ -101,6 +101,13 @@ export interface CronProps {
   clearButtonProps?: ClearButtonProps
 
   /**
+   * Define the clear button action
+   *
+   * Default: 'fill-with-every'
+   */
+  clearButtonAction?: ClearButtonAction
+
+  /**
    * Display error style (red border and background)
    *
    * Display: true
@@ -165,6 +172,7 @@ export type OnError =
   | Dispatch<SetStateAction<CronError>>
   | undefined
 export interface ClearButtonProps extends Omit<ButtonProps, 'onClick'> {}
+export type ClearButtonAction = 'empty' | 'fill-with-every'
 export type PeriodType =
   | 'year'
   | 'month'

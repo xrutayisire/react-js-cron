@@ -1,7 +1,7 @@
 import { MutableRefObject } from 'react'
 
 import { UNITS, SUPPORTED_SHORTCUTS } from './constants'
-import { range, sort, dedup } from './utils'
+import { range, sort, dedup, setError } from './utils'
 import {
   Unit,
   PeriodType,
@@ -15,7 +15,6 @@ import {
   SetValueNumbersOrUndefined,
   SetValuePeriod,
 } from './types'
-import { DEFAULT_LOCALE_EN } from './locale'
 
 /**
  * Set values from cron string
@@ -93,12 +92,7 @@ export function setValuesFromCronString(
   if (error) {
     internalValueRef.current = cronString
     setInternalError(true)
-    onError &&
-      onError({
-        type: 'invalid_cron',
-        description:
-          locale.errorInvalidCron || DEFAULT_LOCALE_EN.errorInvalidCron,
-      })
+    setError(onError, locale)
   }
 }
 

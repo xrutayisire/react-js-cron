@@ -8,7 +8,7 @@ import Months from './fields/Months'
 import Hours from './fields/Hours'
 import Minutes from './fields/Minutes'
 import WeekDays from './fields/WeekDays'
-import { classNames } from './utils'
+import { classNames, setError } from './utils'
 import { DEFAULT_LOCALE_EN } from './locale'
 import { setValuesFromCronString, getCronStringFromValues } from './converter'
 
@@ -17,6 +17,8 @@ import './styles.css'
 export default function Cron(props: CronProps) {
   const {
     clearButton = true,
+    clearButtonProps = {},
+    clearButtonAction = 'fill-with-every',
     locale = DEFAULT_LOCALE_EN,
     value = '',
     setValue,
@@ -24,7 +26,6 @@ export default function Cron(props: CronProps) {
     onError,
     className,
     defaultPeriod = 'day',
-    clearButtonProps = {},
     allowEmpty = 'for-default-value',
     humanizeLabels = true,
     humanizeValue = false,
@@ -104,15 +105,7 @@ export default function Cron(props: CronProps) {
   useEffect(
     () => {
       // Only change the value if a user touched a field
-      if (
-        period ||
-        minutes ||
-        months ||
-        monthDays ||
-        weekDays ||
-        hours ||
-        minutes
-      ) {
+      if (minutes || months || monthDays || weekDays || hours || minutes) {
         const cron = getCronStringFromValues(
           period || defaultPeriodRef.current,
           months,
@@ -141,23 +134,37 @@ export default function Cron(props: CronProps) {
       setWeekDays(undefined)
       setHours(undefined)
       setMinutes(undefined)
-      const cron = getCronStringFromValues(
-        period || defaultPeriodRef.current,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined
-      )
 
-      setValue(cron)
-      internalValueRef.current = cron
+      // When clearButtonAction = 'empty'
+      let newValue = ''
 
-      onError && onError(undefined)
-      setInternalError(false)
+      // When clearButtonAction = 'fill-with-every'
+      if (clearButtonAction === 'fill-with-every') {
+        const cron = getCronStringFromValues(
+          period || defaultPeriodRef.current,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined
+        )
+
+        newValue = cron
+      }
+
+      setValue(newValue)
+      internalValueRef.current = newValue
+
+      if (allowEmpty === 'never' && clearButtonAction === 'empty') {
+        setInternalError(true)
+        setError(onError, locale)
+      } else {
+        onError && onError(undefined)
+        setInternalError(false)
+      }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [period, setValue, onError]
+    [period, setValue, onError, clearButtonAction]
   )
 
   const internalClassName = useMemo(

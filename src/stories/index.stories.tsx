@@ -16,6 +16,7 @@ import {
   ENGLISH_VARIANT_LOCALE,
   NO_PREFIX_SUFFIX_LOCALE,
 } from './constants.stories'
+import { ClearButtonAction } from '../types'
 
 import './styles.stories.css'
 
@@ -102,6 +103,9 @@ export function DynamicSettings() {
     [inputRef]
   )
   const [error, onError] = useState<CronError>()
+  const [clearButtonAction, setClearButtonAction] = useState<ClearButtonAction>(
+    'fill-with-every'
+  )
 
   const transformedLocale = useMemo(() => {
     let newLocale
@@ -252,6 +256,15 @@ export function DynamicSettings() {
             <Radio.Button value='english-variant'>English variant</Radio.Button>
           </Radio.Group>
         </Form.Item>
+        <Form.Item label='Clear button action'>
+          <Radio.Group
+            value={clearButtonAction}
+            onChange={(e) => setClearButtonAction(e.target.value)}
+          >
+            <Radio.Button value='empty'>Empty</Radio.Button>
+            <Radio.Button value='fill-with-every'>Fill with every</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
         <Form.Item label='Empty value management *'>
           <Radio.Group
             value={allowEmpty}
@@ -334,6 +347,7 @@ export function DynamicSettings() {
         humanizeValue={humanizeValue}
         displayError={displayErrorStyle}
         clearButton={displayClearButton}
+        clearButtonAction={clearButtonAction}
         shortcuts={supportShortcuts}
         allowEmpty={allowEmpty}
         clockFormat={clockFormat === '' ? undefined : clockFormat}
@@ -876,6 +890,41 @@ export function NoClearButton() {
       <p>Value: {value}</p>
 
       <Cron clearButton={false} value={value} setValue={setValue} />
+    </div>
+  )
+}
+
+export function ClearButtonEmptyValue() {
+  const clearButtonAction = 'empty'
+  const defaultValue = '0 10 * * 1,3,5'
+  const [value, setValue] = useState(defaultValue)
+
+  return (
+    <div>
+      <p>Clear button action: {clearButtonAction}</p>
+      <p>Default value: {defaultValue}</p>
+      <p>Value: {value}</p>
+
+      <Cron
+        value={value}
+        setValue={setValue}
+        clearButtonAction={clearButtonAction}
+      />
+
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          The &quot;clearButtonAction&quot; prop allow you to empty the field or
+          fill it with &quot;* * * * *&quot;
+        </span>
+      </div>
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          If not set, the prop &quot;clearButtonAction&quot; is
+          &quot;fill-with-every&quot;
+        </span>
+      </div>
     </div>
   )
 }
