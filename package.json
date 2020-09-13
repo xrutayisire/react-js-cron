@@ -39,7 +39,7 @@
     "prettier": "prettier --write 'src/**/*.{ts?(x),css}'"
   },
   "peerDependencies": {
-    "antd": ">=4.1.0",
+    "antd": ">=4.6.0",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
