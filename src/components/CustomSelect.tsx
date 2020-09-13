@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react'
+import React, { useMemo, useCallback, useEffect, useRef } from 'react'
 import { Select } from 'antd'
 
 import { CustomSelectProps, Clicks } from '../types'
@@ -23,7 +23,6 @@ export default function CustomSelect(props: CustomSelectProps) {
     unit,
     ...otherProps
   } = props
-  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     Array.from(
@@ -102,14 +101,6 @@ export default function CustomSelect(props: CustomSelectProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [value, localeJSON, humanizeLabels, leadingZero, clockFormat]
   )
-
-  const onClick = useCallback(() => {
-    setOpen(true)
-  }, [])
-
-  const onBlur = useCallback(() => {
-    setOpen(false)
-  }, [])
 
   const simpleClick = useCallback(
     (newValueOption: number | number[]) => {
@@ -267,11 +258,9 @@ export default function CustomSelect(props: CustomSelectProps) {
       mode='tags'
       allowClear={!readOnly}
       virtual={false}
-      open={readOnly ? false : open}
+      open={readOnly ? false : undefined}
       value={stringValue}
       onChange={onChange}
-      onClick={onClick}
-      onBlur={onBlur}
       tagRender={renderTag}
       className={internalClassName}
       dropdownClassName={dropdownClassNames}
