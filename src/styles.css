@@ -29,6 +29,9 @@ div.react-js-cron-custom-select {
   z-index: 1;
   background: white;
 }
+div.react-js-cron-error div.react-js-cron-custom-select {
+  background: #fff6f6;
+}
 div.react-js-cron-select.react-js-cron-custom-select.ant-select
   div.ant-select-selector {
   padding-left: 11px;
