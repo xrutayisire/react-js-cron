@@ -3129,7 +3129,7 @@ ansi-to-html@^0.6.11:
   dependencies:
     entities "^1.1.2"
 
-antd@^4.6.3:
+antd@^4.6.4:
   version "4.6.4"
   resolved "https://registry.yarnpkg.com/antd/-/antd-4.6.4.tgz#297c9d1856a7745bfa4bae6aa4554498a047e244"
   integrity sha512-fzrxyXc93fq+h0A0Rduw+7we1qyZEIgwIefXJmZg7ft81M/nQcdJ1l37sbaJWcg120f+kjeuWIbrmCVUqTpgXw==
