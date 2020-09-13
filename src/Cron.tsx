@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react'
-import { Button } from 'antd'
+import Button from 'antd/lib/button'
 
 import { CronProps, PeriodType } from './types'
 import Period from './fields/Period'
