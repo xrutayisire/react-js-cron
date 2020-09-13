@@ -123,3 +123,6 @@ div.react-js-cron-custom-select .ant-select-selection-placeholder {
   margin-left: 10px;
   margin-bottom: 10px;
 }
+.react-js-cron-disabled .react-js-cron-select.ant-select-disabled {
+  background: #f5f5f5;
+}
