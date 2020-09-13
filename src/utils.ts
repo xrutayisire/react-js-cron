@@ -1,3 +1,5 @@
+import { useRef, useEffect } from 'react'
+
 import { Classes, OnError, Locale } from './types'
 import { DEFAULT_LOCALE_EN } from './locale'
 
@@ -51,7 +53,7 @@ export function classNames(classes: Classes) {
 }
 
 /**
- *
+ * Handle onError prop to set the error
  */
 export function setError(onError: OnError, locale: Locale) {
   onError &&
@@ -60,4 +62,17 @@ export function setError(onError: OnError, locale: Locale) {
       description:
         locale.errorInvalidCron || DEFAULT_LOCALE_EN.errorInvalidCron,
     })
+}
+
+/**
+ * React useEffect hook to return the previous value
+ */
+export function usePrevious(value: any) {
+  const ref = useRef(value)
+
+  useEffect(() => {
+    ref.current = value
+  }, [value])
+
+  return ref.current
 }

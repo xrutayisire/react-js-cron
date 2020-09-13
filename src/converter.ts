@@ -112,8 +112,19 @@ export function getCronStringFromValues(
     return '@reboot'
   }
 
+  const newMonths = period === 'year' && months ? months : []
+  const newMonthDays =
+    (period === 'year' || period === 'month') && monthDays ? monthDays : []
+  const newWeekDays =
+    (period === 'year' || period === 'month' || period === 'week') && weekDays
+      ? weekDays
+      : []
+  const newHours =
+    period !== 'minute' && period !== 'hour' && hours ? hours : []
+  const newMinutes = period !== 'minute' && minutes ? minutes : []
+
   const parsedArray = parseCronArray(
-    [minutes || [], hours || [], monthDays || [], months || [], weekDays || []],
+    [newMinutes, newHours, newMonthDays, newMonths, newWeekDays],
     humanizeValue
   )
 

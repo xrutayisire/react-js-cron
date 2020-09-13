@@ -8,7 +8,7 @@ import Months from './fields/Months'
 import Hours from './fields/Hours'
 import Minutes from './fields/Minutes'
 import WeekDays from './fields/WeekDays'
-import { classNames, setError } from './utils'
+import { classNames, setError, usePrevious } from './utils'
 import { DEFAULT_LOCALE_EN } from './locale'
 import { setValuesFromCronString, getCronStringFromValues } from './converter'
 
@@ -52,6 +52,8 @@ export default function Cron(props: CronProps) {
   const [hours, setHours] = useState<number[] | undefined>()
   const [minutes, setMinutes] = useState<number[] | undefined>()
   const [error, setInternalError] = useState<boolean>(false)
+  const [valueCleared, setValueCleared] = useState<boolean>(false)
+  const previousValueCleared = usePrevious(valueCleared)
   const localeJSON = JSON.stringify(locale)
 
   useEffect(
@@ -105,7 +107,18 @@ export default function Cron(props: CronProps) {
   useEffect(
     () => {
       // Only change the value if a user touched a field
-      if (minutes || months || monthDays || weekDays || hours || minutes) {
+      // and if the user didn't use the clear button
+      if (
+        (period ||
+          minutes ||
+          months ||
+          monthDays ||
+          weekDays ||
+          hours ||
+          minutes) &&
+        !valueCleared &&
+        !previousValueCleared
+      ) {
         const cron = getCronStringFromValues(
           period || defaultPeriodRef.current,
           months,
@@ -121,10 +134,21 @@ export default function Cron(props: CronProps) {
 
         onError && onError(undefined)
         setInternalError(false)
+      } else if (valueCleared) {
+        setValueCleared(false)
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [period, monthDays, months, weekDays, hours, minutes, humanizeValue]
+    [
+      period,
+      monthDays,
+      months,
+      weekDays,
+      hours,
+      minutes,
+      humanizeValue,
+      valueCleared,
+    ]
   )
 
   const handleClear = useCallback(
@@ -135,13 +159,20 @@ export default function Cron(props: CronProps) {
       setHours(undefined)
       setMinutes(undefined)
 
-      // When clearButtonAction = 'empty'
+      // When clearButtonAction is 'empty'
       let newValue = ''
 
-      // When clearButtonAction = 'fill-with-every'
+      const newPeriod =
+        period !== 'reboot' && period ? period : defaultPeriodRef.current
+
+      if (newPeriod !== period) {
+        setPeriod(newPeriod)
+      }
+
+      // When clearButtonAction is 'fill-with-every'
       if (clearButtonAction === 'fill-with-every') {
         const cron = getCronStringFromValues(
-          period || defaultPeriodRef.current,
+          newPeriod,
           undefined,
           undefined,
           undefined,
@@ -154,6 +185,8 @@ export default function Cron(props: CronProps) {
 
       setValue(newValue)
       internalValueRef.current = newValue
+
+      setValueCleared(true)
 
       if (allowEmpty === 'never' && clearButtonAction === 'empty') {
         setInternalError(true)
