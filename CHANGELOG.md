@@ -7,7 +7,7 @@
 - **(Breaking change!)** Fix period change not handling new value, changing
   period now change the value
 - Add the possibility to choose clear button action, empty or fill-with-every
-- Fix issue [#1] "Styling of popovers breaks with latest antd version"
+- Fix issue [#1](https://github.com/xrutayisire/react-js-cron/issues/1) "Styling of popovers breaks with latest antd version"
 - Fix a problem with the onBlur function not triggered by Select component
 - Fix antd automatic tree-shaking not working in many cases
 
