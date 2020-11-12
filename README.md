@@ -29,9 +29,8 @@ Live **demo** and **usage** at [https://xrutayisire.github.io/react-js-cron/](ht
 ## Installation
 
 Be sure that you have these dependencies on your project:
-* antd
-* react
-* react-dom
+* react (>=16.8.0)
+* antd (>=4.6.0)
 
 ```bash
 # Yarn
