@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useEffect, useRef } from 'react'
+import React, { useMemo, useCallback, useRef } from 'react'
 import Select from 'antd/lib/select'
 
 import { CustomSelectProps, Clicks } from '../types'
@@ -23,14 +23,6 @@ export default function CustomSelect(props: CustomSelectProps) {
     unit,
     ...otherProps
   } = props
-
-  useEffect(() => {
-    Array.from(
-      document.getElementsByClassName('ant-select-selection-search-input')
-    ).forEach((element: Element) => {
-      element.setAttribute('readonly', 'readonly')
-    })
-  }, [])
 
   const stringValue = useMemo(() => {
     if (value && Array.isArray(value)) {
@@ -255,7 +247,9 @@ export default function CustomSelect(props: CustomSelectProps) {
 
   return (
     <Select
-      mode='tags'
+      // Use 'multiple' instead of 'tags‘ mode
+      // cf: Issue #2
+      mode='multiple'
       allowClear={!readOnly}
       virtual={false}
       open={readOnly ? false : undefined}
