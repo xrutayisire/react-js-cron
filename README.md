@@ -58,6 +58,7 @@ Learn more with [dynamic settings](https://xrutayisire.github.io/react-js-cron/?
 - [Leading zero for numbers](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--leading-zero)
 - [Error management with text and style](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--track-error)
 - ["Clear button" removal](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--no-clear-button)
+- ["Clear button action"](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--clear-button-empty-value)
 - [Empty value management](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--empty-never-allowed)
 - [Cron shortcuts](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--shortcuts)
 - [12-hour clock](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--twelve-hour-clock)
