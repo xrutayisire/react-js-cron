@@ -1,5 +1,11 @@
 ## Changelog
 
+#### 1.1.1
+
+- Fix issue [#2](https://github.com/xrutayisire/react-js-cron/issues/2): "antd Select cannot work when using Cron component"
+- Add dependencies version in README
+- Add link in README to story for clear button action management
+
 #### 1.1.0
 
 - **(Breaking change!)** Drop support of antd version anterior to 4.6.0 due to
