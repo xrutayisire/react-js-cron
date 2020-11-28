@@ -54,6 +54,9 @@ export const UNITS: Unit[] = [
     min: 1,
     max: 12,
     total: 12,
+    // DO NO EDIT
+    // Only used internally for Cron syntax
+    // alt values used for labels are in ./locale.ts file
     alt: [
       'JAN',
       'FEB',
@@ -74,6 +77,9 @@ export const UNITS: Unit[] = [
     min: 0,
     max: 6,
     total: 7,
+    // DO NO EDIT
+    // Only used internally for Cron syntax
+    // alt values used for labels are in ./locale.ts file
     alt: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
   },
 ]

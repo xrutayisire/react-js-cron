@@ -26,6 +26,7 @@ export const FRENCH_LOCALE = {
   suffixMinutesForHourPeriod: 'minute(s)',
   errorInvalidCron: 'Expression cron invalide',
   clearButtonText: 'Effacer',
+  // Order is important, the index will be used as value
   months: [
     'janvier',
     'février',
@@ -40,6 +41,7 @@ export const FRENCH_LOCALE = {
     'novembre',
     'décembre',
   ],
+  // Order is important, the index will be used as value
   weekDays: [
     'dimanche',
     'lundi',
@@ -49,6 +51,25 @@ export const FRENCH_LOCALE = {
     'vendredi',
     'samedi',
   ],
+  // cf: https://fr.wikipedia.org/wiki/Mois#Abr%C3%A9viations
+  // Order is important, the index will be used as value
+  altMonths: [
+    'JAN',
+    'FÉV',
+    'MAR',
+    'AVR',
+    'MAI',
+    'JUN',
+    'JUL',
+    'AOÛ',
+    'SEP',
+    'OCT',
+    'NOV',
+    'DÉC',
+  ],
+  // cf: http://bdl.oqlf.gouv.qc.ca/bdl/gabarit_bdl.asp?id=3617
+  // Order is important, the index will be used as value
+  altWeekDays: ['DIM', 'LUN', 'MAR', 'MER', 'JEU', 'VEN', 'SAM'],
 }
 export const ENGLISH_VARIANT_LOCALE = {
   everyText: 'all',

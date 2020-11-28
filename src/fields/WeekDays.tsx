@@ -80,7 +80,12 @@ export default function WeekDays(props: WeekDaysProps) {
         optionsList={optionsList}
         grid={false}
         value={value}
-        unit={UNITS[4]}
+        unit={{
+          ...UNITS[4],
+          // Allow translation of alternative labels when using "humanizeLabels"
+          // Issue #3
+          alt: locale.altWeekDays || DEFAULT_LOCALE_EN.altWeekDays,
+        }}
         setValue={setValue}
         locale={locale}
         className={className}

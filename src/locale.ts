@@ -53,4 +53,29 @@ export const DEFAULT_LOCALE_EN: DefaultLocale = {
     'November',
     'December',
   ],
+  // Order is important, the index will be used as value
+  altWeekDays: [
+    'SUN', // Sunday must always be first, it's "0"
+    'MON',
+    'TUE',
+    'WED',
+    'THU',
+    'FRI',
+    'SAT',
+  ],
+  // Order is important, the index will be used as value
+  altMonths: [
+    'JAN',
+    'FEB',
+    'MAR',
+    'APR',
+    'MAY',
+    'JUN',
+    'JUL',
+    'AUG',
+    'SEP',
+    'OCT',
+    'NOV',
+    'DEC',
+  ],
 }

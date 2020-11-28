@@ -6,122 +6,128 @@ import { ButtonProps } from 'antd/lib/button'
 
 export interface CronProps {
   /**
-   * Cron value, the component is by design a controled component
-   * The first value will be the default value
+   * Cron value, the component is by design a controled component.
+   * The first value will be the default value.
    *
    * required
    */
   value: string
 
   /**
-   * Set the cron value, similar to onChange
-   * The naming tells you that you have to set the value by yourself
+   * Set the cron value, similar to onChange.
+   * The naming tells you that you have to set the value by yourself.
    *
    * required
    */
   setValue: SetValue
 
   /**
-   * Set the container className and used as a prefix for other selectors
+   * Set the container className and used as a prefix for other selectors.
    * Available selectors: https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--custom-style
    */
   className?: string
 
   /**
-   * Humanize the labels in the cron component, SUN-SAT and JAN-DEC
+   * Humanize the labels in the cron component, SUN-SAT and JAN-DEC.
    *
    * Default: true
    */
   humanizeLabels?: boolean
 
   /**
-   * Humanize the value, SUN-SAT and JAN-DEC
+   * Humanize the value, SUN-SAT and JAN-DEC.
    *
    * Default: false
    */
   humanizeValue?: boolean
 
   /**
-   * Add a "0" before numbers lower than 10
+   * Add a "0" before numbers lower than 10.
    *
    * Default: false
    */
   leadingZero?: LeadingZero
 
   /**
-   * Define the default period when the default value is empty
+   * Define the default period when the default value is empty.
    *
    * Default: 'day'
    */
   defaultPeriod?: PeriodType
 
   /**
-   * Disable the cron component
+   * Disable the cron component.
    *
    * Default: false
    */
   disabled?: boolean
 
   /**
-   * Make the cron component read-only
+   * Make the cron component read-only.
    *
    * Default: false
    */
   readOnly?: boolean
 
   /**
-   * Define if empty should trigger an error
+   * Define if empty should trigger an error.
    *
    * Default: 'for-default-value'
    */
   allowEmpty?: AllowEmpty
 
   /**
-   * Support cron shortcuts
+   * Support cron shortcuts.
    *
    * Default: ['@yearly', '@annually', '@monthly', '@weekly', '@daily', '@midnight', '@hourly']
    */
   shortcuts?: Shortcuts
 
   /**
-   * Define the clock format
+   * Define the clock format.
    */
   clockFormat?: ClockFormat
 
   /**
-   * Display the clear button
+   * Display the clear button.
    *
    * Default: true
    */
   clearButton?: boolean
 
   /**
-   * antd button props to customize the clear button
+   * antd button props to customize the clear button.
    */
   clearButtonProps?: ClearButtonProps
 
   /**
-   * Define the clear button action
+   * Define the clear button action.
    *
    * Default: 'fill-with-every'
    */
   clearButtonAction?: ClearButtonAction
 
   /**
-   * Display error style (red border and background)
+   * Display error style (red border and background).
    *
    * Display: true
    */
   displayError?: boolean
 
   /**
-   * Triggered when the cron component detects an error with the value
+   * Triggered when the cron component detects an error with the value.
    */
   onError?: OnError
 
   /**
-   * Change the component language
-   * Can also be used to remove prefix and suffix
+   * Change the component language.
+   * Can also be used to remove prefix and suffix.
+   *
+   * When setting 'humanizeLabels' you can change the language of the
+   * alternative labels with 'altWeekDays' and 'altMonths'.
+   *
+   * The order of the 'locale' properties 'weekDays', 'months', 'altMonths'
+   * and 'altWeekDays' is important! The index will be used as value.
    *
    * Default './locale.ts'
    */
@@ -157,6 +163,8 @@ export interface Locale {
   clearButtonText?: string
   weekDays?: string[]
   months?: string[]
+  altWeekDays?: string[]
+  altMonths?: string[]
 }
 export type SetValueFunction = (value: string) => void
 export type SetValue = SetValueFunction | Dispatch<SetStateAction<string>>
@@ -306,6 +314,8 @@ export interface DefaultLocale {
   clearButtonText: string
   weekDays: string[]
   months: string[]
+  altWeekDays: string[]
+  altMonths: string[]
 }
 export type CronValues = { [key in CronType]: number[] | string | undefined }
 export interface Classes {

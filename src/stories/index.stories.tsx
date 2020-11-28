@@ -612,6 +612,14 @@ export function HumanizeLabels() {
           Works only for week days and months
         </span>
       </div>
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          Can be used with &quot;locale&quot; prop and &quot;altMonths&quot; /
+          &quot;altWeekDays&quot; properties in order to display translated
+          labels
+        </span>
+      </div>
     </div>
   )
 }
@@ -1245,7 +1253,7 @@ export function TwentyFourHourClock() {
 
 export function FrenchLocale() {
   const inputRef = useRef<AntdInput>(null)
-  const defaultValue = '30 14 22 * *'
+  const defaultValue = '* * 1-2 2,8 1,3,6'
   const [value, setValue] = useState(defaultValue)
   const customSetValue = useCallback(
     (newValue: string) => {
@@ -1258,7 +1266,10 @@ export function FrenchLocale() {
 
   return (
     <div>
+      <p>locale: FRENCH_LOCALE</p>
+      <p>humanizeLabels: true (by default)</p>
       <p>Erreur: {error ? error.description : 'undefined'}</p>
+      <p>Value: {value}</p>
 
       <AntdInput
         ref={inputRef}
@@ -1279,15 +1290,16 @@ export function FrenchLocale() {
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
-          The order of the &quot;locale&quot; properties &quot;weekDays&quot;
-          and &quot;months&quot; is important! The index will be used as value
+          The order of the &quot;locale&quot; properties &quot;weekDays&quot;,
+          &quot;months&quot;, &quot;altMonths&quot; and &quot;altWeekDays&quot;
+          is important! The index will be used as value
         </span>
       </div>
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
-          Sunday must always be the first value of &quot;weekDays&quot; property
-          because it&apos;s &quot;0&quot;
+          Sunday must always be the first value of &quot;weekDays&quot; and
+          &quot;altWeekDays&quot; property because it&apos;s &quot;0&quot;
         </span>
       </div>
     </div>
@@ -1300,6 +1312,7 @@ export function CustomENLocale() {
 
   return (
     <div>
+      <p>locale: ENGLISH_VARIANT_LOCALE</p>
       <p>Value: {value}</p>
 
       <Cron locale={ENGLISH_VARIANT_LOCALE} value={value} setValue={setValue} />
@@ -1321,6 +1334,7 @@ export function NoPrefixAndSuffix() {
 
   return (
     <div>
+      <p>locale: NO_PREFIX_SUFFIX_LOCALE</p>
       <p>Value: {value}</p>
 
       <Cron
@@ -1355,6 +1369,8 @@ export function CustomStyle() {
 
   return (
     <div>
+      <p>className: my-project-cron</p>
+      <p>clearButtonProps: &#123; type: &quot;default&quot; &#125;</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
       <AntdInput
