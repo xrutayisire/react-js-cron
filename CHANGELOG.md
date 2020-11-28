@@ -1,5 +1,10 @@
 ## Changelog
 
+#### 1.2.0
+
+- **(New feature)** Issue [#3](https://github.com/xrutayisire/react-js-cron/issues/3): "Add the possibility to translate alternative labels"
+- Fix typo in README
+
 #### 1.1.1
 
 - Fix issue [#2](https://github.com/xrutayisire/react-js-cron/issues/2): "antd Select cannot work when using Cron component"
