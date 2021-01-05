@@ -55,6 +55,7 @@ div.react-js-cron-custom-select .ant-select-selection-placeholder {
   transform: none;
   transition: none;
   opacity: 1;
+  color: inherit;
 }
 .react-js-cron-week-days-placeholder
   .react-js-cron-custom-select
