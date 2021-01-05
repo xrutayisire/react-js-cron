@@ -7,7 +7,7 @@ import { DEFAULT_LOCALE_EN } from './locale'
  * Creates an array of integers from start to end, inclusive
  */
 export function range(start: number, end: number) {
-  const array = []
+  const array: number[] = []
 
   for (let i = start; i <= end; i++) {
     array.push(i)

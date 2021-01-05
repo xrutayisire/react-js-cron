@@ -26,3 +26,6 @@ yarn-error.log*
 
 # tarball
 react-js-cron-*.tgz
+
+# cache
+.eslintcache
