@@ -1,5 +1,10 @@
 ## Changelog
 
+#### 1.2.1
+
+- Fix issue [#6](https://github.com/xrutayisire/react-js-cron/issues/6): "Display problem for Selects with antd 4.10.0"
+- Fix placeholder color that should not be gray but black as the value
+
 #### 1.2.0
 
 - **(New feature)** Issue [#3](https://github.com/xrutayisire/react-js-cron/issues/3): "Add the possibility to translate alternative labels"
