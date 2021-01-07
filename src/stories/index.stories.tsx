@@ -1,14 +1,22 @@
 import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react'
 import {
-  Input as AntdInput,
-  Divider,
+  TextField,
   Table,
-  Form,
   Radio,
   Switch,
   Button,
-} from 'antd'
-import { InfoCircleOutlined } from '@ant-design/icons'
+  FormControlLabel,
+  RadioGroup,
+  FormGroup,
+  Input,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Typography
+} from '@material-ui/core'
+import InfoIcon from '@material-ui/icons/Info';
+import DividerWithText from '../components/DividerWithText'
 
 import Cron, { CronError, AllowEmpty, ClockFormat, PeriodType } from '../index'
 import {
@@ -26,13 +34,13 @@ export default {
 }
 
 export function Demo() {
-  const inputRef = useRef<AntdInput>(null)
+  const inputRef = useRef<string>()
   const defaultValue = '30 5 * * 1,6'
   const [value, setValue] = useState(defaultValue)
   const customSetValue = useCallback(
     (newValue: string) => {
       setValue(newValue)
-      inputRef.current?.setValue(newValue)
+      inputRef.current = newValue
     },
     [inputRef]
   )
@@ -40,22 +48,24 @@ export function Demo() {
 
   return (
     <div>
-      <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
-          setValue(event.target.value)
+      <TextField
+
+        // 
+        onChange={(event: any) => {
+          customSetValue(event.target.value)
         }}
-        onPressEnter={() => {
-          setValue(inputRef.current?.input.value || '')
-        }}
+      // on
+      // onPressEnter={() => {
+      //   setValue(inputRef.current?.input.value || '')
+      // }}
       />
 
-      <Divider>OR</Divider>
+      <DividerWithText>OR</DividerWithText>
 
       <Cron value={value} setValue={customSetValue} onError={onError} />
 
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           Double click on a dropdown option to automatically select / unselect a
           periodicity
@@ -71,7 +81,7 @@ export function Demo() {
 
 export function DynamicSettings() {
   const [displayInput, setDisplayInput] = useState<boolean>(true)
-  const [changeValueOnBlur, setChangeValueOnBlur] = useState<boolean>(true)
+  const [changeValueonChange, setChangeValueonChange] = useState<boolean>(true)
   const [changeValueOnEnter, setChangeValueOnEnter] = useState<boolean>(true)
   const [readOnlyInput, setReadOnlyInput] = useState<boolean>(false)
   const [disabled, setDisabled] = useState<boolean>(false)
@@ -84,26 +94,26 @@ export function DynamicSettings() {
   const [supportShortcuts, setSupportShortcuts] = useState<boolean>(true)
   const [removePrefixSuffix, setRemovePrefixSuffix] = useState<boolean>(false)
   const [customStyle, setCustomStyle] = useState<boolean>(false)
-  const [allowEmpty, setAllowEmpty] = useState<AllowEmpty>('for-default-value')
-  const [clockFormat, setClockFormat] = useState<ClockFormat | ''>('')
+  const [allowEmpty, setAllowEmpty] = useState<AllowEmpty | string>('for-default-value')
+  const [clockFormat, setClockFormat] = useState<ClockFormat | '' | string>('')
   const [locale, setLocale] = useState<
-    'english' | 'french' | 'english-variant'
+    'english' | 'french' | 'english-variant' | string
   >('english')
-  const [defaultPeriod, setDefaultPeriod] = useState<PeriodType>('day')
+  const [defaultPeriod, setDefaultPeriod] = useState<PeriodType | string>('day')
   const [defaultValue, setDefaultValue] = useState('@daily')
   const [leadingZero, setLeadingZero] = useState<boolean>(false)
   const [key, setKey] = useState('render')
-  const inputRef = useRef<AntdInput>(null)
+  const inputRef = useRef<string>()
   const [value, setValue] = useState(defaultValue)
   const customSetValue = useCallback(
     (newValue: string) => {
-      setValue(newValue)
-      inputRef.current?.setValue(newValue)
+      inputRef.current = newValue
+
     },
     [inputRef]
   )
   const [error, onError] = useState<CronError>()
-  const [clearButtonAction, setClearButtonAction] = useState<ClearButtonAction>(
+  const [clearButtonAction, setClearButtonAction] = useState<ClearButtonAction | string>(
     'fill-with-every'
   )
 
@@ -135,8 +145,9 @@ export function DynamicSettings() {
 
   useEffect(
     () => {
-      if (displayInput) {
-        inputRef.current?.setValue(value)
+      if (displayInput && value !== null) {
+        //  inputRef.current = value;
+
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -145,170 +156,170 @@ export function DynamicSettings() {
 
   return (
     <div>
-      <Form layout='inline' className='demo-dynamic-settings'>
-        <Form.Item label='Display input'>
+      <FormGroup row className='demo-dynamic-settings'>
+        <FormControlLabel label='Display input' control={
           <Switch
             checked={displayInput}
             onChange={() => setDisplayInput((prevValue) => !prevValue)}
           />
-        </Form.Item>
-        <Form.Item label='Change input value on blur'>
+        } />
+
+        <FormControlLabel label='Change input value on blur' control={
           <Switch
-            checked={changeValueOnBlur}
-            onChange={() => setChangeValueOnBlur((prevValue) => !prevValue)}
+            checked={changeValueonChange}
+            onChange={() => setChangeValueonChange((prevValue) => !prevValue)}
           />
-        </Form.Item>
-        <Form.Item label='Change input value on enter'>
+        } />
+        <FormControlLabel label='Change input value on enter' control={
           <Switch
             checked={changeValueOnEnter}
             onChange={() => setChangeValueOnEnter((prevValue) => !prevValue)}
           />
-        </Form.Item>
-        <Form.Item label='Read-Only input'>
+        } />
+        <FormControlLabel label='Read-Only input' control={
           <Switch
             checked={readOnlyInput}
             onChange={() => setReadOnlyInput((prevValue) => !prevValue)}
           />
-        </Form.Item>
-        <Form.Item label='Disabled'>
+        } />
+        <FormControlLabel label='Disabled' control={
           <Switch
             checked={disabled}
             onChange={() => setDisabled((prevValue) => !prevValue)}
           />
-        </Form.Item>
-        <Form.Item label='Read-Only'>
+        } />
+        <FormControlLabel label='Read-Only' control={
           <Switch
             checked={readOnly}
             onChange={() => setReadOnly((prevValue) => !prevValue)}
           />
-        </Form.Item>
-        <Form.Item label='Humainze labels'>
+        } />
+        <FormControlLabel label='Humainze labels' control={
           <Switch
             checked={humanizeLabels}
             onChange={() => setHumanizeLabels((prevValue) => !prevValue)}
           />
-        </Form.Item>
-        <Form.Item label='Humanize value'>
+        } />
+        <FormControlLabel label='Humanize value' control={
           <Switch
             checked={humanizeValue}
             onChange={() => setHumanizeValue((prevValue) => !prevValue)}
           />
-        </Form.Item>
-        <Form.Item label='Display error text'>
+        } />
+        <FormControlLabel label='Display error text' control={
           <Switch
             checked={displayErrorText}
             onChange={() => setDisplayErrorText((prevValue) => !prevValue)}
           />
-        </Form.Item>
-        <Form.Item label='Display error style'>
+        } />
+        <FormControlLabel label='Display error style' control={
           <Switch
             checked={displayErrorStyle}
             onChange={() => setDisplayErrorStyle((prevValue) => !prevValue)}
           />
-        </Form.Item>
-        <Form.Item label='Display clear button'>
+        } />
+        <FormControlLabel label='Display clear button' control={
           <Switch
             checked={displayClearButton}
             onChange={() => setDisplayClearButton((prevValue) => !prevValue)}
           />
-        </Form.Item>
-        <Form.Item label='Support shortcuts'>
+        } />
+        <FormControlLabel label='Support shortcuts' control={
           <Switch
             checked={supportShortcuts}
             onChange={() => setSupportShortcuts((prevValue) => !prevValue)}
           />
-        </Form.Item>
-        <Form.Item label='Remove prefix/suffix'>
+        } />
+        <FormControlLabel label='Remove prefix/suffix' control={
           <Switch
             checked={removePrefixSuffix}
             onChange={() => setRemovePrefixSuffix((prevValue) => !prevValue)}
           />
-        </Form.Item>
-        <Form.Item label='Set custom style'>
+        } />
+        <FormControlLabel label='Set custom style' control={
           <Switch
             checked={customStyle}
             onChange={() => setCustomStyle((prevValue) => !prevValue)}
           />
-        </Form.Item>
-        <Form.Item label='Leading zero'>
+        } />
+        <FormControlLabel label='Leading zero' control={
           <Switch
             checked={leadingZero}
             onChange={() => setLeadingZero((prevValue) => !prevValue)}
           />
-        </Form.Item>
-        <Form.Item label='Clock format'>
-          <Radio.Group
+        } />
+        <FormControlLabel label='Clock format' control={
+          <RadioGroup
             value={clockFormat}
             onChange={(e) => setClockFormat(e.target.value)}
           >
-            <Radio.Button value=''>None</Radio.Button>
-            <Radio.Button value='12-hour-clock'>12-hour clock</Radio.Button>
-            <Radio.Button value='24-hour-clock'>24-hour-clock</Radio.Button>
-          </Radio.Group>
-        </Form.Item>
-        <Form.Item label='Locale'>
-          <Radio.Group
+            <FormControlLabel control={<Radio />} value='' label='None' />
+            <FormControlLabel control={<Radio />} value='12-hour-clock' label='12-hour clock' />
+            <FormControlLabel control={<Radio />} value='24-hour-clock' label='24-hour-clock' />
+          </RadioGroup>
+        } />
+        <FormControlLabel label='Locale' control={
+          <RadioGroup
             value={locale}
             onChange={(e) => setLocale(e.target.value)}
           >
-            <Radio.Button value='english'>English</Radio.Button>
-            <Radio.Button value='french'>French</Radio.Button>
-            <Radio.Button value='english-variant'>English variant</Radio.Button>
-          </Radio.Group>
-        </Form.Item>
-        <Form.Item label='Clear button action'>
-          <Radio.Group
+            <FormControlLabel control={<Radio />} value='english' label='English' />
+            <FormControlLabel control={<Radio />} value='french' label='French' />
+            <FormControlLabel control={<Radio />} value='english-variant' label='English variant' />
+          </RadioGroup>
+        } />
+        <FormControlLabel label='Clear button action' control={
+          <RadioGroup
             value={clearButtonAction}
             onChange={(e) => setClearButtonAction(e.target.value)}
           >
-            <Radio.Button value='empty'>Empty</Radio.Button>
-            <Radio.Button value='fill-with-every'>Fill with every</Radio.Button>
-          </Radio.Group>
-        </Form.Item>
-        <Form.Item label='Empty value management *'>
-          <Radio.Group
+            <FormControlLabel control={<Radio />} value='empty' label='Empty' />
+            <FormControlLabel control={<Radio />} value='fill-with-every' label='Fill with every' />
+          </RadioGroup>
+        } />
+        <FormControlLabel label='Empty value management *' control={
+          <RadioGroup
             value={allowEmpty}
             onChange={(e) => setAllowEmpty(e.target.value)}
           >
-            <Radio.Button value='for-default-value'>
-              For default value
-            </Radio.Button>
-            <Radio.Button value='always'>Always</Radio.Button>
-            <Radio.Button value='never'>Never</Radio.Button>
-          </Radio.Group>
-        </Form.Item>
-        <Form.Item label='Default value *'>
-          <AntdInput
+            <FormControlLabel control={<Radio />} value='for-default-value' label='For default value'></FormControlLabel>
+            <FormControlLabel control={<Radio />} value='always' label='Always' />
+            <FormControlLabel control={<Radio />} value='never' label='Never' />
+          </RadioGroup>
+        } />
+        <FormControlLabel label='Default value *' control={
+          <Input
+
             value={defaultValue}
-            onChange={(e) => setDefaultValue(e.target.value)}
+            onChange={(e: any) => setDefaultValue(e.target.value)}
           />
-        </Form.Item>
-        <Form.Item label='Default period **'>
-          <Radio.Group
+        } />
+        <FormControlLabel label='Default period **' control={
+          <RadioGroup
             value={defaultPeriod}
             onChange={(e) => setDefaultPeriod(e.target.value)}
           >
-            <Radio.Button value='year'>Year</Radio.Button>
-            <Radio.Button value='month'>Month</Radio.Button>
-            <Radio.Button value='week'>Week</Radio.Button>
-            <Radio.Button value='day'>Day</Radio.Button>
-            <Radio.Button value='hour'>Hour</Radio.Button>
-            <Radio.Button value='minute'>Minute</Radio.Button>
-            <Radio.Button value='reboot'>Reboot</Radio.Button>
-          </Radio.Group>
-        </Form.Item>
+            <FormControlLabel control={<Radio />} value='year' label='Year' />
+            <FormControlLabel control={<Radio />} value='month' label='Month' />
+            <FormControlLabel control={<Radio />} value='week' label='Week' />
+            <FormControlLabel control={<Radio />} value='day' label='Day' />
+            <FormControlLabel control={<Radio />} value='hour' label='Hour' />
+            <FormControlLabel control={<Radio />} value='minute' label='Minute' />
+            <FormControlLabel control={<Radio />} value='reboot' label='Reboot' />
+          </RadioGroup>
+        } />
         <p>(*) Need to reset the component to see the changes</p>
         <p>
           (**) Need to reset the component and to have an empty default value to
           see the changes
         </p>
-      </Form>
+      </FormGroup>
 
       <div>
         <p>Value: {value}</p>
 
         <Button
-          type='primary'
+          variant='contained'
           onClick={() => {
             customSetValue(defaultValue)
             setKey(Math.random().toString(36).substring(7))
@@ -320,19 +331,14 @@ export function DynamicSettings() {
 
       {displayInput && (
         <>
-          <AntdInput
-            ref={inputRef}
-            readOnly={readOnlyInput}
-            onBlur={(event) => {
-              changeValueOnBlur && setValue(event.target.value)
-            }}
-            onPressEnter={() => {
-              changeValueOnEnter &&
-                setValue(inputRef.current?.input.value || '')
-            }}
-          />
+          <Input
 
-          <Divider>OR</Divider>
+            readOnly={readOnlyInput}
+            onChange={(event: any) => {
+              changeValueonChange && setValue(event.target.value)
+            }} />
+
+          <DividerWithText>OR</DividerWithText>
         </>
       )}
 
@@ -355,13 +361,7 @@ export function DynamicSettings() {
         leadingZero={leadingZero}
         className={customStyle ? 'my-project-cron' : undefined}
         locale={transformedLocale}
-        clearButtonProps={
-          customStyle
-            ? {
-                type: 'default',
-              }
-            : undefined
-        }
+
       />
 
       {displayErrorText && (
@@ -373,43 +373,43 @@ export function DynamicSettings() {
   )
 }
 
-export function Input() {
-  const inputRef = useRef<AntdInput>(null)
+export function LocalInput() {
+  const inputRef = useRef<string>()
   const defaultValue = ''
   const [value, setValue] = useState(defaultValue)
   const customSetValue = useCallback(
     (newValue: string) => {
       setValue(newValue)
-      inputRef.current?.setValue(newValue)
+      inputRef.current = newValue
     },
     [inputRef]
   )
 
   return (
     <div>
-      <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
+      <Input
+
+        onChange={(event: any) => {
           setValue(event.target.value)
         }}
       />
 
       <div style={{ marginTop: 10 }}>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
-          The &quot;onBlur&quot; event must be used instead of
+          The &quot;onChange&quot; event must be used instead of
           &quot;onChange&quot; to prevent a value change from the cron component
         </span>
       </div>
       <div style={{ marginTop: 10 }}>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           Don&apos;t directly set the value of the Input with the prop
           &quot;value&quot;, you will not be able to edit it
         </span>
       </div>
 
-      <Divider>OR</Divider>
+      <DividerWithText>OR</DividerWithText>
 
       <Cron value={value} setValue={customSetValue} />
     </div>
@@ -417,37 +417,36 @@ export function Input() {
 }
 
 export function InputWithOnEnter() {
-  const inputRef = useRef<AntdInput>(null)
+  const inputRef = useRef<string>()
   const defaultValue = '0 10 * * 1,3,5'
   const [value, setValue] = useState(defaultValue)
   const customSetValue = useCallback(
     (newValue: string) => {
       setValue(newValue)
-      inputRef.current?.setValue(newValue)
+      inputRef.current = newValue
     },
     [inputRef]
   )
 
   return (
     <div>
-      <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
+      <Input
+
+        onChange={(event: any) => {
           setValue(event.target.value)
         }}
-        onPressEnter={() => {
-          setValue(inputRef.current?.input.value || '')
-        }}
+
+
       />
 
       <div style={{ marginTop: 10 }}>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           You can also add &quot;onEnter&quot; support to set the value
         </span>
       </div>
 
-      <Divider>OR</Divider>
+      <DividerWithText>OR</DividerWithText>
 
       <Cron value={value} setValue={customSetValue} />
     </div>
@@ -460,9 +459,9 @@ export function ReadOnlyInput() {
 
   return (
     <div>
-      <AntdInput readOnly value={value} />
+      <Input readOnly value={value} />
 
-      <Divider>OR</Divider>
+      <DividerWithText>OR</DividerWithText>
 
       <Cron value={value} setValue={setValue} />
     </div>
@@ -481,7 +480,7 @@ export function DefaultValue() {
       <Cron value={value} setValue={setValue} />
 
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           The first value will always be used as default value
         </span>
@@ -504,13 +503,13 @@ export function DefaultPeriod() {
       <Cron value={value} setValue={setValue} defaultPeriod={defaultPeriod} />
 
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           The &quot;defaultPeriod&quot; prop only work for empty default value
         </span>
       </div>
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           If not set, the prop &quot;defaultPeriod&quot; is &quot;day&quot;
         </span>
@@ -532,7 +531,7 @@ export function Disabled() {
       <Cron value={value} setValue={setValue} disabled />
 
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           If not set, the prop &quot;disabled&quot; is false
         </span>
@@ -554,7 +553,7 @@ export function ReadOnly() {
       <Cron value={value} setValue={setValue} readOnly />
 
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           If not set, the prop &quot;readOnly&quot; is false
         </span>
@@ -564,14 +563,14 @@ export function ReadOnly() {
 }
 
 export function HumanizeLabels() {
-  const inputRef = useRef<AntdInput>(null)
+  const inputRef = useRef<string>()
   const defaultValue = '* * * * MON-WED,sat'
   const [value, setValue] = useState(defaultValue)
   const [error, onError] = useState<CronError>()
   const customSetValue = useCallback(
     (newValue: string) => {
       setValue(newValue)
-      inputRef.current?.setValue(newValue)
+      inputRef.current = newValue
     },
     [inputRef]
   )
@@ -583,37 +582,37 @@ export function HumanizeLabels() {
       <p>Value: {value}</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
-      <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
+      <Input
+
+        onChange={(event: any) => {
           setValue(event.target.value)
         }}
       />
 
-      <Divider>OR</Divider>
+      <DividerWithText>OR</DividerWithText>
 
       <Cron value={value} setValue={customSetValue} onError={onError} />
 
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           If not set, the prop &quot;humanizeLabels&quot; is true
         </span>
       </div>
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           Humanizes the labels in the cron component
         </span>
       </div>
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           Works only for week days and months
         </span>
       </div>
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           Can be used with &quot;locale&quot; prop and &quot;altMonths&quot; /
           &quot;altWeekDays&quot; properties in order to display translated
@@ -625,14 +624,14 @@ export function HumanizeLabels() {
 }
 
 export function HumanizeValue() {
-  const inputRef = useRef<AntdInput>(null)
+  const inputRef = useRef<string>()
   const defaultValue = '* * * * MON-WED,sat'
   const [value, setValue] = useState(defaultValue)
   const [error, onError] = useState<CronError>()
   const customSetValue = useCallback(
     (newValue: string) => {
       setValue(newValue)
-      inputRef.current?.setValue(newValue)
+      inputRef.current = newValue
     },
     [inputRef]
   )
@@ -645,14 +644,14 @@ export function HumanizeValue() {
       <p>Value: {value}</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
-      <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
+      <Input
+
+        onChange={(event: any) => {
           setValue(event.target.value)
         }}
       />
 
-      <Divider>OR</Divider>
+      <DividerWithText>OR</DividerWithText>
 
       <Cron
         value={value}
@@ -663,40 +662,40 @@ export function HumanizeValue() {
       />
 
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           If not set, the prop &quot;humanizeValue&quot; is false
         </span>
       </div>
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           The prop &quot;humanizeValue&quot; cannot be used to prohibit used of
           valid string value like &quot;MON,WED&quot;
         </span>
       </div>
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           If the prop &quot;humanizeValue&quot; is true, the component will
           automatically convert a valid number value to string
         </span>
       </div>
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           If the prop &quot;humanizeValue&quot; is false, the component will
           automatically convert a valid string value to number
         </span>
       </div>
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           A valid string value can be in lowercase or uppercase
         </span>
       </div>
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           Works only for week days and months
         </span>
@@ -706,14 +705,14 @@ export function HumanizeValue() {
 }
 
 export function HumanizeLabelsAndValue() {
-  const inputRef = useRef<AntdInput>(null)
+  const inputRef = useRef<string>()
   const defaultValue = '* * * * MON-WED,sat'
   const [value, setValue] = useState(defaultValue)
   const [error, onError] = useState<CronError>()
   const customSetValue = useCallback(
     (newValue: string) => {
       setValue(newValue)
-      inputRef.current?.setValue(newValue)
+      inputRef.current = newValue
     },
     [inputRef]
   )
@@ -726,14 +725,14 @@ export function HumanizeLabelsAndValue() {
       <p>Value: {value}</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
-      <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
+      <Input
+
+        onChange={(event: any) => {
           setValue(event.target.value)
         }}
       />
 
-      <Divider>OR</Divider>
+      <DividerWithText>OR</DividerWithText>
 
       <Cron
         value={value}
@@ -743,13 +742,13 @@ export function HumanizeLabelsAndValue() {
       />
 
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           Humanizes in the cron component both the labels and the value
         </span>
       </div>
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           Works only for week days and months
         </span>
@@ -759,13 +758,13 @@ export function HumanizeLabelsAndValue() {
 }
 
 export function LeadingZero() {
-  const inputRef = useRef<AntdInput>(null)
+  const inputRef = useRef<string>()
   const defaultValue = '5 3 2-3,8 * *'
   const [value, setValue] = useState(defaultValue)
   const customSetValue = useCallback(
     (newValue: string) => {
       setValue(newValue)
-      inputRef.current?.setValue(newValue)
+      inputRef.current = newValue
     },
     [inputRef]
   )
@@ -775,26 +774,26 @@ export function LeadingZero() {
       <p>Leading zero: &quot;always&quot;</p>
       <p>Value: {value}</p>
 
-      <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
+      <Input
+
+        onChange={(event: any) => {
           setValue(event.target.value)
         }}
       />
 
-      <Divider>OR</Divider>
+      <DividerWithText>OR</DividerWithText>
 
       <Cron value={value} setValue={customSetValue} leadingZero={true} />
 
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           You can set the prop to a boolean or an array [&quot;minutes&quot;,
           &quot;hours&quot;, &quot;month-days&quot;]
         </span>
       </div>
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           If not set, the prop &quot;leadingZero&quot; is &quot;never&quot;
         </span>
@@ -804,13 +803,13 @@ export function LeadingZero() {
 }
 
 export function TrackError() {
-  const inputRef = useRef<AntdInput>(null)
+  const inputRef = useRef<string>()
   const defaultValue = ''
   const [value, setValue] = useState(defaultValue)
   const customSetValue = useCallback(
     (newValue: string) => {
       setValue(newValue)
-      inputRef.current?.setValue(newValue)
+      inputRef.current = newValue
     },
     [inputRef]
   )
@@ -821,27 +820,27 @@ export function TrackError() {
       <p>Value: {value}</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
-      <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
+      <Input
+
+        onChange={(event: any) => {
           setValue(event.target.value)
         }}
       />
 
       <div style={{ marginTop: 10 }}>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           Write a bad cron expression to trigger an error after the
-          &quot;onBlur&quot; event
+          &quot;onChange&quot; event
         </span>
       </div>
 
-      <Divider>OR</Divider>
+      <DividerWithText>OR</DividerWithText>
 
       <Cron value={value} setValue={customSetValue} onError={onError} />
 
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           Use prop &quot;onError&quot; to be able to know when the value is
           invalid
@@ -852,13 +851,13 @@ export function TrackError() {
 }
 
 export function DisableErrorStyle() {
-  const inputRef = useRef<AntdInput>(null)
+  const inputRef = useRef<string>()
   const defaultValue = ''
   const [value, setValue] = useState(defaultValue)
   const customSetValue = useCallback(
     (newValue: string) => {
       setValue(newValue)
-      inputRef.current?.setValue(newValue)
+      inputRef.current = newValue
     },
     [inputRef]
   )
@@ -869,14 +868,14 @@ export function DisableErrorStyle() {
       <p>Display error: false</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
-      <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
+      <Input
+
+        onChange={(event: any) => {
           setValue(event.target.value)
         }}
       />
 
-      <Divider>OR</Divider>
+      <DividerWithText>OR</DividerWithText>
 
       <Cron
         value={value}
@@ -920,14 +919,14 @@ export function ClearButtonEmptyValue() {
       />
 
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           The &quot;clearButtonAction&quot; prop allow you to empty the field or
           fill it with &quot;* * * * *&quot;
         </span>
       </div>
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           If not set, the prop &quot;clearButtonAction&quot; is
           &quot;fill-with-every&quot;
@@ -954,13 +953,13 @@ export function InvalidDefaultValue() {
 }
 
 export function EmptyNeverAllowed() {
-  const inputRef = useRef<AntdInput>(null)
+  const inputRef = useRef<string>()
   const defaultValue = ''
   const [value, setValue] = useState(defaultValue)
   const customSetValue = useCallback(
     (newValue: string) => {
       setValue(newValue)
-      inputRef.current?.setValue(newValue)
+      inputRef.current = newValue
     },
     [inputRef]
   )
@@ -973,14 +972,14 @@ export function EmptyNeverAllowed() {
       <p>Value: {value}</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
-      <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
+      <Input
+
+        onChange={(event: any) => {
           setValue(event.target.value)
         }}
       />
 
-      <Divider>OR</Divider>
+      <DividerWithText>OR</DividerWithText>
 
       <Cron
         value={value}
@@ -990,7 +989,7 @@ export function EmptyNeverAllowed() {
       />
 
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           If not set, the prop &quot;allowEmpty&quot; is
           &quot;for-default-value&quot;
@@ -1001,13 +1000,13 @@ export function EmptyNeverAllowed() {
 }
 
 export function EmptyAlwaysAllowed() {
-  const inputRef = useRef<AntdInput>(null)
+  const inputRef = useRef<string>()
   const defaultValue = ''
   const [value, setValue] = useState(defaultValue)
   const customSetValue = useCallback(
     (newValue: string) => {
       setValue(newValue)
-      inputRef.current?.setValue(newValue)
+      inputRef.current = newValue
     },
     [inputRef]
   )
@@ -1020,14 +1019,14 @@ export function EmptyAlwaysAllowed() {
       <p>Value: {value}</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
-      <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
+      <Input
+
+        onChange={(event: any) => {
           setValue(event.target.value)
         }}
       />
 
-      <Divider>OR</Divider>
+      <DividerWithText>OR</DividerWithText>
 
       <Cron
         value={value}
@@ -1037,7 +1036,7 @@ export function EmptyAlwaysAllowed() {
       />
 
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           If not set, the prop &quot;allowEmpty&quot; is
           &quot;for-default-value&quot;
@@ -1048,13 +1047,13 @@ export function EmptyAlwaysAllowed() {
 }
 
 export function Shortcuts() {
-  const inputRef = useRef<AntdInput>(null)
+  const inputRef = useRef<string>()
   const defaultValue = '@monthly'
   const [value, setValue] = useState(defaultValue)
   const customSetValue = useCallback(
     (newValue: string) => {
       setValue(newValue)
-      inputRef.current?.setValue(newValue)
+      inputRef.current = newValue
     },
     [inputRef]
   )
@@ -1121,14 +1120,14 @@ export function Shortcuts() {
       <p>Value: {value}</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
-      <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
+      <Input
+
+        onChange={(event: any) => {
           setValue(event.target.value)
         }}
       />
 
-      <Divider>OR</Divider>
+      <DividerWithText>OR</DividerWithText>
 
       <Cron
         value={value}
@@ -1138,7 +1137,7 @@ export function Shortcuts() {
       />
 
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           If not set, the prop &quot;Shortcuts&quot; is [&quot;@yearly&quot;,
           &quot;@annually&quot;, &quot;@monthly&quot;, &quot;@weekly&quot;,
@@ -1146,33 +1145,49 @@ export function Shortcuts() {
         </span>
       </div>
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           Just pass true to activate all shortcuts including &quot;@reboot&quot;
         </span>
       </div>
 
+
+      <Typography variant="h6" id="tableTitle" component="div">
+        Supported shortcuts
+        </Typography>
       <Table
-        columns={columns}
-        dataSource={data}
-        showHeader={false}
-        bordered
-        pagination={false}
+
         style={{ marginTop: 20 }}
-        title={() => <h3>Supported shortcuts</h3>}
-      />
+      >
+        <TableHead>
+          <TableRow>
+            {columns.map((obj) => {
+              return (<TableCell key={obj.key}>{obj.dataIndex}</TableCell>)
+            })}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.map(({ key, name, description, value }) => {
+            return (<TableRow key={key}>
+              <TableCell>{name}</TableCell>
+              <TableCell>{description}</TableCell>
+              <TableCell>{value}</TableCell>
+            </TableRow>)
+          })}
+        </TableBody>
+      </Table>
     </div>
   )
 }
 
 export function TwelveHourClock() {
-  const inputRef = useRef<AntdInput>(null)
+  const inputRef = useRef<string>()
   const defaultValue = '2 5,7,18 * * SUN'
   const [value, setValue] = useState(defaultValue)
   const customSetValue = useCallback(
     (newValue: string) => {
       setValue(newValue)
-      inputRef.current?.setValue(newValue)
+      inputRef.current = newValue
     },
     [inputRef]
   )
@@ -1185,14 +1200,14 @@ export function TwelveHourClock() {
       <p>Value: {value}</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
-      <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
+      <Input
+
+        onChange={(event: any) => {
           setValue(event.target.value)
         }}
       />
 
-      <Divider>OR</Divider>
+      <DividerWithText>OR</DividerWithText>
 
       <Cron
         value={value}
@@ -1205,13 +1220,13 @@ export function TwelveHourClock() {
 }
 
 export function TwentyFourHourClock() {
-  const inputRef = useRef<AntdInput>(null)
+  const inputRef = useRef<string>()
   const defaultValue = '2 5,7,18 * * SUN'
   const [value, setValue] = useState(defaultValue)
   const customSetValue = useCallback(
     (newValue: string) => {
       setValue(newValue)
-      inputRef.current?.setValue(newValue)
+      inputRef.current = newValue
     },
     [inputRef]
   )
@@ -1224,14 +1239,14 @@ export function TwentyFourHourClock() {
       <p>Value: {value}</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
-      <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
+      <Input
+
+        onChange={(event: any) => {
           setValue(event.target.value)
         }}
       />
 
-      <Divider>OR</Divider>
+      <DividerWithText>OR</DividerWithText>
 
       <Cron
         value={value}
@@ -1241,7 +1256,7 @@ export function TwentyFourHourClock() {
       />
 
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           This prop override the prop &quot;leadingZero&quot; for
           &quot;hours&quot; and &quot;minutes&quot;
@@ -1252,13 +1267,13 @@ export function TwentyFourHourClock() {
 }
 
 export function FrenchLocale() {
-  const inputRef = useRef<AntdInput>(null)
+  const inputRef = useRef<string>()
   const defaultValue = '* * 1-2 2,8 1,3,6'
   const [value, setValue] = useState(defaultValue)
   const customSetValue = useCallback(
     (newValue: string) => {
       setValue(newValue)
-      inputRef.current?.setValue(newValue)
+      inputRef.current = newValue
     },
     [inputRef]
   )
@@ -1271,14 +1286,14 @@ export function FrenchLocale() {
       <p>Erreur: {error ? error.description : 'undefined'}</p>
       <p>Value: {value}</p>
 
-      <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
+      <Input
+
+        onChange={(event: any) => {
           setValue(event.target.value)
         }}
       />
 
-      <Divider>OU</Divider>
+      <DividerWithText>OU</DividerWithText>
 
       <Cron
         locale={FRENCH_LOCALE}
@@ -1288,7 +1303,7 @@ export function FrenchLocale() {
       />
 
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           The order of the &quot;locale&quot; properties &quot;weekDays&quot;,
           &quot;months&quot;, &quot;altMonths&quot; and &quot;altWeekDays&quot;
@@ -1296,7 +1311,7 @@ export function FrenchLocale() {
         </span>
       </div>
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           Sunday must always be the first value of &quot;weekDays&quot; and
           &quot;altWeekDays&quot; property because it&apos;s &quot;0&quot;
@@ -1318,7 +1333,7 @@ export function CustomENLocale() {
       <Cron locale={ENGLISH_VARIANT_LOCALE} value={value} setValue={setValue} />
 
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           Not all translations need to be changed when using the prop
           &quot;locale&quot;
@@ -1344,7 +1359,7 @@ export function NoPrefixAndSuffix() {
       />
 
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           Using empty string &apos;&apos; for a prefix / suffix translation will
           remove the text
@@ -1355,13 +1370,13 @@ export function NoPrefixAndSuffix() {
 }
 
 export function CustomStyle() {
-  const inputRef = useRef<AntdInput>(null)
+  const inputRef = useRef<string>()
   const defaultValue = '30 14 22 * *'
   const [value, setValue] = useState(defaultValue)
   const customSetValue = useCallback(
     (newValue: string) => {
       setValue(newValue)
-      inputRef.current?.setValue(newValue)
+      inputRef.current = newValue
     },
     [inputRef]
   )
@@ -1373,14 +1388,14 @@ export function CustomStyle() {
       <p>clearButtonProps: &#123; type: &quot;default&quot; &#125;</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
-      <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
+      <Input
+
+        onChange={(event: any) => {
           setValue(event.target.value)
         }}
       />
 
-      <Divider>OR</Divider>
+      <DividerWithText>OR</DividerWithText>
 
       <Cron
         value={value}
@@ -1388,12 +1403,12 @@ export function CustomStyle() {
         onError={onError}
         className='my-project-cron'
         clearButtonProps={{
-          type: 'default',
+          type: 'button',
         }}
       />
 
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           Custom CSS example (See file &quot;styles.stories.css&quot;):
         </span>
@@ -1406,7 +1421,7 @@ export function CustomStyle() {
         </ul>
       </div>
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           Available classes when using the prop &quot;className&quot;:
         </span>
@@ -1434,7 +1449,7 @@ export function CustomStyle() {
         </ul>
       </div>
       <div>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <InfoIcon style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           Don&apos;t forget to import antd default style
         </span>

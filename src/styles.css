@@ -1,3 +1,4 @@
+@import 'fontsource-roboto';
 .react-js-cron {
   display: flex;
   align-items: flex-start;
@@ -111,7 +112,7 @@ div.react-js-cron-custom-select .ant-select-selection-placeholder {
   width: auto !important;
 }
 .react-js-cron-clear-button {
-  margin-left: 10px;
+  margin-left: 20px;
   margin-bottom: 10px;
 }
 .react-js-cron-disabled .react-js-cron-select.ant-select-disabled {

@@ -29,3 +29,6 @@ react-js-cron-*.tgz
 
 # cache
 .eslintcache
+
+#vscode
+.vscode

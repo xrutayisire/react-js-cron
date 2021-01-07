@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react'
-import Button from 'antd/lib/button'
-
+import { Button } from '@material-ui/core'
 import { CronProps, PeriodType } from './types'
 import Period from './fields/Period'
 import MonthDays from './fields/MonthDays'
@@ -45,7 +44,7 @@ export default function Cron(props: CronProps) {
   } = props
   const internalValueRef = useRef<string>(value)
   const defaultPeriodRef = useRef<PeriodType>(defaultPeriod)
-  const [period, setPeriod] = useState<PeriodType | undefined>()
+  const [period, setPeriod] = useState<PeriodType | string | undefined>()
   const [monthDays, setMonthDays] = useState<number[] | undefined>()
   const [months, setMonths] = useState<number[] | undefined>()
   const [weekDays, setWeekDays] = useState<number[] | undefined>()
@@ -235,11 +234,11 @@ export default function Cron(props: CronProps) {
       if (clearButton && !readOnly) {
         return (
           <Button
+          style={{marginLeft:'10px'}}
             className={clearButtonClassName}
-            danger
-            type='primary'
+            variant='contained'
+            color='secondary'
             disabled={disabled}
-            {...otherClearButtonProps}
             onClick={handleClear}
           >
             {locale.clearButtonText || DEFAULT_LOCALE_EN.clearButtonText}
@@ -278,83 +277,83 @@ export default function Cron(props: CronProps) {
       {periodForRender === 'reboot' ? (
         clearButtonNode
       ) : (
-        <>
-          {periodForRender === 'year' && (
-            <Months
-              value={months}
-              setValue={setMonths}
-              locale={locale}
-              className={className}
-              humanizeLabels={humanizeLabels}
-              disabled={disabled}
-              readOnly={readOnly}
-              period={periodForRender}
-            />
-          )}
-
-          {(periodForRender === 'year' || periodForRender === 'month') && (
-            <MonthDays
-              value={monthDays}
-              setValue={setMonthDays}
-              locale={locale}
-              className={className}
-              weekDays={weekDays}
-              disabled={disabled}
-              readOnly={readOnly}
-              leadingZero={leadingZero}
-              period={periodForRender}
-            />
-          )}
-
-          {(periodForRender === 'year' ||
-            periodForRender === 'month' ||
-            periodForRender === 'week') && (
-            <WeekDays
-              value={weekDays}
-              setValue={setWeekDays}
-              locale={locale}
-              className={className}
-              humanizeLabels={humanizeLabels}
-              monthDays={monthDays}
-              disabled={disabled}
-              readOnly={readOnly}
-              period={periodForRender}
-            />
-          )}
-
-          <div>
-            {periodForRender !== 'minute' && periodForRender !== 'hour' && (
-              <Hours
-                value={hours}
-                setValue={setHours}
+          <>
+            {periodForRender === 'year' && (
+              <Months
+                value={months}
+                setValue={setMonths}
                 locale={locale}
                 className={className}
+                humanizeLabels={humanizeLabels}
                 disabled={disabled}
                 readOnly={readOnly}
-                leadingZero={leadingZero}
-                clockFormat={clockFormat}
                 period={periodForRender}
               />
             )}
 
-            {periodForRender !== 'minute' && (
-              <Minutes
-                value={minutes}
-                setValue={setMinutes}
+            {(periodForRender === 'year' || periodForRender === 'month') && (
+              <MonthDays
+                value={monthDays}
+                setValue={setMonthDays}
                 locale={locale}
-                period={periodForRender}
                 className={className}
+                weekDays={weekDays}
                 disabled={disabled}
                 readOnly={readOnly}
                 leadingZero={leadingZero}
-                clockFormat={clockFormat}
+                period={periodForRender}
               />
             )}
 
-            {clearButtonNode}
-          </div>
-        </>
-      )}
+            {(periodForRender === 'year' ||
+              periodForRender === 'month' ||
+              periodForRender === 'week') && (
+                <WeekDays
+                  value={weekDays}
+                  setValue={setWeekDays}
+                  locale={locale}
+                  className={className}
+                  humanizeLabels={humanizeLabels}
+                  monthDays={monthDays}
+                  disabled={disabled}
+                  readOnly={readOnly}
+                  period={periodForRender}
+                />
+              )}
+
+            <div>
+              {periodForRender !== 'minute' && periodForRender !== 'hour' && (
+                <Hours
+                  value={hours}
+                  setValue={setHours}
+                  locale={locale}
+                  className={className}
+                  disabled={disabled}
+                  readOnly={readOnly}
+                  leadingZero={leadingZero}
+                  clockFormat={clockFormat}
+                  period={periodForRender}
+                />
+              )}
+
+              {periodForRender !== 'minute' && (
+                <Minutes
+                  value={minutes}
+                  setValue={setMinutes}
+                  locale={locale}
+                  period={periodForRender}
+                  className={className}
+                  disabled={disabled}
+                  readOnly={readOnly}
+                  leadingZero={leadingZero}
+                  clockFormat={clockFormat}
+                />
+              )}
+
+              {clearButtonNode}
+            </div>
+          </>
+        )}
     </div>
   )
 }

@@ -1,7 +1,5 @@
-import { SelectProps } from 'antd/lib/select'
 import { Dispatch, SetStateAction } from 'react'
-import { ButtonProps } from 'antd/lib/button'
-
+import {ButtonProps,SelectProps} from '@material-ui/core'
 // External props
 
 export interface CronProps {
@@ -95,9 +93,7 @@ export interface CronProps {
    */
   clearButton?: boolean
 
-  /**
-   * antd button props to customize the clear button.
-   */
+
   clearButtonProps?: ClearButtonProps
 
   /**
@@ -180,7 +176,7 @@ export type OnError =
   | Dispatch<SetStateAction<CronError>>
   | undefined
 export interface ClearButtonProps extends Omit<ButtonProps, 'onClick'> {}
-export type ClearButtonAction = 'empty' | 'fill-with-every'
+export type ClearButtonAction = 'empty' | 'fill-with-every' | string
 export type PeriodType =
   | 'year'
   | 'month'
@@ -189,7 +185,8 @@ export type PeriodType =
   | 'hour'
   | 'minute'
   | 'reboot'
-export type AllowEmpty = 'always' | 'never' | 'for-default-value'
+  | string
+export type AllowEmpty = 'always' | 'never' | 'for-default-value' | string
 export type CronType =
   | 'period'
   | 'months'
@@ -197,9 +194,10 @@ export type CronType =
   | 'week-days'
   | 'hours'
   | 'minutes'
-export type LeadingZeroType = 'month-days' | 'hours' | 'minutes'
+  | string
+export type LeadingZeroType = 'month-days' | 'hours' | 'minutes' | string
 export type LeadingZero = boolean | LeadingZeroType[]
-export type ClockFormat = '24-hour-clock' | '12-hour-clock'
+export type ClockFormat = '24-hour-clock' | '12-hour-clock' | string
 export type ShortcutsType =
   | '@yearly'
   | '@annually'
