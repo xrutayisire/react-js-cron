@@ -1,17 +1,17 @@
 ## ReactJS Cron
-
-> A React cron editor built with [antd](https://github.com/ant-design/ant-design)
+> This package is based on Xavier Rutayisire package (https://github.com/xrutayisire/react-js-cron). Most if not all of the credit should go to him.
+> A React cron editor built with [Material-UI](https://www.npmjs.com/package/@material-ui/core)
 
 [![npm package](https://img.shields.io/npm/v/react-js-cron/latest.svg)](https://www.npmjs.com/package/react-js-cron)
-[![MIT License Badge](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/xrutayisire/react-js-cron/blob/master/LICENSE.md)
+[![MIT License Badge](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/levyitay/react-js-cron-mui/blob/master/LICENSE.md)
 
-Live **demo** and **usage** at [https://xrutayisire.github.io/react-js-cron/](https://xrutayisire.github.io/react-js-cron/?path=/docs/reactjs-cron--demo)
+Live **demo** and **usage** at [https://levyitay.github.io/react-js-cron/](https://levyitay.github.io/react-js-cron/?path=/docs/reactjs-cron--demo)
 
-![react-js-cron example](https://raw.githubusercontent.com/xrutayisire/react-js-cron/master/react-js-cron-example.png)
+![react-js-cron example](https://raw.githubusercontent.com/levyitay/react-js-cron-mui/master/react-js-cron-example.png)
 
 ## Features
 
-- Zero dependencies except React and antd
+- Zero dependencies except React and Material-UI
 - Supports all standard cron expressions
 - Supports cron names for months and week days
 - Supports cron shortcuts
@@ -46,26 +46,26 @@ react-js-cron is written in TypeScript with complete definitions
 
 ## Usage
 
-Learn more with [dynamic settings](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--dynamic-settings).
+Learn more with [dynamic settings](https://levyitay.github.io/react-js-cron-mui/?path=/story/reactjs-cron--dynamic-settings).
 
-- [Two-way sync binding with input](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--input)
-- [Default value](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--default-value)
-- [Default period](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--default-period)
-- [Disabled mode](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--disabled)
-- [Read-Only mode](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--read-only)
-- [Humanized labels](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--humanize-labels)
-- [Humanized value](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--humanize-value)
-- [Leading zero for numbers](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--leading-zero)
-- [Error management with text and style](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--track-error)
-- ["Clear button" removal](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--no-clear-button)
-- ["Clear button" action](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--clear-button-empty-value)
-- [Empty value management](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--empty-never-allowed)
-- [Cron shortcuts](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--shortcuts)
-- [12-hour clock](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--twelve-hour-clock)
-- [24-hour clock](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--twenty-four-hour-clock)
-- [Locale customization](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--french-locale)
-- [Prefix and suffix removal](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--no-prefix-and-suffix)
-- [Style customization](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--custom-style)
+- [Two-way sync binding with input](https://levyitay.github.io/react-js-cron-mui/?path=/story/reactjs-cron--input)
+- [Default value](https://levyitay.github.io/react-js-cron-mui/?path=/story/reactjs-cron--default-value)
+- [Default period](https://levyitay.github.io/react-js-cron-mui/?path=/story/reactjs-cron--default-period)
+- [Disabled mode](https://levyitay.github.io/react-js-cron-mui/?path=/story/reactjs-cron--disabled)
+- [Read-Only mode](https://levyitay.github.io/react-js-cron-mui/?path=/story/reactjs-cron--read-only)
+- [Humanized labels](https://levyitay.github.io/react-js-cron-mui/?path=/story/reactjs-cron--humanize-labels)
+- [Humanized value](https://levyitay.github.io/react-js-cron-mui/?path=/story/reactjs-cron--humanize-value)
+- [Leading zero for numbers](https://levyitay.github.io/react-js-cron-mui/?path=/story/reactjs-cron--leading-zero)
+- [Error management with text and style](https://levyitay.github.io/react-js-cron-mui/?path=/story/reactjs-cron--track-error)
+- ["Clear button" removal](https://levyitay.github.io/react-js-cron-mui/?path=/story/reactjs-cron--no-clear-button)
+- ["Clear button" action](https://levyitay.github.io/react-js-cron-mui/?path=/story/reactjs-cron--clear-button-empty-value)
+- [Empty value management](https://levyitay.github.io/react-js-cron-mui/?path=/story/reactjs-cron--empty-never-allowed)
+- [Cron shortcuts](https://levyitay.github.io/react-js-cron-mui/?path=/story/reactjs-cron--shortcuts)
+- [12-hour clock](https://levyitay.github.io/react-js-cron-mui/?path=/story/reactjs-cron--twelve-hour-clock)
+- [24-hour clock](https://levyitay.github.io/react-js-cron-mui/?path=/story/reactjs-cron--twenty-four-hour-clock)
+- [Locale customization](https://levyitay.github.io/react-js-cron-mui/?path=/story/reactjs-cron--french-locale)
+- [Prefix and suffix removal](https://levyitay.github.io/react-js-cron-mui/?path=/story/reactjs-cron--no-prefix-and-suffix)
+- [Style customization](https://levyitay.github.io/react-js-cron-mui/?path=/story/reactjs-cron--custom-style)
 
 ## API
 
@@ -91,7 +91,7 @@ CronProps {
 
   /**
    * Set the container className and used as a prefix for other selectors.
-   * Available selectors: https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--custom-style
+   * Available selectors: https://levyitay.github.io/react-js-cron-mui/?path=/story/reactjs-cron--custom-style
    */
   className?: string
 
@@ -245,5 +245,5 @@ CronProps {
 
 ## License
 
-MIT © [xrutayisire](https://github.com/xrutayisire)
+MIT © [levyitay](https://github.com/levyitay)
   
