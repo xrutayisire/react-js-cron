@@ -1448,12 +1448,6 @@ export function CustomStyle() {
           <li>.my-project-cron-select-dropdown-week-days</li>
         </ul>
       </div>
-      <div>
-        <InfoIcon style={{ marginRight: 5 }} />
-        <span style={{ fontSize: 12 }}>
-          Don&apos;t forget to import antd default style
-        </span>
-      </div>
     </div>
   )
 }
