@@ -247,7 +247,7 @@ export interface MinutesProps extends FieldProps {
 }
 export interface CustomSelectProps
   extends Omit<
-    SelectProps<any>,
+    SelectProps,
     | 'mode'
     | 'tokenSeparators'
     | 'allowClear'
