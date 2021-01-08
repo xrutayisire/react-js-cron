@@ -5,7 +5,7 @@
 [![npm package](https://img.shields.io/npm/v/react-js-cron/latest.svg)](https://www.npmjs.com/package/react-js-cron)
 [![MIT License Badge](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/levyitay/react-js-cron-mui/blob/master/LICENSE.md)
 
-Live **demo** and **usage** at [https://levyitay.github.io/react-js-cron/](https://levyitay.github.io/react-js-cron/?path=/docs/reactjs-cron--demo)
+Live **demo** and **usage** at [https://levyitay.github.io/react-js-cron/](https://levyitay.github.io/react-js-cron-mui/?path=/docs/reactjs-cron--demo)
 
 ![react-js-cron example](https://raw.githubusercontent.com/levyitay/react-js-cron-mui/master/react-js-cron-example.png)
 
