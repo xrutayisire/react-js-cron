@@ -1,11 +1,13 @@
 @import 'fontsource-roboto';
 .react-js-cron {
+  font-family: 'roboto';
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
 }
 .react-js-cron > div,
 .react-js-cron-field {
+  font-family: 'roboto';
   display: flex;
   align-items: center;
 }

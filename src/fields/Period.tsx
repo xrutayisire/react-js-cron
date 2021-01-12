@@ -53,9 +53,9 @@ export default function Period(props: PeriodProps) {
   }
 
   const handleChange = useCallback(
-    (newValue) => {
+    (event) => {
       if (!readOnly) {
-        setValue(newValue)
+        setValue(event.target.value)
       }
     },
     [setValue, readOnly]
@@ -82,6 +82,16 @@ export default function Period(props: PeriodProps) {
     [className, locale.prefixPeriod]
   )
 
+  // const dropdownClassName = useMemo(
+  //   () =>
+  //     classNames({
+  //       'react-js-cron-select-dropdown': true,
+  //       'react-js-cron-select-dropdown-period': true,
+  //       [`${className}-select-dropdown`]: !!className,
+  //       [`${className}-select-dropdown-period`]: !!className,
+  //     }),
+  //   [className]
+  // )
 
   return (
     <div className={internalClassName}>

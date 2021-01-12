@@ -3,7 +3,7 @@ import { Select, MenuItem } from '@material-ui/core'
 
 import { CustomSelectProps } from '../types'
 import { DEFAULT_LOCALE_EN } from '../locale'
-import { classNames } from '../utils'
+import { classNames, sort } from '../utils'
 import { parsePartArray, partToString, formatValue } from '../converter'
 
 export default function CustomSelect(props: CustomSelectProps) {
@@ -91,36 +91,40 @@ export default function CustomSelect(props: CustomSelectProps) {
     [value, localeJSON, humanizeLabels, leadingZero, clockFormat]
   )
 
-  // const simpleClick = useCallback(
-  //   (newValueOption: number | number[]) => {
-  //     const newValueOptions = Array.isArray(newValueOption)
-  //       ? sort(newValueOption)
-  //       : [newValueOption]
-  //     let newValue: number[] = newValueOptions
+  const simpleClick = useCallback(
+    (event: any) => {
+      let newValueOption: number[] = event.target.value;
+      if (newValueOption.length == 0) {
+        newValueOption.push(0);
+      }
+      newValueOption = Array.isArray(newValueOption)
+        ? sort(newValueOption)
+        : [newValueOption]
+      const newValue: number[] = newValueOption
 
-  //     if (value) {
-  //       newValue = [...value]
+      // if (value) {
+      //   newValue = [...value]
 
-  //       newValueOptions.forEach((o) => {
-  //         const newValueOptionNumber = Number(o)
+      //   newValueOptions.forEach((o) => {
+      //     const newValueOptionNumber = Number(o)
 
-  //         if (value.some((v) => v === newValueOptionNumber)) {
-  //           newValue = newValue.filter((v) => v !== newValueOptionNumber)
-  //         } else {
-  //           newValue = sort([...newValue, newValueOptionNumber])
-  //         }
-  //       })
-  //     }
+      //     if (value.some((v) => v === newValueOptionNumber)) {
+      //       newValue = newValue.filter((v) => v !== newValueOptionNumber)
+      //     } else {
+      //       newValue = sort([...newValue, newValueOptionNumber])
+      //     }
+      //   })
+      // }
 
-  //     if (newValue.length === unit.total) {
-  //       setValue([])
-  //     } else {
-  //       setValue(newValue)
-  //     }
-  //   },
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   [setValue, value]
-  // )
+      if (newValue.length === unit.total) {
+        setValue([])
+      } else {
+        setValue(newValue)
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [setValue, value]
+  )
 
   // const doubleClick = useCallback(
   //   (newValueOption: number) => {
@@ -154,24 +158,39 @@ export default function CustomSelect(props: CustomSelectProps) {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   //   [value, options, setValue]
   // )
+  // // Used by the select clear icon
+  // const onChange = useCallback(
+  //   (newValue: any) => {
+  //     if (!readOnly) {
+  //       if (newValue && newValue.length === 0) {
+  //         setValue([])
+  //       }
+  //     }
+  //   },
+  //   [setValue, readOnly]
+  // )
 
   // const clicksRef = useRef<Clicks[]>([])
   // const onOptionClick = useCallback(
-  //   (newValueOption: string) => {
+  //   (event: any) => {
+  //     const newValueOption = event.target.value;
   //     if (!readOnly) {
-  //       const doubleClickTimeout = 300
-  //       const clicks = clicksRef.current
+  //       // const doubleClickTimeout = 300
+  //       // const clicks = clicksRef.current
+  //       // newValueOption.forEach((newValue: number) => {
 
-  //       clicks.push({
-  //         time: new Date().getTime(),
-  //         value: Number(newValueOption),
-  //       })
 
+  //       //   clicks.push({
+  //       //     time: new Date().getTime(),
+  //       //     value: Number(newValue),
+  //       //   })
+  //       // });
+  //       simpleClick(Number(newValueOption))
   //       const id = window.setTimeout(() => {
   //         if (
   //           clicks.length > 1 &&
   //           clicks[clicks.length - 1].time - clicks[clicks.length - 2].time <
-  //             doubleClickTimeout
+  //           doubleClickTimeout
   //         ) {
   //           if (
   //             clicks[clicks.length - 1].value ===
@@ -190,26 +209,16 @@ export default function CustomSelect(props: CustomSelectProps) {
 
   //         clicksRef.current = []
   //       }, doubleClickTimeout)
-
+  //       onChange(newValueOption)
   //       return () => {
   //         window.clearTimeout(id)
   //       }
   //     }
   //   },
-  //   [clicksRef, simpleClick, doubleClick, readOnly]
+  //   [clicksRef, simpleClick, doubleClick, readOnly, onChange]
   // )
 
-  // Used by the select clear icon
-  const onChange = useCallback(
-    (newValue: any) => {
-      if (!readOnly) {
-        if (newValue && newValue.length === 0) {
-          setValue([])
-        }
-      }
-    },
-    [setValue, readOnly]
-  )
+
 
   const internalClassName = useMemo(
     () =>
@@ -247,10 +256,11 @@ export default function CustomSelect(props: CustomSelectProps) {
       multiple={true}
       open={readOnly ? false : undefined}
       value={stringValue}
-      onChange={onChange}
+      onChange={simpleClick}
       renderValue={renderTag}
       className={internalClassName}
       autoWidth={false}
+
       disabled={disabled}
     >
       {options.map((obj) => (

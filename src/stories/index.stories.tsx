@@ -13,7 +13,8 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  Typography
+  Typography,
+  TextFieldProps
 } from '@material-ui/core'
 import InfoIcon from '@material-ui/icons/Info';
 import DividerWithText from '../components/DividerWithText'
@@ -34,22 +35,28 @@ export default {
 }
 
 export function Demo() {
-  const inputRef = useRef<string>()
+  // const textFieldType = typeof TextField;
+  const inputRef = useRef<TextFieldProps>()
   const defaultValue = '30 5 * * 1,6'
   const [value, setValue] = useState(defaultValue)
+  const [textValue, setTextValue] = useState('');
   const customSetValue = useCallback(
     (newValue: string) => {
       setValue(newValue)
-      inputRef.current = newValue
+      setTextValue(newValue);
     },
-    [inputRef]
+    [setTextValue]
   )
   const [error, onError] = useState<CronError>()
 
   return (
     <div>
       <TextField
-
+        value={textValue}
+        inputRef={inputRef}
+        onBlur={(event) => {
+          setValue(event.target.value)
+        }}
         // 
         onChange={(event: any) => {
           customSetValue(event.target.value)
