@@ -30,14 +30,15 @@ Live **demo** and **usage** at [https://levyitay.github.io/react-js-cron/](https
 
 Be sure that you have these dependencies on your project:
 * react (>=16.8.0)
-* antd (>=4.6.0)
+* material-ui (>=4.0.0)
+* fontsource-roboto
 
 ```bash
 # Yarn
-yarn add react-js-cron
+yarn add react-js-cron-mui
 
 # NPM
-npm install --save react-js-cron
+npm install --save react-js-cron-mui
 ```
 
 ## TypeScript
