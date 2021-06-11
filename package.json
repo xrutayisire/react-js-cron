@@ -14,7 +14,10 @@
     "widget",
     "generator",
     "antd",
-    "ant-design"
+    "ant-design",
+    "cronjob",
+    "schedule",
+    "parser"
   ],
   "homepage": "https://github.com/xrutayisire/react-js-cron#readme",
   "repository": {
