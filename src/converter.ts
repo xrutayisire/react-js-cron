@@ -392,7 +392,9 @@ function parseRange(rangeStr: string, context: string, unit: Unit) {
     const minValue = parseInt(subparts[0], 10)
     const maxValue = parseInt(subparts[1], 10)
 
-    if (maxValue <= minValue) {
+    // Fix to allow equal min and max range values
+    // cf: https://github.com/roccivic/cron-converter/pull/15
+    if (maxValue < minValue) {
       throw new Error(
         `Max range is less than min range in "${rangeStr}" for ${unit.type}`
       )
