@@ -14,6 +14,7 @@ export default function Period(props: PeriodProps) {
     disabled,
     readOnly,
     shortcuts,
+    ...selectProps
   } = props
   let options = [
     {
@@ -107,6 +108,7 @@ export default function Period(props: PeriodProps) {
         className={selectClassName}
         disabled={disabled}
         open={readOnly ? false : undefined}
+        {...selectProps}
       >
         {options.map((obj) => (
           <MenuItem key={obj.value} value={obj.value}>

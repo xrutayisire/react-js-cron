@@ -19,6 +19,7 @@ export default function CustomSelect(props: CustomSelectProps) {
     clockFormat,
     optionsList,
     unit,
+    ...selectProps,
   } = props
 
   const stringValue = useMemo(() => {
@@ -102,20 +103,6 @@ export default function CustomSelect(props: CustomSelectProps) {
         : [newValueOption]
       const newValue: number[] = newValueOption
 
-      // if (value) {
-      //   newValue = [...value]
-
-      //   newValueOptions.forEach((o) => {
-      //     const newValueOptionNumber = Number(o)
-
-      //     if (value.some((v) => v === newValueOptionNumber)) {
-      //       newValue = newValue.filter((v) => v !== newValueOptionNumber)
-      //     } else {
-      //       newValue = sort([...newValue, newValueOptionNumber])
-      //     }
-      //   })
-      // }
-
       if (newValue.length === unit.total) {
         setValue([])
       } else {
@@ -125,100 +112,6 @@ export default function CustomSelect(props: CustomSelectProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [setValue, value]
   )
-
-  // const doubleClick = useCallback(
-  //   (newValueOption: number) => {
-  //     if (newValueOption !== 0 && newValueOption !== 1) {
-  //       const limit = unit.total + unit.min
-  //       const newValue: number[] = []
-
-  //       for (let i = unit.min; i < limit; i++) {
-  //         if (i % newValueOption === 0) {
-  //           newValue.push(i)
-  //         }
-  //       }
-  //       const oldValueEqualNewValue =
-  //         value &&
-  //         newValue &&
-  //         value.length === newValue.length &&
-  //         value.every((v: number, i: number) => v === newValue[i])
-  //       const allValuesSelected = newValue.length === options.length
-
-  //       if (allValuesSelected) {
-  //         setValue([])
-  //       } else if (oldValueEqualNewValue) {
-  //         setValue([])
-  //       } else {
-  //         setValue(newValue)
-  //       }
-  //     } else {
-  //       setValue([])
-  //     }
-  //   },
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   [value, options, setValue]
-  // )
-  // // Used by the select clear icon
-  // const onChange = useCallback(
-  //   (newValue: any) => {
-  //     if (!readOnly) {
-  //       if (newValue && newValue.length === 0) {
-  //         setValue([])
-  //       }
-  //     }
-  //   },
-  //   [setValue, readOnly]
-  // )
-
-  // const clicksRef = useRef<Clicks[]>([])
-  // const onOptionClick = useCallback(
-  //   (event: any) => {
-  //     const newValueOption = event.target.value;
-  //     if (!readOnly) {
-  //       // const doubleClickTimeout = 300
-  //       // const clicks = clicksRef.current
-  //       // newValueOption.forEach((newValue: number) => {
-
-
-  //       //   clicks.push({
-  //       //     time: new Date().getTime(),
-  //       //     value: Number(newValue),
-  //       //   })
-  //       // });
-  //       simpleClick(Number(newValueOption))
-  //       const id = window.setTimeout(() => {
-  //         if (
-  //           clicks.length > 1 &&
-  //           clicks[clicks.length - 1].time - clicks[clicks.length - 2].time <
-  //           doubleClickTimeout
-  //         ) {
-  //           if (
-  //             clicks[clicks.length - 1].value ===
-  //             clicks[clicks.length - 2].value
-  //           ) {
-  //             doubleClick(Number(newValueOption))
-  //           } else {
-  //             simpleClick([
-  //               clicks[clicks.length - 2].value,
-  //               clicks[clicks.length - 1].value,
-  //             ])
-  //           }
-  //         } else {
-  //           simpleClick(Number(newValueOption))
-  //         }
-
-  //         clicksRef.current = []
-  //       }, doubleClickTimeout)
-  //       onChange(newValueOption)
-  //       return () => {
-  //         window.clearTimeout(id)
-  //       }
-  //     }
-  //   },
-  //   [clicksRef, simpleClick, doubleClick, readOnly, onChange]
-  // )
-
-
 
   const internalClassName = useMemo(
     () =>
@@ -230,27 +123,6 @@ export default function CustomSelect(props: CustomSelectProps) {
     [className]
   )
 
-  // const dropdownClassNames = useMemo(
-  //   () =>
-  //     classNames({
-  //       'react-js-cron-select-dropdown': true,
-  //       [`react-js-cron-select-dropdown-${unit.type}`]: true,
-  //       'react-js-cron-custom-select-dropdown': true,
-  //       [`react-js-cron-custom-select-dropdown-${unit.type}`]: true,
-  //       [`react-js-cron-custom-select-dropdown-minutes-large`]:
-  //         unit.type === 'minutes' && period !== 'hour' && period !== 'day',
-  //       [`react-js-cron-custom-select-dropdown-minutes-medium`]:
-  //         unit.type === 'minutes' && (period === 'day' || period === 'hour'),
-  //       'react-js-cron-custom-select-dropdown-hours-twelve-hour-clock':
-  //         unit.type === 'hours' && clockFormat === '12-hour-clock',
-  //       'react-js-cron-custom-select-dropdown-grid': !!grid,
-  //       [`${className}-select-dropdown`]: !!className,
-  //       [`${className}-select-dropdown-${unit.type}`]: !!className,
-  //     }),
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   [className, grid, clockFormat, period]
-  // )
-
   return (
     <Select
       multiple={true}
@@ -260,8 +132,8 @@ export default function CustomSelect(props: CustomSelectProps) {
       renderValue={renderTag}
       className={internalClassName}
       autoWidth={false}
-
       disabled={disabled}
+      {...selectProps}
     >
       {options.map((obj) => (
         <MenuItem key={obj.value} value={obj.value}>

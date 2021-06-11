@@ -17,6 +17,7 @@ export default function Minutes(props: MinutesProps) {
     leadingZero,
     clockFormat,
     period,
+    ...selectProps
   } = props
   const internalClassName = useMemo(
     () =>
@@ -61,6 +62,7 @@ export default function Minutes(props: MinutesProps) {
         leadingZero={leadingZero}
         clockFormat={clockFormat}
         period={period}
+        {...selectProps}
       />
 
       {period === 'hour' && locale.suffixMinutesForHourPeriod !== '' && (
