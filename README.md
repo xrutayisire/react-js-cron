@@ -243,6 +243,10 @@ CronProps {
 }
 ````
 
+## Alternatives
+
+If you use Material UI in your react project then consider using, [material-ui-cron](https://github.com/baymac/material-ui-cron).
+
 ## License
 
 MIT © [xrutayisire](https://github.com/xrutayisire)
