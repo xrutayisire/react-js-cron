@@ -17,6 +17,7 @@ export default function WeekDays(props: WeekDaysProps) {
     disabled,
     readOnly,
     period,
+    periodicityOnDoubleClick,
   } = props
   const optionsList = locale.weekDays || DEFAULT_LOCALE_EN.weekDays
   const noMonthDays = period === 'week' || !monthDays || monthDays.length === 0
@@ -93,6 +94,7 @@ export default function WeekDays(props: WeekDaysProps) {
         disabled={disabled}
         readOnly={readOnly}
         period={period}
+        periodicityOnDoubleClick={periodicityOnDoubleClick}
       />
     </div>
   ) : null

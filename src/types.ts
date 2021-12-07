@@ -120,6 +120,14 @@ export interface CronProps {
   onError?: OnError
 
   /**
+   * Define if a double click on a dropdown option should automatically
+   * select / unselect a periodicity.
+   *
+   * Default: true
+   */
+  periodicityOnDoubleClick?: boolean
+
+  /**
    * Change the component language.
    * Can also be used to remove prefix and suffix.
    *
@@ -221,9 +229,13 @@ export interface FieldProps {
   disabled: boolean
   readOnly: boolean
   period: PeriodType
+  periodicityOnDoubleClick: boolean
 }
 export interface PeriodProps
-  extends Omit<FieldProps, 'value' | 'setValue' | 'period'> {
+  extends Omit<
+    FieldProps,
+    'value' | 'setValue' | 'period' | 'periodicityOnDoubleClick'
+  > {
   value: PeriodType
   setValue: SetValuePeriod
   shortcuts: Shortcuts
@@ -278,6 +290,7 @@ export interface CustomSelectProps
   clockFormat?: ClockFormat
   period: PeriodType
   unit: Unit
+  periodicityOnDoubleClick: boolean
 }
 export type SetValueNumbersOrUndefined = Dispatch<
   SetStateAction<number[] | undefined>

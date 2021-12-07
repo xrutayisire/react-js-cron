@@ -17,6 +17,7 @@ export default function Hours(props: HoursProps) {
     leadingZero,
     clockFormat,
     period,
+    periodicityOnDoubleClick,
   } = props
   const internalClassName = useMemo(
     () =>
@@ -47,6 +48,7 @@ export default function Hours(props: HoursProps) {
         leadingZero={leadingZero}
         clockFormat={clockFormat}
         period={period}
+        periodicityOnDoubleClick={periodicityOnDoubleClick}
       />
     </div>
   )

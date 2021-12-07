@@ -197,6 +197,14 @@ CronProps {
     | undefined
 
   /**
+   * Define if a double click on a dropdown option should automatically
+   * select / unselect a periodicity.
+   *
+   * Default: true
+   */
+  periodicityOnDoubleClick?: boolean
+
+  /**
    * Change the component language.
    * Can also be used to remove prefix and suffix.
    *

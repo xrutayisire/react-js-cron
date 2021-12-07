@@ -42,6 +42,7 @@ export default function Cron(props: CronProps) {
       '@hourly',
     ],
     clockFormat,
+    periodicityOnDoubleClick = true,
   } = props
   const internalValueRef = useRef<string>(value)
   const defaultPeriodRef = useRef<PeriodType>(defaultPeriod)
@@ -289,6 +290,7 @@ export default function Cron(props: CronProps) {
               disabled={disabled}
               readOnly={readOnly}
               period={periodForRender}
+              periodicityOnDoubleClick={periodicityOnDoubleClick}
             />
           )}
 
@@ -303,6 +305,7 @@ export default function Cron(props: CronProps) {
               readOnly={readOnly}
               leadingZero={leadingZero}
               period={periodForRender}
+              periodicityOnDoubleClick={periodicityOnDoubleClick}
             />
           )}
 
@@ -319,6 +322,7 @@ export default function Cron(props: CronProps) {
               disabled={disabled}
               readOnly={readOnly}
               period={periodForRender}
+              periodicityOnDoubleClick={periodicityOnDoubleClick}
             />
           )}
 
@@ -334,6 +338,7 @@ export default function Cron(props: CronProps) {
                 leadingZero={leadingZero}
                 clockFormat={clockFormat}
                 period={periodForRender}
+                periodicityOnDoubleClick={periodicityOnDoubleClick}
               />
             )}
 
@@ -348,6 +353,7 @@ export default function Cron(props: CronProps) {
                 readOnly={readOnly}
                 leadingZero={leadingZero}
                 clockFormat={clockFormat}
+                periodicityOnDoubleClick={periodicityOnDoubleClick}
               />
             )}
 

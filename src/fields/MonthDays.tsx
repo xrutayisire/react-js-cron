@@ -17,6 +17,7 @@ export default function MonthDays(props: MonthDaysProps) {
     readOnly,
     leadingZero,
     period,
+    periodicityOnDoubleClick,
   } = props
   const noWeekDays = !weekDays || weekDays.length === 0
 
@@ -69,6 +70,7 @@ export default function MonthDays(props: MonthDaysProps) {
         readOnly={readOnly}
         leadingZero={leadingZero}
         period={period}
+        periodicityOnDoubleClick={periodicityOnDoubleClick}
       />
     </div>
   ) : null

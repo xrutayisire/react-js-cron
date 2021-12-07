@@ -21,6 +21,7 @@ export default function CustomSelect(props: CustomSelectProps) {
     clockFormat,
     period,
     unit,
+    periodicityOnDoubleClick,
     ...otherProps
   } = props
 
@@ -172,6 +173,7 @@ export default function CustomSelect(props: CustomSelectProps) {
 
         const id = window.setTimeout(() => {
           if (
+            periodicityOnDoubleClick &&
             clicks.length > 1 &&
             clicks[clicks.length - 1].time - clicks[clicks.length - 2].time <
               doubleClickTimeout
@@ -199,7 +201,7 @@ export default function CustomSelect(props: CustomSelectProps) {
         }
       }
     },
-    [clicksRef, simpleClick, doubleClick, readOnly]
+    [clicksRef, simpleClick, doubleClick, readOnly, periodicityOnDoubleClick]
   )
 
   // Used by the select clear icon

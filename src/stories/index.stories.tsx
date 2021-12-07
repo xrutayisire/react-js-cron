@@ -92,6 +92,10 @@ export function DynamicSettings() {
   const [defaultPeriod, setDefaultPeriod] = useState<PeriodType>('day')
   const [defaultValue, setDefaultValue] = useState('@daily')
   const [leadingZero, setLeadingZero] = useState<boolean>(false)
+  const [
+    periodicityOnDoubleClick,
+    setPeriodicityOnDoubleClick,
+  ] = useState<boolean>(true)
   const [key, setKey] = useState('render')
   const inputRef = useRef<AntdInput>(null)
   const [value, setValue] = useState(defaultValue)
@@ -236,6 +240,14 @@ export function DynamicSettings() {
             onChange={() => setLeadingZero((prevValue) => !prevValue)}
           />
         </Form.Item>
+        <Form.Item label='Periodicity on double click'>
+          <Switch
+            checked={periodicityOnDoubleClick}
+            onChange={() =>
+              setPeriodicityOnDoubleClick((prevValue) => !prevValue)
+            }
+          />
+        </Form.Item>
         <Form.Item label='Clock format'>
           <Radio.Group
             value={clockFormat}
@@ -354,6 +366,7 @@ export function DynamicSettings() {
         defaultPeriod={defaultPeriod}
         leadingZero={leadingZero}
         className={customStyle ? 'my-project-cron' : undefined}
+        periodicityOnDoubleClick={periodicityOnDoubleClick}
         locale={transformedLocale}
         clearButtonProps={
           customStyle
@@ -1245,6 +1258,33 @@ export function TwentyFourHourClock() {
         <span style={{ fontSize: 12 }}>
           This prop override the prop &quot;leadingZero&quot; for
           &quot;hours&quot; and &quot;minutes&quot;
+        </span>
+      </div>
+    </div>
+  )
+}
+
+export function NoPeriodicityOnDoubleClick() {
+  const defaultValue = '30 5 * * 1,6'
+  const [value, setValue] = useState(defaultValue)
+
+  return (
+    <div>
+      <p>Default value: {defaultValue}</p>
+      <p>Value: {value}</p>
+      <p>periodicityOnDoubleClick: false</p>
+
+      <Cron
+        value={value}
+        setValue={setValue}
+        periodicityOnDoubleClick={false}
+      />
+
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          You can disable the double click on a dropdown option that
+          automatically select / unselect a periodicity
         </span>
       </div>
     </div>

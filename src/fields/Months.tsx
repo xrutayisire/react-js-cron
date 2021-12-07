@@ -16,6 +16,7 @@ export default function Months(props: MonthsProps) {
     disabled,
     readOnly,
     period,
+    periodicityOnDoubleClick,
   } = props
   const optionsList = locale.months || DEFAULT_LOCALE_EN.months
 
@@ -54,6 +55,7 @@ export default function Months(props: MonthsProps) {
         disabled={disabled}
         readOnly={readOnly}
         period={period}
+        periodicityOnDoubleClick={periodicityOnDoubleClick}
       />
     </div>
   )
