@@ -1,5 +1,11 @@
 ## Changelog
 
+#### 1.3.0
+
+- **(New feature)** Issue [#12](https://github.com/xrutayisire/react-js-cron/issues/12): "Add the possibility to deactivate the double click feature"
+- Fix antd automatic tree-shaking not working in many cases (Missing Select import)
+- Fix to allow equal min and max range values
+
 #### 1.2.1
 
 - Fix issue [#6](https://github.com/xrutayisire/react-js-cron/issues/6): "Display problem for Selects with antd 4.10.0"
