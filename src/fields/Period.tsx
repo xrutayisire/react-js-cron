@@ -6,15 +6,8 @@ import { DEFAULT_LOCALE_EN } from '../locale'
 import { classNames } from '../utils'
 
 export default function Period(props: PeriodProps) {
-  const {
-    value,
-    setValue,
-    locale,
-    className,
-    disabled,
-    readOnly,
-    shortcuts,
-  } = props
+  const { value, setValue, locale, className, disabled, readOnly, shortcuts } =
+    props
   let options = [
     {
       value: 'year',

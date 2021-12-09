@@ -92,10 +92,8 @@ export function DynamicSettings() {
   const [defaultPeriod, setDefaultPeriod] = useState<PeriodType>('day')
   const [defaultValue, setDefaultValue] = useState('@daily')
   const [leadingZero, setLeadingZero] = useState<boolean>(false)
-  const [
-    periodicityOnDoubleClick,
-    setPeriodicityOnDoubleClick,
-  ] = useState<boolean>(true)
+  const [periodicityOnDoubleClick, setPeriodicityOnDoubleClick] =
+    useState<boolean>(true)
   const [key, setKey] = useState('render')
   const inputRef = useRef<AntdInput>(null)
   const [value, setValue] = useState(defaultValue)
@@ -107,9 +105,8 @@ export function DynamicSettings() {
     [inputRef]
   )
   const [error, onError] = useState<CronError>()
-  const [clearButtonAction, setClearButtonAction] = useState<ClearButtonAction>(
-    'fill-with-every'
-  )
+  const [clearButtonAction, setClearButtonAction] =
+    useState<ClearButtonAction>('fill-with-every')
 
   const transformedLocale = useMemo(() => {
     let newLocale

@@ -216,10 +216,8 @@ export default function Cron(props: CronProps) {
     [className, error, displayError, disabled, readOnly]
   )
 
-  const {
-    className: clearButtonClassNameProp,
-    ...otherClearButtonProps
-  } = clearButtonProps
+  const { className: clearButtonClassNameProp, ...otherClearButtonProps } =
+    clearButtonProps
   const clearButtonClassName = useMemo(
     () =>
       classNames({
