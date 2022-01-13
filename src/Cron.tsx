@@ -110,13 +110,7 @@ export default function Cron(props: CronProps) {
       // Only change the value if a user touched a field
       // and if the user didn't use the clear button
       if (
-        (period ||
-          minutes ||
-          months ||
-          monthDays ||
-          weekDays ||
-          hours ||
-          minutes) &&
+        (period || minutes || months || monthDays || weekDays || hours) &&
         !valueCleared &&
         !previousValueCleared
       ) {
