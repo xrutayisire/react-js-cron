@@ -1,5 +1,10 @@
 ## Changelog
 
+#### 1.3.1
+
+- Fix disabled mode broken since antd 13.0
+- Fix issue [#15](https://github.com/xrutayisire/react-js-cron/issues/15): "Fix double setValue function call that prevents changing value"
+
 #### 1.3.0
 
 - **(New feature)** Issue [#12](https://github.com/xrutayisire/react-js-cron/issues/12): "Add the possibility to deactivate the double click feature"
