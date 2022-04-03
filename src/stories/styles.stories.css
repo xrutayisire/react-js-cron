@@ -30,7 +30,7 @@
 .my-project-cron-field > span {
   font-weight: bold;
 }
-.my-project-cron-error-field > span {
+.my-project-cron-error .my-project-cron-field > span {
   color: #ff4d4f;
 }
 .my-project-cron .my-project-cron-select > div:first-child {
