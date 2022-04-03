@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react'
+/* eslint-disable */
+import React, { useState, useMemo } from 'react'
 import {
   Input as AntdInput,
   Divider,
@@ -16,6 +17,7 @@ import {
   ENGLISH_VARIANT_LOCALE,
   NO_PREFIX_SUFFIX_LOCALE,
 } from './constants.stories'
+import { useCronReducer } from './utils.stories'
 import { ClearButtonAction } from '../types'
 
 import './styles.stories.css'
@@ -26,33 +28,46 @@ export default {
 }
 
 export function Demo() {
-  const inputRef = useRef<AntdInput>(null)
   const defaultValue = '30 5 * * 1,6'
-  const [value, setValue] = useState(defaultValue)
-  const customSetValue = useCallback(
-    (newValue: string) => {
-      setValue(newValue)
-      inputRef.current?.setValue(newValue)
-    },
-    [inputRef]
-  )
+  const [values, dispatchValues] = useCronReducer(defaultValue)
   const [error, onError] = useState<CronError>()
 
   return (
     <div>
       <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
-          setValue(event.target.value)
+        value={values.inputValue}
+        onChange={(event) => {
+          dispatchValues({
+            type: 'set_input_value',
+            value: event.target.value,
+          })
+        }}
+        onBlur={() => {
+          dispatchValues({
+            type: 'set_cron_value',
+            value: values.inputValue,
+          })
         }}
         onPressEnter={() => {
-          setValue(inputRef.current?.input.value || '')
+          dispatchValues({
+            type: 'set_cron_value',
+            value: values.inputValue,
+          })
         }}
       />
 
       <Divider>OR</Divider>
 
-      <Cron value={value} setValue={customSetValue} onError={onError} />
+      <Cron
+        value={values.cronValue}
+        setValue={(newValue: string) => {
+          dispatchValues({
+            type: 'set_values',
+            value: newValue,
+          })
+        }}
+        onError={onError}
+      />
 
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
@@ -95,15 +110,7 @@ export function DynamicSettings() {
   const [periodicityOnDoubleClick, setPeriodicityOnDoubleClick] =
     useState<boolean>(true)
   const [key, setKey] = useState('render')
-  const inputRef = useRef<AntdInput>(null)
-  const [value, setValue] = useState(defaultValue)
-  const customSetValue = useCallback(
-    (newValue: string) => {
-      setValue(newValue)
-      inputRef.current?.setValue(newValue)
-    },
-    [inputRef]
-  )
+  const [values, dispatchValues] = useCronReducer(defaultValue)
   const [error, onError] = useState<CronError>()
   const [clearButtonAction, setClearButtonAction] =
     useState<ClearButtonAction>('fill-with-every')
@@ -133,16 +140,6 @@ export function DynamicSettings() {
 
     return newLocale
   }, [locale, removePrefixSuffix])
-
-  useEffect(
-    () => {
-      if (displayInput) {
-        inputRef.current?.setValue(value)
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [displayInput]
-  )
 
   return (
     <div>
@@ -314,12 +311,15 @@ export function DynamicSettings() {
       </Form>
 
       <div>
-        <p>Value: {value}</p>
+        <p>Value: {values.cronValue}</p>
 
         <Button
           type='primary'
           onClick={() => {
-            customSetValue(defaultValue)
+            dispatchValues({
+              type: 'set_values',
+              value: defaultValue,
+            })
             setKey(Math.random().toString(36).substring(7))
           }}
         >
@@ -330,14 +330,27 @@ export function DynamicSettings() {
       {displayInput && (
         <>
           <AntdInput
-            ref={inputRef}
             readOnly={readOnlyInput}
-            onBlur={(event) => {
-              changeValueOnBlur && setValue(event.target.value)
+            value={values.inputValue}
+            onChange={(event) => {
+              dispatchValues({
+                type: 'set_input_value',
+                value: event.target.value,
+              })
+            }}
+            onBlur={() => {
+              changeValueOnBlur &&
+                dispatchValues({
+                  type: 'set_cron_value',
+                  value: values.inputValue,
+                })
             }}
             onPressEnter={() => {
               changeValueOnEnter &&
-                setValue(inputRef.current?.input.value || '')
+                dispatchValues({
+                  type: 'set_cron_value',
+                  value: values.inputValue,
+                })
             }}
           />
 
@@ -347,8 +360,13 @@ export function DynamicSettings() {
 
       <Cron
         key={key}
-        value={value}
-        setValue={customSetValue}
+        value={values.cronValue}
+        setValue={(newValue: string) => {
+          dispatchValues({
+            type: 'set_values',
+            value: newValue,
+          })
+        }}
         onError={onError}
         disabled={disabled}
         readOnly={readOnly}
@@ -384,23 +402,24 @@ export function DynamicSettings() {
 }
 
 export function Input() {
-  const inputRef = useRef<AntdInput>(null)
   const defaultValue = ''
-  const [value, setValue] = useState(defaultValue)
-  const customSetValue = useCallback(
-    (newValue: string) => {
-      setValue(newValue)
-      inputRef.current?.setValue(newValue)
-    },
-    [inputRef]
-  )
+  const [values, dispatchValues] = useCronReducer(defaultValue)
 
   return (
     <div>
       <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
-          setValue(event.target.value)
+        value={values.inputValue}
+        onChange={(event) => {
+          dispatchValues({
+            type: 'set_input_value',
+            value: event.target.value,
+          })
+        }}
+        onBlur={() => {
+          dispatchValues({
+            type: 'set_cron_value',
+            value: values.inputValue,
+          })
         }}
       />
 
@@ -411,55 +430,65 @@ export function Input() {
           &quot;onChange&quot; to prevent a value change from the cron component
         </span>
       </div>
-      <div style={{ marginTop: 10 }}>
-        <InfoCircleOutlined style={{ marginRight: 5 }} />
-        <span style={{ fontSize: 12 }}>
-          Don&apos;t directly set the value of the Input with the prop
-          &quot;value&quot;, you will not be able to edit it
-        </span>
-      </div>
 
       <Divider>OR</Divider>
 
-      <Cron value={value} setValue={customSetValue} />
+      <Cron
+        value={values.cronValue}
+        setValue={(newValue: string) => {
+          dispatchValues({
+            type: 'set_values',
+            value: newValue,
+          })
+        }}
+      />
     </div>
   )
 }
 
 export function InputWithOnEnter() {
-  const inputRef = useRef<AntdInput>(null)
   const defaultValue = '0 10 * * 1,3,5'
-  const [value, setValue] = useState(defaultValue)
-  const customSetValue = useCallback(
-    (newValue: string) => {
-      setValue(newValue)
-      inputRef.current?.setValue(newValue)
-    },
-    [inputRef]
-  )
+  const [values, dispatchValues] = useCronReducer(defaultValue)
 
   return (
     <div>
       <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
-          setValue(event.target.value)
+        value={values.inputValue}
+        onChange={(event) => {
+          dispatchValues({
+            type: 'set_input_value',
+            value: event.target.value,
+          })
+        }}
+        onBlur={() => {
+          dispatchValues({
+            type: 'set_cron_value',
+            value: values.inputValue,
+          })
         }}
         onPressEnter={() => {
-          setValue(inputRef.current?.input.value || '')
+          dispatchValues({
+            type: 'set_cron_value',
+            value: values.inputValue,
+          })
         }}
       />
-
       <div style={{ marginTop: 10 }}>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
           You can also add &quot;onEnter&quot; support to set the value
         </span>
       </div>
-
       <Divider>OR</Divider>
-
-      <Cron value={value} setValue={customSetValue} />
+      <Cron
+        value={values.cronValue}
+        setValue={(newValue: string) => {
+          dispatchValues({
+            type: 'set_values',
+            value: newValue,
+          })
+        }}
+      />{' '}
     </div>
   )
 }
@@ -574,35 +603,45 @@ export function ReadOnly() {
 }
 
 export function HumanizeLabels() {
-  const inputRef = useRef<AntdInput>(null)
   const defaultValue = '* * * * MON-WED,sat'
-  const [value, setValue] = useState(defaultValue)
+  const [values, dispatchValues] = useCronReducer(defaultValue)
   const [error, onError] = useState<CronError>()
-  const customSetValue = useCallback(
-    (newValue: string) => {
-      setValue(newValue)
-      inputRef.current?.setValue(newValue)
-    },
-    [inputRef]
-  )
 
   return (
     <div>
       <p>Humanize labels: true</p>
       <p>Default value: {defaultValue}</p>
-      <p>Value: {value}</p>
+      <p>Value: {values.cronValue}</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
       <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
-          setValue(event.target.value)
+        value={values.inputValue}
+        onChange={(event) => {
+          dispatchValues({
+            type: 'set_input_value',
+            value: event.target.value,
+          })
+        }}
+        onBlur={() => {
+          dispatchValues({
+            type: 'set_cron_value',
+            value: values.inputValue,
+          })
         }}
       />
 
       <Divider>OR</Divider>
 
-      <Cron value={value} setValue={customSetValue} onError={onError} />
+      <Cron
+        value={values.cronValue}
+        setValue={(newValue: string) => {
+          dispatchValues({
+            type: 'set_values',
+            value: newValue,
+          })
+        }}
+        onError={onError}
+      />
 
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
@@ -635,38 +674,44 @@ export function HumanizeLabels() {
 }
 
 export function HumanizeValue() {
-  const inputRef = useRef<AntdInput>(null)
   const defaultValue = '* * * * MON-WED,sat'
-  const [value, setValue] = useState(defaultValue)
+  const [values, dispatchValues] = useCronReducer(defaultValue)
   const [error, onError] = useState<CronError>()
-  const customSetValue = useCallback(
-    (newValue: string) => {
-      setValue(newValue)
-      inputRef.current?.setValue(newValue)
-    },
-    [inputRef]
-  )
 
   return (
     <div>
       <p>Humanize labels: false</p>
       <p>Humanize value: true</p>
       <p>Default value: {defaultValue}</p>
-      <p>Value: {value}</p>
+      <p>Value: {values.cronValue}</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
       <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
-          setValue(event.target.value)
+        value={values.inputValue}
+        onChange={(event) => {
+          dispatchValues({
+            type: 'set_input_value',
+            value: event.target.value,
+          })
+        }}
+        onBlur={() => {
+          dispatchValues({
+            type: 'set_cron_value',
+            value: values.inputValue,
+          })
         }}
       />
 
       <Divider>OR</Divider>
 
       <Cron
-        value={value}
-        setValue={customSetValue}
+        value={values.cronValue}
+        setValue={(newValue: string) => {
+          dispatchValues({
+            type: 'set_values',
+            value: newValue,
+          })
+        }}
         onError={onError}
         humanizeLabels={false}
         humanizeValue
@@ -716,38 +761,44 @@ export function HumanizeValue() {
 }
 
 export function HumanizeLabelsAndValue() {
-  const inputRef = useRef<AntdInput>(null)
   const defaultValue = '* * * * MON-WED,sat'
-  const [value, setValue] = useState(defaultValue)
+  const [values, dispatchValues] = useCronReducer(defaultValue)
   const [error, onError] = useState<CronError>()
-  const customSetValue = useCallback(
-    (newValue: string) => {
-      setValue(newValue)
-      inputRef.current?.setValue(newValue)
-    },
-    [inputRef]
-  )
 
   return (
     <div>
       <p>Humanize labels: true</p>
       <p>Humanize value: true</p>
       <p>Default value: {defaultValue}</p>
-      <p>Value: {value}</p>
+      <p>Value: {values.cronValue}</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
       <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
-          setValue(event.target.value)
+        value={values.inputValue}
+        onChange={(event) => {
+          dispatchValues({
+            type: 'set_input_value',
+            value: event.target.value,
+          })
+        }}
+        onBlur={() => {
+          dispatchValues({
+            type: 'set_cron_value',
+            value: values.inputValue,
+          })
         }}
       />
 
       <Divider>OR</Divider>
 
       <Cron
-        value={value}
-        setValue={customSetValue}
+        value={values.cronValue}
+        setValue={(newValue: string) => {
+          dispatchValues({
+            type: 'set_values',
+            value: newValue,
+          })
+        }}
         onError={onError}
         humanizeValue
       />
@@ -769,32 +820,42 @@ export function HumanizeLabelsAndValue() {
 }
 
 export function LeadingZero() {
-  const inputRef = useRef<AntdInput>(null)
   const defaultValue = '5 3 2-3,8 * *'
-  const [value, setValue] = useState(defaultValue)
-  const customSetValue = useCallback(
-    (newValue: string) => {
-      setValue(newValue)
-      inputRef.current?.setValue(newValue)
-    },
-    [inputRef]
-  )
+  const [values, dispatchValues] = useCronReducer(defaultValue)
 
   return (
     <div>
       <p>Leading zero: &quot;always&quot;</p>
-      <p>Value: {value}</p>
+      <p>Value: {values.cronValue}</p>
 
       <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
-          setValue(event.target.value)
+        value={values.inputValue}
+        onChange={(event) => {
+          dispatchValues({
+            type: 'set_input_value',
+            value: event.target.value,
+          })
+        }}
+        onBlur={() => {
+          dispatchValues({
+            type: 'set_cron_value',
+            value: values.inputValue,
+          })
         }}
       />
 
       <Divider>OR</Divider>
 
-      <Cron value={value} setValue={customSetValue} leadingZero={true} />
+      <Cron
+        value={values.cronValue}
+        setValue={(newValue: string) => {
+          dispatchValues({
+            type: 'set_values',
+            value: newValue,
+          })
+        }}
+        leadingZero={true}
+      />
 
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
@@ -814,27 +875,28 @@ export function LeadingZero() {
 }
 
 export function TrackError() {
-  const inputRef = useRef<AntdInput>(null)
   const defaultValue = ''
-  const [value, setValue] = useState(defaultValue)
-  const customSetValue = useCallback(
-    (newValue: string) => {
-      setValue(newValue)
-      inputRef.current?.setValue(newValue)
-    },
-    [inputRef]
-  )
+  const [values, dispatchValues] = useCronReducer(defaultValue)
   const [error, onError] = useState<CronError>()
 
   return (
     <div>
-      <p>Value: {value}</p>
+      <p>Value: {values.cronValue}</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
       <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
-          setValue(event.target.value)
+        value={values.inputValue}
+        onChange={(event) => {
+          dispatchValues({
+            type: 'set_input_value',
+            value: event.target.value,
+          })
+        }}
+        onBlur={() => {
+          dispatchValues({
+            type: 'set_cron_value',
+            value: values.inputValue,
+          })
         }}
       />
 
@@ -848,7 +910,16 @@ export function TrackError() {
 
       <Divider>OR</Divider>
 
-      <Cron value={value} setValue={customSetValue} onError={onError} />
+      <Cron
+        value={values.cronValue}
+        setValue={(newValue: string) => {
+          dispatchValues({
+            type: 'set_values',
+            value: newValue,
+          })
+        }}
+        onError={onError}
+      />
 
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
@@ -862,16 +933,8 @@ export function TrackError() {
 }
 
 export function DisableErrorStyle() {
-  const inputRef = useRef<AntdInput>(null)
   const defaultValue = ''
-  const [value, setValue] = useState(defaultValue)
-  const customSetValue = useCallback(
-    (newValue: string) => {
-      setValue(newValue)
-      inputRef.current?.setValue(newValue)
-    },
-    [inputRef]
-  )
+  const [values, dispatchValues] = useCronReducer(defaultValue)
   const [error, onError] = useState<CronError>()
 
   return (
@@ -880,17 +943,31 @@ export function DisableErrorStyle() {
       <p>Error: {error ? error.description : 'undefined'}</p>
 
       <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
-          setValue(event.target.value)
+        value={values.inputValue}
+        onChange={(event) => {
+          dispatchValues({
+            type: 'set_input_value',
+            value: event.target.value,
+          })
+        }}
+        onBlur={() => {
+          dispatchValues({
+            type: 'set_cron_value',
+            value: values.inputValue,
+          })
         }}
       />
 
       <Divider>OR</Divider>
 
       <Cron
-        value={value}
-        setValue={customSetValue}
+        value={values.cronValue}
+        setValue={(newValue: string) => {
+          dispatchValues({
+            type: 'set_values',
+            value: newValue,
+          })
+        }}
         onError={onError}
         displayError={false}
       />
@@ -964,37 +1041,43 @@ export function InvalidDefaultValue() {
 }
 
 export function EmptyNeverAllowed() {
-  const inputRef = useRef<AntdInput>(null)
   const defaultValue = ''
-  const [value, setValue] = useState(defaultValue)
-  const customSetValue = useCallback(
-    (newValue: string) => {
-      setValue(newValue)
-      inputRef.current?.setValue(newValue)
-    },
-    [inputRef]
-  )
+  const [values, dispatchValues] = useCronReducer(defaultValue)
   const [error, onError] = useState<CronError>()
 
   return (
     <div>
       <p>Allow empty: &quot;never&quot;</p>
       <p>Default value: {defaultValue}</p>
-      <p>Value: {value}</p>
+      <p>Value: {values.cronValue}</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
       <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
-          setValue(event.target.value)
+        value={values.inputValue}
+        onChange={(event) => {
+          dispatchValues({
+            type: 'set_input_value',
+            value: event.target.value,
+          })
+        }}
+        onBlur={() => {
+          dispatchValues({
+            type: 'set_cron_value',
+            value: values.inputValue,
+          })
         }}
       />
 
       <Divider>OR</Divider>
 
       <Cron
-        value={value}
-        setValue={customSetValue}
+        value={values.cronValue}
+        setValue={(newValue: string) => {
+          dispatchValues({
+            type: 'set_values',
+            value: newValue,
+          })
+        }}
         onError={onError}
         allowEmpty='never'
       />
@@ -1011,37 +1094,43 @@ export function EmptyNeverAllowed() {
 }
 
 export function EmptyAlwaysAllowed() {
-  const inputRef = useRef<AntdInput>(null)
   const defaultValue = ''
-  const [value, setValue] = useState(defaultValue)
-  const customSetValue = useCallback(
-    (newValue: string) => {
-      setValue(newValue)
-      inputRef.current?.setValue(newValue)
-    },
-    [inputRef]
-  )
+  const [values, dispatchValues] = useCronReducer(defaultValue)
   const [error, onError] = useState<CronError>()
 
   return (
     <div>
       <p>Allow empty: &quot;always&quot;</p>
       <p>Default value: {defaultValue}</p>
-      <p>Value: {value}</p>
+      <p>Value: {values.cronValue}</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
       <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
-          setValue(event.target.value)
+        value={values.inputValue}
+        onChange={(event) => {
+          dispatchValues({
+            type: 'set_input_value',
+            value: event.target.value,
+          })
+        }}
+        onBlur={() => {
+          dispatchValues({
+            type: 'set_cron_value',
+            value: values.inputValue,
+          })
         }}
       />
 
       <Divider>OR</Divider>
 
       <Cron
-        value={value}
-        setValue={customSetValue}
+        value={values.cronValue}
+        setValue={(newValue: string) => {
+          dispatchValues({
+            type: 'set_values',
+            value: newValue,
+          })
+        }}
         onError={onError}
         allowEmpty='always'
       />
@@ -1058,16 +1147,8 @@ export function EmptyAlwaysAllowed() {
 }
 
 export function Shortcuts() {
-  const inputRef = useRef<AntdInput>(null)
   const defaultValue = '@monthly'
-  const [value, setValue] = useState(defaultValue)
-  const customSetValue = useCallback(
-    (newValue: string) => {
-      setValue(newValue)
-      inputRef.current?.setValue(newValue)
-    },
-    [inputRef]
-  )
+  const [values, dispatchValues] = useCronReducer(defaultValue)
   const [error, onError] = useState<CronError>()
 
   const columns = [
@@ -1128,21 +1209,35 @@ export function Shortcuts() {
     <div>
       <p>Shortcuts: true</p>
       <p>Default value: {defaultValue}</p>
-      <p>Value: {value}</p>
+      <p>Value: {values.cronValue}</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
       <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
-          setValue(event.target.value)
+        value={values.inputValue}
+        onChange={(event) => {
+          dispatchValues({
+            type: 'set_input_value',
+            value: event.target.value,
+          })
+        }}
+        onBlur={() => {
+          dispatchValues({
+            type: 'set_cron_value',
+            value: values.inputValue,
+          })
         }}
       />
 
       <Divider>OR</Divider>
 
       <Cron
-        value={value}
-        setValue={customSetValue}
+        value={values.cronValue}
+        setValue={(newValue: string) => {
+          dispatchValues({
+            type: 'set_values',
+            value: newValue,
+          })
+        }}
         onError={onError}
         shortcuts
       />
@@ -1176,37 +1271,43 @@ export function Shortcuts() {
 }
 
 export function TwelveHourClock() {
-  const inputRef = useRef<AntdInput>(null)
   const defaultValue = '2 5,7,18 * * SUN'
-  const [value, setValue] = useState(defaultValue)
-  const customSetValue = useCallback(
-    (newValue: string) => {
-      setValue(newValue)
-      inputRef.current?.setValue(newValue)
-    },
-    [inputRef]
-  )
+  const [values, dispatchValues] = useCronReducer(defaultValue)
   const [error, onError] = useState<CronError>()
 
   return (
     <div>
       <p>Clock format: &quot;12-hour-clock&quot;</p>
       <p>Default value: {defaultValue}</p>
-      <p>Value: {value}</p>
+      <p>Value: {values.cronValue}</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
       <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
-          setValue(event.target.value)
+        value={values.inputValue}
+        onChange={(event) => {
+          dispatchValues({
+            type: 'set_input_value',
+            value: event.target.value,
+          })
+        }}
+        onBlur={() => {
+          dispatchValues({
+            type: 'set_cron_value',
+            value: values.inputValue,
+          })
         }}
       />
 
       <Divider>OR</Divider>
 
       <Cron
-        value={value}
-        setValue={customSetValue}
+        value={values.cronValue}
+        setValue={(newValue: string) => {
+          dispatchValues({
+            type: 'set_values',
+            value: newValue,
+          })
+        }}
         onError={onError}
         clockFormat='12-hour-clock'
       />
@@ -1215,37 +1316,43 @@ export function TwelveHourClock() {
 }
 
 export function TwentyFourHourClock() {
-  const inputRef = useRef<AntdInput>(null)
   const defaultValue = '2 5,7,18 * * SUN'
-  const [value, setValue] = useState(defaultValue)
-  const customSetValue = useCallback(
-    (newValue: string) => {
-      setValue(newValue)
-      inputRef.current?.setValue(newValue)
-    },
-    [inputRef]
-  )
+  const [values, dispatchValues] = useCronReducer(defaultValue)
   const [error, onError] = useState<CronError>()
 
   return (
     <div>
       <p>Clock format: &quot;24-hour-clock&quot;</p>
       <p>Default value: {defaultValue}</p>
-      <p>Value: {value}</p>
+      <p>Value: {values.cronValue}</p>
       <p>Error: {error ? error.description : 'undefined'}</p>
 
       <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
-          setValue(event.target.value)
+        value={values.inputValue}
+        onChange={(event) => {
+          dispatchValues({
+            type: 'set_input_value',
+            value: event.target.value,
+          })
+        }}
+        onBlur={() => {
+          dispatchValues({
+            type: 'set_cron_value',
+            value: values.inputValue,
+          })
         }}
       />
 
       <Divider>OR</Divider>
 
       <Cron
-        value={value}
-        setValue={customSetValue}
+        value={values.cronValue}
+        setValue={(newValue: string) => {
+          dispatchValues({
+            type: 'set_values',
+            value: newValue,
+          })
+        }}
         onError={onError}
         clockFormat='24-hour-clock'
       />
@@ -1289,16 +1396,8 @@ export function NoPeriodicityOnDoubleClick() {
 }
 
 export function FrenchLocale() {
-  const inputRef = useRef<AntdInput>(null)
   const defaultValue = '* * 1-2 2,8 1,3,6'
-  const [value, setValue] = useState(defaultValue)
-  const customSetValue = useCallback(
-    (newValue: string) => {
-      setValue(newValue)
-      inputRef.current?.setValue(newValue)
-    },
-    [inputRef]
-  )
+  const [values, dispatchValues] = useCronReducer(defaultValue)
   const [error, onError] = useState<CronError>()
 
   return (
@@ -1306,12 +1405,21 @@ export function FrenchLocale() {
       <p>locale: FRENCH_LOCALE</p>
       <p>humanizeLabels: true (by default)</p>
       <p>Erreur: {error ? error.description : 'undefined'}</p>
-      <p>Value: {value}</p>
+      <p>Value: {values.cronValue}</p>
 
       <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
-          setValue(event.target.value)
+        value={values.inputValue}
+        onChange={(event) => {
+          dispatchValues({
+            type: 'set_input_value',
+            value: event.target.value,
+          })
+        }}
+        onBlur={() => {
+          dispatchValues({
+            type: 'set_cron_value',
+            value: values.inputValue,
+          })
         }}
       />
 
@@ -1319,8 +1427,13 @@ export function FrenchLocale() {
 
       <Cron
         locale={FRENCH_LOCALE}
-        value={value}
-        setValue={customSetValue}
+        value={values.cronValue}
+        setValue={(newValue: string) => {
+          dispatchValues({
+            type: 'set_values',
+            value: newValue,
+          })
+        }}
         onError={onError}
       />
 
@@ -1392,16 +1505,8 @@ export function NoPrefixAndSuffix() {
 }
 
 export function CustomStyle() {
-  const inputRef = useRef<AntdInput>(null)
   const defaultValue = '30 14 22 * *'
-  const [value, setValue] = useState(defaultValue)
-  const customSetValue = useCallback(
-    (newValue: string) => {
-      setValue(newValue)
-      inputRef.current?.setValue(newValue)
-    },
-    [inputRef]
-  )
+  const [values, dispatchValues] = useCronReducer(defaultValue)
   const [error, onError] = useState<CronError>()
 
   return (
@@ -1411,17 +1516,31 @@ export function CustomStyle() {
       <p>Error: {error ? error.description : 'undefined'}</p>
 
       <AntdInput
-        ref={inputRef}
-        onBlur={(event) => {
-          setValue(event.target.value)
+        value={values.inputValue}
+        onChange={(event) => {
+          dispatchValues({
+            type: 'set_input_value',
+            value: event.target.value,
+          })
+        }}
+        onBlur={() => {
+          dispatchValues({
+            type: 'set_cron_value',
+            value: values.inputValue,
+          })
         }}
       />
 
       <Divider>OR</Divider>
 
       <Cron
-        value={value}
-        setValue={customSetValue}
+        value={values.cronValue}
+        setValue={(newValue: string) => {
+          dispatchValues({
+            type: 'set_values',
+            value: newValue,
+          })
+        }}
         onError={onError}
         className='my-project-cron'
         clearButtonProps={{
