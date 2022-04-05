@@ -18,6 +18,7 @@ export default function Minutes(props: MinutesProps) {
     clockFormat,
     period,
     periodicityOnDoubleClick,
+    mode,
   } = props
   const internalClassName = useMemo(
     () =>
@@ -63,6 +64,7 @@ export default function Minutes(props: MinutesProps) {
         clockFormat={clockFormat}
         period={period}
         periodicityOnDoubleClick={periodicityOnDoubleClick}
+        mode={mode}
       />
 
       {period === 'hour' && locale.suffixMinutesForHourPeriod !== '' && (

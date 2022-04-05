@@ -205,6 +205,14 @@ CronProps {
   periodicityOnDoubleClick?: boolean
 
   /**
+   * Define if it's possible to select only one or multiple values for each select.
+   * When mode is 'single', periodicityOnDoubleClick prop is ignore and set to false by default.
+   *
+   * Default: 'multiple'
+   */
+  mode?: 'multiple' | 'single'
+
+  /**
    * Change the component language.
    * Can also be used to remove prefix and suffix.
    *

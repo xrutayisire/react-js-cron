@@ -18,7 +18,7 @@ import {
   NO_PREFIX_SUFFIX_LOCALE,
 } from './constants.stories'
 import { useCronReducer } from './utils.stories'
-import { ClearButtonAction } from '../types'
+import { ClearButtonAction, Mode } from '../types'
 
 import './styles.stories.css'
 
@@ -109,6 +109,7 @@ export function DynamicSettings() {
   const [leadingZero, setLeadingZero] = useState<boolean>(false)
   const [periodicityOnDoubleClick, setPeriodicityOnDoubleClick] =
     useState<boolean>(true)
+  const [mode, setMode] = useState<Mode>('multiple')
   const [key, setKey] = useState('render')
   const [values, dispatchValues] = useCronReducer(defaultValue)
   const [error, onError] = useState<CronError>()
@@ -252,6 +253,12 @@ export function DynamicSettings() {
             <Radio.Button value='24-hour-clock'>24-hour-clock</Radio.Button>
           </Radio.Group>
         </Form.Item>
+        <Form.Item label='Mode'>
+          <Radio.Group value={mode} onChange={(e) => setMode(e.target.value)}>
+            <Radio.Button value='single'>Single</Radio.Button>
+            <Radio.Button value='multiple'>Multiple</Radio.Button>
+          </Radio.Group>
+        </Form.Item>
         <Form.Item label='Locale'>
           <Radio.Group
             value={locale}
@@ -330,7 +337,7 @@ export function DynamicSettings() {
       {displayInput && (
         <>
           <AntdInput
-            readOnly={readOnlyInput}
+            readOnly={readOnlyInput || mode === 'single'}
             value={values.inputValue}
             onChange={(event) => {
               dispatchValues({
@@ -382,6 +389,7 @@ export function DynamicSettings() {
         leadingZero={leadingZero}
         className={customStyle ? 'my-project-cron' : undefined}
         periodicityOnDoubleClick={periodicityOnDoubleClick}
+        mode={mode}
         locale={transformedLocale}
         clearButtonProps={
           customStyle
@@ -1389,6 +1397,29 @@ export function NoPeriodicityOnDoubleClick() {
         <span style={{ fontSize: 12 }}>
           You can disable the double click on a dropdown option that
           automatically select / unselect a periodicity
+        </span>
+      </div>
+    </div>
+  )
+}
+
+export function SingleSelectionMode() {
+  const defaultValue = '30 3 4 4 1'
+  const [value, setValue] = useState(defaultValue)
+
+  return (
+    <div>
+      <p>Default value: {defaultValue}</p>
+      <p>Value: {value}</p>
+      <p>mode: &quot;single&quot;</p>
+
+      <Cron value={value} setValue={setValue} mode='single' />
+
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          When mode is &quot;single&quot;, periodicityOnDoubleClick prop is
+          ignore and set to false by default
         </span>
       </div>
     </div>

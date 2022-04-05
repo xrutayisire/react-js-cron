@@ -128,6 +128,14 @@ export interface CronProps {
   periodicityOnDoubleClick?: boolean
 
   /**
+   * Define if it's possible to select only one or multiple values for each select.
+   * When mode is 'single', periodicityOnDoubleClick prop is ignore and set to false by default.
+   *
+   * Default: 'multiple'
+   */
+  mode?: Mode
+
+  /**
    * Change the component language.
    * Can also be used to remove prefix and suffix.
    *
@@ -218,6 +226,7 @@ export type ShortcutsType =
   | '@hourly'
   | '@reboot'
 export type Shortcuts = boolean | ShortcutsType[]
+export type Mode = 'multiple' | 'single'
 
 // Internal props
 
@@ -230,11 +239,12 @@ export interface FieldProps {
   readOnly: boolean
   period: PeriodType
   periodicityOnDoubleClick: boolean
+  mode: Mode
 }
 export interface PeriodProps
   extends Omit<
     FieldProps,
-    'value' | 'setValue' | 'period' | 'periodicityOnDoubleClick'
+    'value' | 'setValue' | 'period' | 'periodicityOnDoubleClick' | 'mode'
   > {
   value: PeriodType
   setValue: SetValuePeriod
@@ -291,6 +301,7 @@ export interface CustomSelectProps
   period: PeriodType
   unit: Unit
   periodicityOnDoubleClick: boolean
+  mode: Mode
 }
 export type SetValueNumbersOrUndefined = Dispatch<
   SetStateAction<number[] | undefined>

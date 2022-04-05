@@ -22,6 +22,7 @@ export default function CustomSelect(props: CustomSelectProps) {
     period,
     unit,
     periodicityOnDoubleClick,
+    mode,
     ...otherProps
   } = props
 
@@ -103,7 +104,7 @@ export default function CustomSelect(props: CustomSelectProps) {
       let newValue: number[] = newValueOptions
 
       if (value) {
-        newValue = [...value]
+        newValue = mode === 'single' ? [] : [...value]
 
         newValueOptions.forEach((o) => {
           const newValueOptionNumber = Number(o)
@@ -173,6 +174,7 @@ export default function CustomSelect(props: CustomSelectProps) {
 
         const id = window.setTimeout(() => {
           if (
+            mode === 'multiple' &&
             periodicityOnDoubleClick &&
             clicks.length > 1 &&
             clicks[clicks.length - 1].time - clicks[clicks.length - 2].time <
@@ -201,7 +203,14 @@ export default function CustomSelect(props: CustomSelectProps) {
         }
       }
     },
-    [clicksRef, simpleClick, doubleClick, readOnly, periodicityOnDoubleClick]
+    [
+      clicksRef,
+      simpleClick,
+      doubleClick,
+      readOnly,
+      periodicityOnDoubleClick,
+      mode,
+    ]
   )
 
   // Used by the select clear icon
