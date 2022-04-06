@@ -1,5 +1,9 @@
 ## Changelog
 
+#### 1.4.0
+
+- **(New feature)** Issue [#22](https://github.com/xrutayisire/react-js-cron/issues/22): "Add the possibility to choose a single selection mode"
+
 #### 1.3.1
 
 - Fix disabled mode broken since antd 13.0
