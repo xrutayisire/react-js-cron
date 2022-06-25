@@ -174,7 +174,6 @@ export default function CustomSelect(props: CustomSelectProps) {
 
         const id = window.setTimeout(() => {
           if (
-            mode === 'multiple' &&
             periodicityOnDoubleClick &&
             clicks.length > 1 &&
             clicks[clicks.length - 1].time - clicks[clicks.length - 2].time <
@@ -203,14 +202,7 @@ export default function CustomSelect(props: CustomSelectProps) {
         }
       }
     },
-    [
-      clicksRef,
-      simpleClick,
-      doubleClick,
-      readOnly,
-      periodicityOnDoubleClick,
-      mode,
-    ]
+    [clicksRef, simpleClick, doubleClick, readOnly, periodicityOnDoubleClick]
   )
 
   // Used by the select clear icon

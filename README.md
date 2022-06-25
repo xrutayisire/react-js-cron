@@ -206,7 +206,9 @@ CronProps {
 
   /**
    * Define if it's possible to select only one or multiple values for each select.
-   * When mode is 'single', periodicityOnDoubleClick prop is ignore and set to false by default.
+   * Even in single mode, if you want to disable the double click on a dropdown option that
+   * automatically select / unselect a periodicity, set 'periodicityOnDoubleClick'
+   * prop at false.
    *
    * Default: 'multiple'
    */

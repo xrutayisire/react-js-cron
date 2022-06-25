@@ -1418,8 +1418,9 @@ export function SingleSelectionMode() {
       <div>
         <InfoCircleOutlined style={{ marginRight: 5 }} />
         <span style={{ fontSize: 12 }}>
-          When mode is &quot;single&quot;, periodicityOnDoubleClick prop is
-          ignore and set to false by default
+          If you want to disable the double click on a dropdown option that
+          automatically select / unselect a periodicity, set
+          &quot;periodicityOnDoubleClick&quot; prop at false
         </span>
       </div>
     </div>
