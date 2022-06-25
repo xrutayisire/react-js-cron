@@ -26,6 +26,10 @@ Live **demo** and **usage** at [https://xrutayisire.github.io/react-js-cron/](ht
 - [jqCron](https://github.com/arnapou/jqcron)
 - [cron-converter](https://github.com/roccivic/cron-converter)
 
+## TypeScript
+
+react-js-cron is written in TypeScript with complete definitions
+
 ## Installation
 
 Be sure that you have these dependencies on your project:
@@ -33,18 +37,39 @@ Be sure that you have these dependencies on your project:
 * antd (>=4.6.0)
 
 ```bash
+# NPM
+npm install react-js-cron
+
 # Yarn
 yarn add react-js-cron
-
-# NPM
-npm install --save react-js-cron
 ```
 
-## TypeScript
-
-react-js-cron is written in TypeScript with complete definitions
-
 ## Usage
+
+```jsx
+import { Cron } from 'react-js-cron';
+
+import 'react-js-cron/dist/styles.css';
+
+export function App() {
+  const [value, setValue] = useState('30 5 * * 1,6');
+
+  return (
+    <Cron
+      value={value}
+      setValue={setValue}
+    />
+  );
+}
+```
+
+Don't forget to import styles manually:
+
+```jsx
+import 'react-js-cron/dist/styles.css';
+```
+
+## Examples
 
 Learn more with [dynamic settings](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--dynamic-settings).
 

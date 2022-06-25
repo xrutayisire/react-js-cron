@@ -20,6 +20,7 @@ import {
 import { useCronReducer } from './utils.stories'
 import { ClearButtonAction, Mode } from '../types'
 
+import '../styles.css'
 import './styles.stories.css'
 
 export default {
