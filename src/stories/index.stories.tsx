@@ -1427,6 +1427,43 @@ export function SingleSelectionMode() {
   )
 }
 
+export function SingleSelectionModeAutoClose() {
+  const defaultValue = '30 3 4 4 1'
+  const [value, setValue] = useState(defaultValue)
+
+  return (
+    <div>
+      <p>Default value: {defaultValue}</p>
+      <p>Value: {value}</p>
+      <p>mode: &quot;single&quot;</p>
+      <p>periodicityOnDoubleClick: false</p>
+
+      <Cron
+        value={value}
+        setValue={setValue}
+        mode='single'
+        periodicityOnDoubleClick={false}
+      />
+
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          When single mode is active and &quot;periodicityOnDoubleClick&quot; is
+          false, each dropdown will automatically close after selecting a value
+        </span>
+      </div>
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          If you want to disable the double click on a dropdown option that
+          automatically select / unselect a periodicity, set
+          &quot;periodicityOnDoubleClick&quot; prop at false
+        </span>
+      </div>
+    </div>
+  )
+}
+
 export function FrenchLocale() {
   const defaultValue = '* * 1-2 2,8 1,3,6'
   const [values, dispatchValues] = useCronReducer(defaultValue)

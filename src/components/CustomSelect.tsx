@@ -247,7 +247,9 @@ export default function CustomSelect(props: CustomSelectProps) {
     <Select
       // Use 'multiple' instead of 'tags‘ mode
       // cf: Issue #2
-      mode='multiple'
+      mode={
+        mode === 'single' && !periodicityOnDoubleClick ? undefined : 'multiple'
+      }
       allowClear={!readOnly}
       virtual={false}
       open={readOnly ? false : undefined}
