@@ -3,5 +3,7 @@
 /dist/**/stories
 /dist/cjs/styles.css
 /dist/esm/styles.css
+/dist/**/*.test.*
 !/src
 /src/**/stories
+/src/**/*.test.*
