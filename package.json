@@ -40,7 +40,9 @@
     "storybook": "start-storybook -p 9009",
     "build-storybook": "build-storybook -o docs",
     "lint": "eslint 'src/**/*.ts?(x)'",
-    "prettier": "prettier --write 'src/**/*.{ts?(x),css}'"
+    "prettier": "prettier --write 'src/**/*.{ts?(x),css}'",
+    "test": "react-scripts test",
+    "coverage": "npm test -- --coverage --watchAll"
   },
   "peerDependencies": {
     "antd": ">=4.6.0",
@@ -61,6 +63,9 @@
     "@storybook/manager-webpack5": "6.5.9",
     "@storybook/react": "6.5.9",
     "@storybook/testing-library": "0.0.13",
+    "@testing-library/jest-dom": "5.16.4",
+    "@testing-library/react": "13.3.0",
+    "@testing-library/react-hooks": "8.0.1",
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",
@@ -82,5 +87,25 @@
     "react-dom": "18.2.0",
     "react-scripts": "5.0.1",
     "typescript": "4.7.4"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**",
+      "!src/types.ts",
+      "!src/index.ts",
+      "!src/stories/**"
+    ],
+    "coverageReporters": [
+      "lcov",
+      "json-summary"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 100,
+        "branches": 100,
+        "functions": 100,
+        "lines": 100
+      }
+    }
   }
 }
