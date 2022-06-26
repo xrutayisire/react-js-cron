@@ -1,0 +1,14 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build package
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install requirements
+        run: npm ci --legacy-peer-deps
+      - name: Run build
+        run: npm run build
