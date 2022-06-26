@@ -42,7 +42,8 @@
     "lint": "eslint 'src/**/*.ts?(x)'",
     "prettier": "prettier --write 'src/**/*.{ts?(x),css}'",
     "test": "react-scripts test",
-    "coverage": "npm test -- --coverage --watchAll"
+    "coverage": "npm test -- --coverage --watchAll",
+    "test:ci": "npm test -- --coverage --forceExit --detectOpenHandles"
   },
   "peerDependencies": {
     "antd": ">=4.6.0",
@@ -98,14 +99,6 @@
     "coverageReporters": [
       "lcov",
       "json-summary"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "statements": 100,
-        "branches": 100,
-        "functions": 100,
-        "lines": 100
-      }
-    }
+    ]
   }
 }
