@@ -8,6 +8,7 @@ import {
   Radio,
   Switch,
   Button,
+  Select,
 } from 'antd'
 import { InfoCircleOutlined } from '@ant-design/icons'
 
@@ -18,7 +19,7 @@ import {
   NO_PREFIX_SUFFIX_LOCALE,
 } from './constants.stories'
 import { useCronReducer } from './utils.stories'
-import { ClearButtonAction, Mode } from '../types'
+import { ClearButtonAction, CronType, Mode } from '../types'
 
 import '../styles.css'
 import './styles.stories.css'
@@ -116,6 +117,19 @@ export function DynamicSettings() {
   const [error, onError] = useState<CronError>()
   const [clearButtonAction, setClearButtonAction] =
     useState<ClearButtonAction>('fill-with-every')
+  const defaultAllowedDropdowns: CronType[] = [
+    'period',
+    'months',
+    'month-days',
+    'week-days',
+    'hours',
+    'minutes'
+  ]
+  const [allowedDropdowns, setAllowedDropdowns] =
+    useState<CronType[]>(defaultAllowedDropdowns)
+  const defaultAllowedPeriods: PeriodType[] = ['year', 'month', 'week', 'day', 'hour', 'minute', 'reboot']
+  const [allowedPeriods, setAllowedPeriods] =
+      useState<PeriodType[]>(defaultAllowedPeriods)
 
   const transformedLocale = useMemo(() => {
     let newLocale
@@ -260,6 +274,42 @@ export function DynamicSettings() {
             <Radio.Button value='multiple'>Multiple</Radio.Button>
           </Radio.Group>
         </Form.Item>
+        <Form.Item label='Allowed dropdowns'>
+          <Select 
+            mode='multiple'
+            value={allowedDropdowns}
+            onChange={(value) => {
+              setAllowedDropdowns(value)
+            }}
+            style={{ minWidth: 535 }}
+          >
+            {
+              defaultAllowedDropdowns.map((allowedDropdown) => {
+                return (
+                  <Select.Option key={allowedDropdown}>{allowedDropdown}</Select.Option>
+                )
+              })
+            }
+          </Select>         
+        </Form.Item>
+        <Form.Item label='Allowed periods'>
+          <Select 
+            mode='multiple'
+            value={allowedPeriods}
+            onChange={(value) => {
+              setAllowedPeriods(value)
+            }}
+            style={{ minWidth: 485 }}
+          >
+            {
+              defaultAllowedPeriods.map((allowedPeriod) => {
+                return (
+                  <Select.Option key={allowedPeriod}>{allowedPeriod}</Select.Option>
+                )
+              })
+            }
+          </Select>         
+        </Form.Item>
         <Form.Item label='Locale'>
           <Radio.Group
             value={locale}
@@ -391,6 +441,8 @@ export function DynamicSettings() {
         className={customStyle ? 'my-project-cron' : undefined}
         periodicityOnDoubleClick={periodicityOnDoubleClick}
         mode={mode}
+        allowedDropdowns={allowedDropdowns}
+        allowedPeriods={allowedPeriods}
         locale={transformedLocale}
         clearButtonProps={
           customStyle
@@ -1459,6 +1511,49 @@ export function SingleSelectionModeAutoClose() {
           If you want to disable the double click on a dropdown option that
           automatically select / unselect a periodicity, set
           &quot;periodicityOnDoubleClick&quot; prop at false
+        </span>
+      </div>
+    </div>
+  )
+}
+
+export function RestrictPeriodAndSelection() {
+  const defaultValue = '* * 4 * 1'
+  const [value, setValue] = useState(defaultValue)
+
+  return (
+    <div>
+      <p>Default value: {defaultValue}</p>
+      <p>Value: {value}</p>
+      <p>
+        allowedDropdowns: [&quot;period&quot;, &quot;months&quot;,
+        &quot;month-days&quot;, &quot;week-days&quot;]
+      </p>
+      <p>
+        allowedPeriods: [&quot;year&quot;, &quot;month&quot;, &quot;week&quot;,
+        &quot;minute&quot;]
+      </p>
+
+      <Cron
+        value={value}
+        setValue={setValue}
+        allowedDropdowns={['period', 'months', 'month-days', 'week-days']}
+        allowedPeriods={['year', 'month', 'week', 'minute']}
+      />
+
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          E.g.: Hide hours and minutes by removing them from
+          &quot;allowedDropdowns&quot; prop.
+        </span>
+      </div>
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          E.g.: Also hide &quot;day&quot; and &quot;hour&quot; periods with
+          &quot;allowedPeriods&quot; because hours and minutes cannot be
+          changed.
         </span>
       </div>
     </div>

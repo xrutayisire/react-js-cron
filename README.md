@@ -244,6 +244,27 @@ CronProps {
   mode?: 'multiple' | 'single'
 
   /**
+   * Define which dropdowns need to be displayed.
+   *
+   * Default: ['period', 'months', 'month-days', 'week-days', 'hours', 'minutes']
+   */
+  allowedDropdowns?: [
+    'period',
+    'months',
+    'month-days',
+    'week-days',
+    'hours',
+    'minutes'
+  ]
+
+  /**
+   * Define the list of periods available.
+   *
+   * Default: ['year', 'month', 'week', 'day', 'hour', 'minute', 'reboot']
+   */
+  allowedPeriods?: ['year', 'month', 'week', 'day', 'hour', 'minute', 'reboot']
+
+  /**
    * Change the component language.
    * Can also be used to remove prefix and suffix.
    *

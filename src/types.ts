@@ -142,6 +142,20 @@ export interface CronProps {
   mode?: Mode
 
   /**
+   * Define which dropdowns need to be displayed.
+   *
+   * Default: ['period', 'months', 'month-days', 'week-days', 'hours', 'minutes']
+   */
+  allowedDropdowns?: CronType[]
+
+  /**
+   * Define the list of periods available.
+   *
+   * Default: ['year', 'month', 'week', 'day', 'hour', 'minute', 'reboot']
+   */
+  allowedPeriods?: PeriodType[]
+
+  /**
    * Change the component language.
    * Can also be used to remove prefix and suffix.
    *
@@ -255,6 +269,7 @@ export interface PeriodProps
   value: PeriodType
   setValue: SetValuePeriod
   shortcuts: Shortcuts
+  allowedPeriods: PeriodType[]
 }
 export interface MonthsProps extends FieldProps {
   humanizeLabels: boolean
@@ -347,7 +362,6 @@ export interface DefaultLocale {
   altWeekDays: string[]
   altMonths: string[]
 }
-export type CronValues = { [key in CronType]: number[] | string | undefined }
 export interface Classes {
   [key: string]: boolean
 }
