@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react'
 import Select, { BaseOptionType } from 'antd/lib/select'
 
-import { PeriodProps } from '../types'
+import { PeriodProps, PeriodType } from '../types'
 import { DEFAULT_LOCALE_EN } from '../locale'
 import { classNames } from '../utils'
 
@@ -72,7 +72,7 @@ export default function Period(props: PeriodProps) {
   }
 
   const handleChange = useCallback(
-    (newValue) => {
+    (newValue: PeriodType) => {
       if (!readOnly) {
         setValue(newValue)
       }
@@ -118,7 +118,7 @@ export default function Period(props: PeriodProps) {
         <span>{locale.prefixPeriod || DEFAULT_LOCALE_EN.prefixPeriod}</span>
       )}
 
-      <Select
+      <Select<PeriodType, BaseOptionType>
         key={JSON.stringify(locale)}
         defaultValue={value}
         value={value}

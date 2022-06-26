@@ -65,7 +65,7 @@ export default function CustomSelect(props: CustomSelectProps) {
   )
   const localeJSON = JSON.stringify(locale)
   const renderTag = useCallback(
-    (props) => {
+    (props: { value: string[] | undefined }) => {
       const { value: itemValue } = props
 
       if (!value || value[0] !== Number(itemValue)) {
@@ -244,7 +244,7 @@ export default function CustomSelect(props: CustomSelectProps) {
   )
 
   return (
-    <Select
+    <Select<string[] | undefined>
       // Use 'multiple' instead of 'tags‘ mode
       // cf: Issue #2
       mode={
