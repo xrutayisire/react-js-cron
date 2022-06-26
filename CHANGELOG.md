@@ -1,5 +1,12 @@
 ## Changelog
 
+#### 2.0.0
+
+- **(Breaking change!)** Issue [#19](https://github.com/xrutayisire/react-js-cron/issues/19): Remove CSS import in Cron component to support Next.js. **It's now required to manually import "react-js-cron/dist/styles.css" file!**
+- **(Breaking change!)** Issue [#22](https://github.com/xrutayisire/react-js-cron/issues/22): periodicityOnDoubleClick is not ignored anymore when single mode is active
+- **(New feature)** Issue [#22](https://github.com/xrutayisire/react-js-cron/issues/22): Automatically close a dropdown when single mode is active and periodicityOnDoubleClick is false
+- **(New feature)** Issue [#28](https://github.com/xrutayisire/react-js-cron/issues/28): Add the possibility to restrict visible dropdowns and periods
+
 #### 1.4.0
 
 - **(New feature)** Issue [#22](https://github.com/xrutayisire/react-js-cron/issues/22): "Add the possibility to choose a single selection mode"
