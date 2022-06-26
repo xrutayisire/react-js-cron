@@ -123,13 +123,23 @@ export function DynamicSettings() {
     'month-days',
     'week-days',
     'hours',
-    'minutes'
+    'minutes',
   ]
-  const [allowedDropdowns, setAllowedDropdowns] =
-    useState<CronType[]>(defaultAllowedDropdowns)
-  const defaultAllowedPeriods: PeriodType[] = ['year', 'month', 'week', 'day', 'hour', 'minute', 'reboot']
-  const [allowedPeriods, setAllowedPeriods] =
-      useState<PeriodType[]>(defaultAllowedPeriods)
+  const [allowedDropdowns, setAllowedDropdowns] = useState<CronType[]>(
+    defaultAllowedDropdowns
+  )
+  const defaultAllowedPeriods: PeriodType[] = [
+    'year',
+    'month',
+    'week',
+    'day',
+    'hour',
+    'minute',
+    'reboot',
+  ]
+  const [allowedPeriods, setAllowedPeriods] = useState<PeriodType[]>(
+    defaultAllowedPeriods
+  )
 
   const transformedLocale = useMemo(() => {
     let newLocale
@@ -275,7 +285,7 @@ export function DynamicSettings() {
           </Radio.Group>
         </Form.Item>
         <Form.Item label='Allowed dropdowns'>
-          <Select 
+          <Select
             mode='multiple'
             value={allowedDropdowns}
             onChange={(value) => {
@@ -283,17 +293,17 @@ export function DynamicSettings() {
             }}
             style={{ minWidth: 535 }}
           >
-            {
-              defaultAllowedDropdowns.map((allowedDropdown) => {
-                return (
-                  <Select.Option key={allowedDropdown}>{allowedDropdown}</Select.Option>
-                )
-              })
-            }
-          </Select>         
+            {defaultAllowedDropdowns.map((allowedDropdown) => {
+              return (
+                <Select.Option key={allowedDropdown}>
+                  {allowedDropdown}
+                </Select.Option>
+              )
+            })}
+          </Select>
         </Form.Item>
         <Form.Item label='Allowed periods'>
-          <Select 
+          <Select
             mode='multiple'
             value={allowedPeriods}
             onChange={(value) => {
@@ -301,14 +311,14 @@ export function DynamicSettings() {
             }}
             style={{ minWidth: 485 }}
           >
-            {
-              defaultAllowedPeriods.map((allowedPeriod) => {
-                return (
-                  <Select.Option key={allowedPeriod}>{allowedPeriod}</Select.Option>
-                )
-              })
-            }
-          </Select>         
+            {defaultAllowedPeriods.map((allowedPeriod) => {
+              return (
+                <Select.Option key={allowedPeriod}>
+                  {allowedPeriod}
+                </Select.Option>
+              )
+            })}
+          </Select>
         </Form.Item>
         <Form.Item label='Locale'>
           <Radio.Group
