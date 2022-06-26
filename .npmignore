@@ -1,5 +1,7 @@
 /*
 !/dist
 /dist/**/stories
+/dist/cjs/styles.css
+/dist/esm/styles.css
 !/src
 /src/**/stories
