@@ -96,6 +96,7 @@ Learn more with [dynamic settings](https://xrutayisire.github.io/react-js-cron/?
 - [Locale customization](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--french-locale)
 - [Prefix and suffix removal](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--no-prefix-and-suffix)
 - [Style customization](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--custom-style)
+- And many more...
 
 ## API
 
