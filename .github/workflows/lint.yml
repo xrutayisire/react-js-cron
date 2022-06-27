@@ -11,4 +11,4 @@ jobs:
       - name: Install requirements
         run: npm ci --legacy-peer-deps
       - name: Run lint and prettier
-        run: npm run lint & npm run prettier
+        run: npm run lint:ci & npm run prettier:ci

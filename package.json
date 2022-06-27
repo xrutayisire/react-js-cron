@@ -39,11 +39,13 @@
     "build:styles": "cp dist/cjs/styles.css dist/",
     "storybook": "start-storybook -p 9009",
     "build-storybook": "build-storybook -o docs",
-    "lint": "eslint 'src/**/*.ts?(x)'",
+    "lint": "eslint --fix 'src/**/*.ts?(x)'",
     "prettier": "prettier --write 'src/**/*.{ts?(x),css}'",
     "test": "react-scripts test",
     "coverage": "npm test -- --coverage --watchAll",
-    "test:ci": "npm test -- --coverage --forceExit --detectOpenHandles"
+    "test:ci": "npm test -- --coverage --forceExit --detectOpenHandles",
+    "prettier:ci": "prettier --check 'src/**/*.{ts?(x),css}'",
+    "lint:ci": "eslint 'src/**/*.ts?(x)'"
   },
   "peerDependencies": {
     "antd": ">=4.6.0",
