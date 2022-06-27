@@ -1,5 +1,9 @@
 ## Changelog
 
+#### 2.1.0
+
+- **(New feature)** Issue [#28](https://github.com/xrutayisire/react-js-cron/issues/28): "Add an extra param in setValue function to always know the selected period"
+
 #### 2.0.0
 
 - **(Breaking change!)** Issue [#19](https://github.com/xrutayisire/react-js-cron/issues/19): Remove CSS import in Cron component to support Next.js. **It's now required to manually import "react-js-cron/dist/styles.css" file!**
