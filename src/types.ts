@@ -202,7 +202,13 @@ export interface Locale {
   altWeekDays?: string[]
   altMonths?: string[]
 }
-export type SetValueFunction = (value: string) => void
+export type SetValueFunction = (
+  value: string,
+  extra: SetValueFunctionExtra
+) => void
+export interface SetValueFunctionExtra {
+  selectedPeriod: PeriodType
+}
 export type SetValue = SetValueFunction | Dispatch<SetStateAction<string>>
 export type CronError =
   | {

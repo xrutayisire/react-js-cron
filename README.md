@@ -116,7 +116,7 @@ CronProps {
    * required
    */
   setValue: 
-    | (value: string) => void
+    | (value: string, extra: { selectedPeriod }) => void
     | Dispatch<SetStateAction<string>>
 
   /**

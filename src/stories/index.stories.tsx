@@ -107,6 +107,7 @@ export function DynamicSettings() {
     'english' | 'french' | 'english-variant'
   >('english')
   const [defaultPeriod, setDefaultPeriod] = useState<PeriodType>('day')
+  const [selectedPeriod, setSelectedPeriod] = useState<PeriodType>('day')
   const [defaultValue, setDefaultValue] = useState('@daily')
   const [leadingZero, setLeadingZero] = useState<boolean>(false)
   const [periodicityOnDoubleClick, setPeriodicityOnDoubleClick] =
@@ -389,6 +390,7 @@ export function DynamicSettings() {
               value: defaultValue,
             })
             setKey(Math.random().toString(36).substring(7))
+            setSelectedPeriod(defaultPeriod)
           }}
         >
           Reset cron component
@@ -429,11 +431,12 @@ export function DynamicSettings() {
       <Cron
         key={key}
         value={values.cronValue}
-        setValue={(newValue: string) => {
+        setValue={(newValue: string, { selectedPeriod }) => {
           dispatchValues({
             type: 'set_values',
             value: newValue,
           })
+          setSelectedPeriod(selectedPeriod)
         }}
         onError={onError}
         disabled={disabled}
@@ -463,6 +466,7 @@ export function DynamicSettings() {
         }
       />
 
+      <p style={{ marginTop: 20 }}>Selected period: {selectedPeriod}</p>
       {displayErrorText && (
         <p style={{ marginTop: 20 }}>
           Error: {error ? error.description : 'undefined'}
@@ -1566,6 +1570,30 @@ export function RestrictPeriodAndSelection() {
           changed.
         </span>
       </div>
+    </div>
+  )
+}
+
+export function TrackSelectedPeriod() {
+  const defaultValue = ''
+  const defaultPeriod = 'month'
+  const [value, setValue] = useState(defaultValue)
+  const [selectedPeriod, setSelectedPeriod] =
+    useState<PeriodType>(defaultPeriod)
+
+  return (
+    <div>
+      <p>Value: {value}</p>
+      <p>Selected period: {selectedPeriod}</p>
+
+      <Cron
+        value={value}
+        defaultPeriod={defaultPeriod}
+        setValue={(value, { selectedPeriod }) => {
+          setValue(value)
+          setSelectedPeriod(selectedPeriod)
+        }}
+      />
     </div>
   )
 }

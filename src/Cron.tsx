@@ -130,8 +130,9 @@ export default function Cron(props: CronProps) {
         !valueCleared &&
         !previousValueCleared
       ) {
+        const selectedPeriod = period || defaultPeriodRef.current
         const cron = getCronStringFromValues(
-          period || defaultPeriodRef.current,
+          selectedPeriod,
           months,
           monthDays,
           weekDays,
@@ -140,7 +141,7 @@ export default function Cron(props: CronProps) {
           humanizeValue
         )
 
-        setValue(cron)
+        setValue(cron, { selectedPeriod })
         internalValueRef.current = cron
 
         onError && onError(undefined)
@@ -194,7 +195,7 @@ export default function Cron(props: CronProps) {
         newValue = cron
       }
 
-      setValue(newValue)
+      setValue(newValue, { selectedPeriod: newPeriod })
       internalValueRef.current = newValue
 
       setValueCleared(true)
