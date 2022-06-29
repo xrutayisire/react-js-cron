@@ -76,7 +76,7 @@ export function setValuesFromCronString(
 
     try {
       const cronParts = parseCronString(cronString)
-      const period = getPeriodFromCronparts(cronParts)
+      const period = getPeriodFromCronParts(cronParts)
 
       setPeriod(period)
       setMinutes(cronParts[0])
@@ -231,19 +231,34 @@ export function formatValue(
 }
 
 /**
- * Parses a 2-dimentional array of integers as a cron schedule
+ * Validates a range of positive integers
  */
-function parseCronArray(cronArr: number[][], humanizeValue?: boolean) {
-  if (cronArr.length === 5) {
-    return cronArr.map((partArr, idx) => {
-      const unit = UNITS[idx]
-      const parsedArray = parsePartArray(partArr, unit)
+export function parsePartArray(arr: number[], unit: Unit) {
+  const values = sort(dedup(fixSunday(arr, unit)))
 
-      return partToString(parsedArray, unit, humanizeValue)
-    })
+  if (values.length === 0) {
+    return values
   }
 
-  throw new Error('Invalid cron array')
+  const value = outOfRange(values, unit)
+
+  if (typeof value !== 'undefined') {
+    throw new Error(`Value "${value}" out of range for ${unit.type}`)
+  }
+
+  return values
+}
+
+/**
+ * Parses a 2-dimensional array of integers as a cron schedule
+ */
+function parseCronArray(cronArr: number[][], humanizeValue?: boolean) {
+  return cronArr.map((partArr, idx) => {
+    const unit = UNITS[idx]
+    const parsedArray = parsePartArray(partArr, unit)
+
+    return partToString(parsedArray, unit, humanizeValue)
+  })
 }
 
 /**
@@ -256,7 +271,7 @@ function cronToString(parts: string[]) {
 /**
  * Find the period from cron parts
  */
-function getPeriodFromCronparts(cronParts: number[][]): PeriodType {
+function getPeriodFromCronParts(cronParts: number[][]): PeriodType {
   if (cronParts[3].length > 0) {
     return 'year'
   } else if (cronParts[2].length > 0) {
@@ -447,25 +462,6 @@ function applyInterval(values: number[], step?: number) {
     values = values.filter((value) => {
       return value % step === minVal % step || value === minVal
     })
-  }
-
-  return values
-}
-
-/**
- * Validates a range of positive integers
- */
-export function parsePartArray(arr: number[], unit: Unit) {
-  const values = sort(dedup(fixSunday(arr, unit)))
-
-  if (values.length === 0) {
-    return values
-  }
-
-  const value = outOfRange(values, unit)
-
-  if (typeof value !== 'undefined') {
-    throw new Error(`Value "${value}" out of range for ${unit.type}`)
   }
 
   return values

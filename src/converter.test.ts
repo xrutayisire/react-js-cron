@@ -5,7 +5,8 @@ import { AllowEmpty, PeriodType, Shortcuts } from './types'
 
 describe('converter setValuesFromCronString function test suite', () => {
   const testCases: {
-    cronString: string
+    title: string
+    cronString: string | number // number to test wrong value type
     allowEmpty: AllowEmpty
     firstRender: boolean
     shortcuts: Shortcuts
@@ -24,6 +25,7 @@ describe('converter setValuesFromCronString function test suite', () => {
     expectedParamSetPeriod: PeriodType | undefined
   }[] = [
     {
+      title: 'a valid cron with unique value for single unit',
       cronString: '40 * * * *',
       allowEmpty: 'for-default-value',
       firstRender: false,
@@ -43,6 +45,7 @@ describe('converter setValuesFromCronString function test suite', () => {
       expectedParamSetPeriod: 'hour',
     },
     {
+      title: 'a valid cron with multiple values for single unit',
       cronString: '2,5,8,40 * * * *',
       allowEmpty: 'for-default-value',
       firstRender: false,
@@ -62,6 +65,7 @@ describe('converter setValuesFromCronString function test suite', () => {
       expectedParamSetPeriod: 'hour',
     },
     {
+      title: 'a valid cron with single value for multiple units',
       cronString: '3 2 * * *',
       allowEmpty: 'for-default-value',
       firstRender: false,
@@ -81,6 +85,8 @@ describe('converter setValuesFromCronString function test suite', () => {
       expectedParamSetPeriod: 'day',
     },
     {
+      title:
+        'that an empty string is allowed on first render with allowEmpty always',
       cronString: '',
       allowEmpty: 'always',
       firstRender: true,
@@ -100,6 +106,8 @@ describe('converter setValuesFromCronString function test suite', () => {
       expectedParamSetPeriod: undefined,
     },
     {
+      title:
+        'that an empty string is allowed on second render with allowEmpty always',
       cronString: '',
       allowEmpty: 'always',
       firstRender: false,
@@ -119,6 +127,8 @@ describe('converter setValuesFromCronString function test suite', () => {
       expectedParamSetPeriod: undefined,
     },
     {
+      title:
+        'that en empty string is allowed on first render with allowEmpty for-default-value',
       cronString: '',
       allowEmpty: 'for-default-value',
       firstRender: true,
@@ -138,6 +148,8 @@ describe('converter setValuesFromCronString function test suite', () => {
       expectedParamSetPeriod: undefined,
     },
     {
+      title:
+        'that an empty string is not allowed on second render with allowEmpty for-default-value',
       cronString: '',
       allowEmpty: 'for-default-value',
       firstRender: false,
@@ -157,6 +169,8 @@ describe('converter setValuesFromCronString function test suite', () => {
       expectedParamSetPeriod: undefined,
     },
     {
+      title:
+        'that an empty string is not allowed on first render with allowEmpty never',
       cronString: '',
       allowEmpty: 'never',
       firstRender: true,
@@ -176,6 +190,28 @@ describe('converter setValuesFromCronString function test suite', () => {
       expectedParamSetPeriod: undefined,
     },
     {
+      title:
+        'that an empty string is not allowed on second render with allowEmpty never',
+      cronString: '',
+      allowEmpty: 'never',
+      firstRender: false,
+      shortcuts: false,
+      error: true,
+      expectedNbCallsSetMinutes: 0,
+      expectedParamSetMinutes: undefined,
+      expectedNbCallsSetHours: 0,
+      expectedParamSetHours: undefined,
+      expectedNbCallsSetMonthDays: 0,
+      expectedParamSetMonthDays: undefined,
+      expectedNbCallsSetMonths: 0,
+      expectedParamSetMonths: undefined,
+      expectedNbCallsSetWeekDays: 0,
+      expectedParamSetWeekDays: undefined,
+      expectedNbCallsSetPeriod: 0,
+      expectedParamSetPeriod: undefined,
+    },
+    {
+      title: 'a wrong value string throw an error',
       cronString: 'wrong value',
       allowEmpty: 'always',
       firstRender: false,
@@ -195,6 +231,27 @@ describe('converter setValuesFromCronString function test suite', () => {
       expectedParamSetPeriod: undefined,
     },
     {
+      title: 'a wrong value number throw an error',
+      cronString: 200,
+      allowEmpty: 'always',
+      firstRender: false,
+      shortcuts: false,
+      error: true,
+      expectedNbCallsSetMinutes: 0,
+      expectedParamSetMinutes: undefined,
+      expectedNbCallsSetHours: 0,
+      expectedParamSetHours: undefined,
+      expectedNbCallsSetMonthDays: 0,
+      expectedParamSetMonthDays: undefined,
+      expectedNbCallsSetMonths: 0,
+      expectedParamSetMonths: undefined,
+      expectedNbCallsSetWeekDays: 0,
+      expectedParamSetWeekDays: undefined,
+      expectedNbCallsSetPeriod: 0,
+      expectedParamSetPeriod: undefined,
+    },
+    {
+      title: 'all units values filled set year period',
       cronString: '1 2 3 4 5',
       allowEmpty: 'always',
       firstRender: false,
@@ -214,6 +271,27 @@ describe('converter setValuesFromCronString function test suite', () => {
       expectedParamSetPeriod: 'year',
     },
     {
+      title: 'that a range is allowed when valid',
+      cronString: '1 2 3-9/3 4 5',
+      allowEmpty: 'for-default-value',
+      firstRender: false,
+      shortcuts: false,
+      error: false,
+      expectedNbCallsSetMinutes: 1,
+      expectedParamSetMinutes: [1],
+      expectedNbCallsSetHours: 1,
+      expectedParamSetHours: [2],
+      expectedNbCallsSetMonthDays: 1,
+      expectedParamSetMonthDays: [3, 6, 9],
+      expectedNbCallsSetMonths: 1,
+      expectedParamSetMonths: [4],
+      expectedNbCallsSetWeekDays: 1,
+      expectedParamSetWeekDays: [5],
+      expectedNbCallsSetPeriod: 1,
+      expectedParamSetPeriod: 'year',
+    },
+    {
+      title: 'that reboot shortcut is allowed when shortcuts is true',
       cronString: '@reboot',
       allowEmpty: 'always',
       firstRender: false,
@@ -233,6 +311,7 @@ describe('converter setValuesFromCronString function test suite', () => {
       expectedParamSetPeriod: 'reboot',
     },
     {
+      title: 'that reboot shortcut is not allowed when shortcuts is false',
       cronString: '@reboot',
       allowEmpty: 'always',
       firstRender: false,
@@ -252,6 +331,7 @@ describe('converter setValuesFromCronString function test suite', () => {
       expectedParamSetPeriod: undefined,
     },
     {
+      title: 'that monthly shortcut is allowed when shortcuts is true',
       cronString: '@monthly',
       allowEmpty: 'always',
       firstRender: false,
@@ -271,6 +351,8 @@ describe('converter setValuesFromCronString function test suite', () => {
       expectedParamSetPeriod: 'month',
     },
     {
+      title:
+        'that monthly shortcut is not allowed when shortcuts only accept reboot',
       cronString: '@monthly',
       allowEmpty: 'always',
       firstRender: false,
@@ -290,6 +372,7 @@ describe('converter setValuesFromCronString function test suite', () => {
       expectedParamSetPeriod: undefined,
     },
     {
+      title: 'that monthly shortcut is allowed when shortcuts accept @monthly',
       cronString: '@monthly',
       allowEmpty: 'always',
       firstRender: false,
@@ -309,6 +392,7 @@ describe('converter setValuesFromCronString function test suite', () => {
       expectedParamSetPeriod: 'month',
     },
     {
+      title: 'that a wrong shortcut is not allowed',
       cronString: '@wrongShortcut',
       allowEmpty: 'always',
       firstRender: false,
@@ -327,10 +411,272 @@ describe('converter setValuesFromCronString function test suite', () => {
       expectedNbCallsSetPeriod: 0,
       expectedParamSetPeriod: undefined,
     },
+    {
+      title: 'all unit filled with every set minute period',
+      cronString: '* * * * *',
+      allowEmpty: 'always',
+      firstRender: false,
+      shortcuts: true,
+      error: false,
+      expectedNbCallsSetMinutes: 1,
+      expectedParamSetMinutes: [],
+      expectedNbCallsSetHours: 1,
+      expectedParamSetHours: [],
+      expectedNbCallsSetMonthDays: 1,
+      expectedParamSetMonthDays: [],
+      expectedNbCallsSetMonths: 1,
+      expectedParamSetMonths: [],
+      expectedNbCallsSetWeekDays: 1,
+      expectedParamSetWeekDays: [],
+      expectedNbCallsSetPeriod: 1,
+      expectedParamSetPeriod: 'minute',
+    },
+    {
+      title: 'only week day value set week period',
+      cronString: '* * * * 1',
+      allowEmpty: 'always',
+      firstRender: false,
+      shortcuts: true,
+      error: false,
+      expectedNbCallsSetMinutes: 1,
+      expectedParamSetMinutes: [],
+      expectedNbCallsSetHours: 1,
+      expectedParamSetHours: [],
+      expectedNbCallsSetMonthDays: 1,
+      expectedParamSetMonthDays: [],
+      expectedNbCallsSetMonths: 1,
+      expectedParamSetMonths: [],
+      expectedNbCallsSetWeekDays: 1,
+      expectedParamSetWeekDays: [1],
+      expectedNbCallsSetPeriod: 1,
+      expectedParamSetPeriod: 'week',
+    },
+    {
+      title: '7 for sunday converted to 0',
+      cronString: '* * * * 7',
+      allowEmpty: 'always',
+      firstRender: false,
+      shortcuts: true,
+      error: false,
+      expectedNbCallsSetMinutes: 1,
+      expectedParamSetMinutes: [],
+      expectedNbCallsSetHours: 1,
+      expectedParamSetHours: [],
+      expectedNbCallsSetMonthDays: 1,
+      expectedParamSetMonthDays: [],
+      expectedNbCallsSetMonths: 1,
+      expectedParamSetMonths: [],
+      expectedNbCallsSetWeekDays: 1,
+      expectedParamSetWeekDays: [0],
+      expectedNbCallsSetPeriod: 1,
+      expectedParamSetPeriod: 'week',
+    },
+    {
+      title: 'humanized value converted to number',
+      cronString: '* * * MAY SUN',
+      allowEmpty: 'always',
+      firstRender: false,
+      shortcuts: true,
+      error: false,
+      expectedNbCallsSetMinutes: 1,
+      expectedParamSetMinutes: [],
+      expectedNbCallsSetHours: 1,
+      expectedParamSetHours: [],
+      expectedNbCallsSetMonthDays: 1,
+      expectedParamSetMonthDays: [],
+      expectedNbCallsSetMonths: 1,
+      expectedParamSetMonths: [5],
+      expectedNbCallsSetWeekDays: 1,
+      expectedParamSetWeekDays: [0],
+      expectedNbCallsSetPeriod: 1,
+      expectedParamSetPeriod: 'year',
+    },
+    {
+      title: 'wrong range with double "/" throw an error',
+      cronString: '2/2/2 * * * *',
+      allowEmpty: 'always',
+      firstRender: false,
+      shortcuts: true,
+      error: true,
+      expectedNbCallsSetMinutes: 0,
+      expectedParamSetMinutes: undefined,
+      expectedNbCallsSetHours: 0,
+      expectedParamSetHours: undefined,
+      expectedNbCallsSetMonthDays: 0,
+      expectedParamSetMonthDays: undefined,
+      expectedNbCallsSetMonths: 0,
+      expectedParamSetMonths: undefined,
+      expectedNbCallsSetWeekDays: 0,
+      expectedParamSetWeekDays: undefined,
+      expectedNbCallsSetPeriod: 0,
+      expectedParamSetPeriod: undefined,
+    },
+    {
+      title: 'full week days definition set every',
+      cronString: '* * * * 0,1,2,3,4,5,6',
+      allowEmpty: 'always',
+      firstRender: false,
+      shortcuts: true,
+      error: false,
+      expectedNbCallsSetMinutes: 1,
+      expectedParamSetMinutes: [],
+      expectedNbCallsSetHours: 1,
+      expectedParamSetHours: [],
+      expectedNbCallsSetMonthDays: 1,
+      expectedParamSetMonthDays: [],
+      expectedNbCallsSetMonths: 1,
+      expectedParamSetMonths: [],
+      expectedNbCallsSetWeekDays: 1,
+      expectedParamSetWeekDays: [],
+      expectedNbCallsSetPeriod: 1,
+      expectedParamSetPeriod: 'minute',
+    },
+    {
+      title: 'range with every two week days is allowed',
+      cronString: '* * * * */2',
+      allowEmpty: 'always',
+      firstRender: false,
+      shortcuts: true,
+      error: false,
+      expectedNbCallsSetMinutes: 1,
+      expectedParamSetMinutes: [],
+      expectedNbCallsSetHours: 1,
+      expectedParamSetHours: [],
+      expectedNbCallsSetMonthDays: 1,
+      expectedParamSetMonthDays: [],
+      expectedNbCallsSetMonths: 1,
+      expectedParamSetMonths: [],
+      expectedNbCallsSetWeekDays: 1,
+      expectedParamSetWeekDays: [0, 2, 4, 6],
+      expectedNbCallsSetPeriod: 1,
+      expectedParamSetPeriod: 'week',
+    },
+    {
+      title: 'an out of range value too low throw an error',
+      cronString: '* * * * -1',
+      allowEmpty: 'always',
+      firstRender: false,
+      shortcuts: true,
+      error: true,
+      expectedNbCallsSetMinutes: 0,
+      expectedParamSetMinutes: undefined,
+      expectedNbCallsSetHours: 0,
+      expectedParamSetHours: undefined,
+      expectedNbCallsSetMonthDays: 0,
+      expectedParamSetMonthDays: undefined,
+      expectedNbCallsSetMonths: 0,
+      expectedParamSetMonths: undefined,
+      expectedNbCallsSetWeekDays: 0,
+      expectedParamSetWeekDays: undefined,
+      expectedNbCallsSetPeriod: 0,
+      expectedParamSetPeriod: undefined,
+    },
+    {
+      title: 'an out of range value too big throw an error',
+      cronString: '* * * * 200',
+      allowEmpty: 'always',
+      firstRender: false,
+      shortcuts: true,
+      error: true,
+      expectedNbCallsSetMinutes: 0,
+      expectedParamSetMinutes: undefined,
+      expectedNbCallsSetHours: 0,
+      expectedParamSetHours: undefined,
+      expectedNbCallsSetMonthDays: 0,
+      expectedParamSetMonthDays: undefined,
+      expectedNbCallsSetMonths: 0,
+      expectedParamSetMonths: undefined,
+      expectedNbCallsSetWeekDays: 0,
+      expectedParamSetWeekDays: undefined,
+      expectedNbCallsSetPeriod: 0,
+      expectedParamSetPeriod: undefined,
+    },
+    {
+      title:
+        'that a range first value greater than second value throw an error',
+      cronString: '* * * * 5-2',
+      allowEmpty: 'always',
+      firstRender: false,
+      shortcuts: true,
+      error: true,
+      expectedNbCallsSetMinutes: 0,
+      expectedParamSetMinutes: undefined,
+      expectedNbCallsSetHours: 0,
+      expectedParamSetHours: undefined,
+      expectedNbCallsSetMonthDays: 0,
+      expectedParamSetMonthDays: undefined,
+      expectedNbCallsSetMonths: 0,
+      expectedParamSetMonths: undefined,
+      expectedNbCallsSetWeekDays: 0,
+      expectedParamSetWeekDays: undefined,
+      expectedNbCallsSetPeriod: 0,
+      expectedParamSetPeriod: undefined,
+    },
+    {
+      title: 'wrong range with more than one separator throw an error',
+      cronString: '* * * * 5-2-2',
+      allowEmpty: 'always',
+      firstRender: false,
+      shortcuts: true,
+      error: true,
+      expectedNbCallsSetMinutes: 0,
+      expectedParamSetMinutes: undefined,
+      expectedNbCallsSetHours: 0,
+      expectedParamSetHours: undefined,
+      expectedNbCallsSetMonthDays: 0,
+      expectedParamSetMonthDays: undefined,
+      expectedNbCallsSetMonths: 0,
+      expectedParamSetMonths: undefined,
+      expectedNbCallsSetWeekDays: 0,
+      expectedParamSetWeekDays: undefined,
+      expectedNbCallsSetPeriod: 0,
+      expectedParamSetPeriod: undefined,
+    },
+    {
+      title: 'wrong range first part throw an error',
+      cronString: '* * * * error/2',
+      allowEmpty: 'always',
+      firstRender: false,
+      shortcuts: true,
+      error: true,
+      expectedNbCallsSetMinutes: 0,
+      expectedParamSetMinutes: undefined,
+      expectedNbCallsSetHours: 0,
+      expectedParamSetHours: undefined,
+      expectedNbCallsSetMonthDays: 0,
+      expectedParamSetMonthDays: undefined,
+      expectedNbCallsSetMonths: 0,
+      expectedParamSetMonths: undefined,
+      expectedNbCallsSetWeekDays: 0,
+      expectedParamSetWeekDays: undefined,
+      expectedNbCallsSetPeriod: 0,
+      expectedParamSetPeriod: undefined,
+    },
+    {
+      title: 'wrong range second part throw an error',
+      cronString: '* * * * 2/error',
+      allowEmpty: 'always',
+      firstRender: false,
+      shortcuts: true,
+      error: true,
+      expectedNbCallsSetMinutes: 0,
+      expectedParamSetMinutes: undefined,
+      expectedNbCallsSetHours: 0,
+      expectedParamSetHours: undefined,
+      expectedNbCallsSetMonthDays: 0,
+      expectedParamSetMonthDays: undefined,
+      expectedNbCallsSetMonths: 0,
+      expectedParamSetMonths: undefined,
+      expectedNbCallsSetWeekDays: 0,
+      expectedParamSetWeekDays: undefined,
+      expectedNbCallsSetPeriod: 0,
+      expectedParamSetPeriod: undefined,
+    },
   ]
 
   testCases.forEach(
     ({
+      title,
       cronString,
       allowEmpty,
       firstRender,
@@ -349,9 +695,7 @@ describe('converter setValuesFromCronString function test suite', () => {
       expectedNbCallsSetPeriod,
       expectedNbCallsSetWeekDays,
     }) => {
-      it(`should check values from cron string "${cronString}" with allowEmpty ${allowEmpty} ${
-        firstRender ? 'and first render' : ''
-      }`, () => {
+      it(`should check ${title}`, () => {
         const setInternalError = jest.fn()
         const onError = jest.fn()
         const internalValueRef: MutableRefObject<string> = {
@@ -366,7 +710,7 @@ describe('converter setValuesFromCronString function test suite', () => {
         const setPeriod = jest.fn()
 
         setValuesFromCronString(
-          cronString,
+          cronString as string,
           setInternalError,
           onError,
           allowEmpty,
@@ -437,6 +781,7 @@ describe('converter setValuesFromCronString function test suite', () => {
 
 describe('converter getCronStringFromValues function test suite', () => {
   const testCases: {
+    title: string
     period: PeriodType
     months: number[] | undefined
     monthDays: number[] | undefined
@@ -444,9 +789,11 @@ describe('converter getCronStringFromValues function test suite', () => {
     hours: number[] | undefined
     minutes: number[] | undefined
     humanizeValue: boolean
-    expectedValue: string
+    expectedValue: string | undefined
+    error?: string
   }[] = [
     {
+      title: 'valid cron values with unique values for all units',
       period: 'year',
       minutes: [1],
       hours: [2],
@@ -457,6 +804,7 @@ describe('converter getCronStringFromValues function test suite', () => {
       expectedValue: '1 2 3 4 5',
     },
     {
+      title: 'valid cron values with unique values for multiple units',
       period: 'day',
       minutes: [1],
       hours: [2],
@@ -467,6 +815,7 @@ describe('converter getCronStringFromValues function test suite', () => {
       expectedValue: '1 2 * * *',
     },
     {
+      title: 'valid cron values with a unique value for a single unit',
       period: 'day',
       minutes: [1],
       hours: [],
@@ -477,6 +826,7 @@ describe('converter getCronStringFromValues function test suite', () => {
       expectedValue: '1 * * * *',
     },
     {
+      title: 'valid cron values with multiple values for multiple units',
       period: 'year',
       minutes: [1],
       hours: [2],
@@ -487,6 +837,7 @@ describe('converter getCronStringFromValues function test suite', () => {
       expectedValue: '1 2 3 3,7,10 5',
     },
     {
+      title: 'valid cron values with humanized values',
       period: 'year',
       minutes: [1],
       hours: [2],
@@ -497,6 +848,7 @@ describe('converter getCronStringFromValues function test suite', () => {
       expectedValue: '1 2 3 MAR,JUL,OCT FRI',
     },
     {
+      title: 'valid cron values with reboot shortcut',
       period: 'reboot',
       minutes: [],
       hours: [],
@@ -507,6 +859,7 @@ describe('converter getCronStringFromValues function test suite', () => {
       expectedValue: '@reboot',
     },
     {
+      title: 'valid cron values with period that remove unnecessary values',
       period: 'month',
       minutes: undefined,
       hours: undefined,
@@ -517,6 +870,7 @@ describe('converter getCronStringFromValues function test suite', () => {
       expectedValue: '* * 3 * 5',
     },
     {
+      title: 'valid cron values with every',
       period: 'year',
       minutes: undefined,
       hours: undefined,
@@ -527,6 +881,7 @@ describe('converter getCronStringFromValues function test suite', () => {
       expectedValue: '* * * * *',
     },
     {
+      title: 'valid cron values with every 2 week days',
       period: 'year',
       minutes: [0],
       hours: [1],
@@ -536,34 +891,83 @@ describe('converter getCronStringFromValues function test suite', () => {
       humanizeValue: false,
       expectedValue: '0 1 1 5 */2',
     },
+    {
+      title: 'valid cron values with step range definition',
+      period: 'year',
+      minutes: [0],
+      hours: [1],
+      monthDays: [3, 6, 9],
+      months: [5],
+      weekDays: [0, 2, 4, 6],
+      humanizeValue: false,
+      expectedValue: '0 1 3-9/3 5 */2',
+    },
+    {
+      title: 'valid cron values with simple range definition',
+      period: 'year',
+      minutes: [0],
+      hours: [1],
+      monthDays: [3, 4, 5],
+      months: [5],
+      weekDays: [0, 2, 4, 6],
+      humanizeValue: false,
+      expectedValue: '0 1 3-5 5 */2',
+    },
+    {
+      title: 'invalid cron values with a too big value',
+      period: 'year',
+      minutes: [0],
+      hours: [1],
+      monthDays: [3, 4, 500],
+      months: [5],
+      weekDays: [0, 2, 4, 6],
+      humanizeValue: false,
+      expectedValue: undefined,
+      error: 'Value "500" out of range for month-days',
+    },
+    {
+      title: 'invalid cron values with a too low value',
+      period: 'year',
+      minutes: [0],
+      hours: [1],
+      monthDays: [3, 4, -1],
+      months: [5],
+      weekDays: [0, 2, 4, 6],
+      humanizeValue: false,
+      expectedValue: undefined,
+      error: 'Value "-1" out of range for month-days',
+    },
   ]
 
   testCases.forEach(
-    (
-      {
-        period,
-        hours,
-        humanizeValue,
-        minutes,
-        monthDays,
-        months,
-        weekDays,
-        expectedValue,
-      },
-      index
-    ) => {
-      it(`should check cron string from values ${index}`, () => {
-        expect(
-          getCronStringFromValues(
-            period,
-            months,
-            monthDays,
-            weekDays,
-            hours,
-            minutes,
-            humanizeValue
-          )
-        ).toEqual(expectedValue)
+    ({
+      title,
+      period,
+      hours,
+      humanizeValue,
+      minutes,
+      monthDays,
+      months,
+      weekDays,
+      expectedValue,
+      error,
+    }) => {
+      it(`should check ${title}`, () => {
+        try {
+          expect(
+            getCronStringFromValues(
+              period,
+              months as number[] | undefined,
+              monthDays,
+              weekDays,
+              hours,
+              minutes,
+              humanizeValue
+            )
+          ).toEqual(expectedValue)
+        } catch (e) {
+          expect(e.message).toEqual(error)
+        }
       })
     }
   )
