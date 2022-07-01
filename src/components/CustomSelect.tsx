@@ -277,6 +277,7 @@ export default function CustomSelect(props: CustomSelectProps) {
             }
           : undefined
       }
+      data-testid={`custom-select-${unit.type}`}
       {...otherProps}
     />
   )

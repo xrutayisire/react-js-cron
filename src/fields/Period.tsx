@@ -129,6 +129,7 @@ export default function Period(props: PeriodProps) {
         disabled={disabled}
         showArrow={!readOnly}
         open={readOnly ? false : undefined}
+        data-testid='select-period'
       />
     </div>
   )

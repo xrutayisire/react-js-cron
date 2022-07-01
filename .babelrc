@@ -6,7 +6,8 @@
     "babel-plugin-typescript-to-proptypes",
     "@babel/plugin-proposal-export-default-from",
     "@babel/proposal-class-properties",
-    "@babel/proposal-object-rest-spread"
+    "@babel/proposal-object-rest-spread",
+    ["react-remove-properties", { "properties": ["data-testid"] }]
   ],
   "comments": false
 }

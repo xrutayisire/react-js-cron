@@ -5,7 +5,7 @@
     "module": "commonjs",
     "rootDir": "src",
     "outDir": "dist/cjs",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "declaration": true,
     "emitDeclarationOnly": true,
     "noImplicitAny": true,

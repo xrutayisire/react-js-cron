@@ -76,6 +76,7 @@
     "@typescript-eslint/parser": "5.29.0",
     "antd": "4.21.3",
     "babel-loader": "8.2.5",
+    "babel-plugin-react-remove-properties": "0.3.0",
     "babel-plugin-transform-es2015-modules-umd": "6.24.1",
     "babel-plugin-typescript-to-proptypes": "2.0.0",
     "concurrently": "7.2.2",
