@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 
 import Cron from '../Cron'
 import {
@@ -559,7 +559,7 @@ describe('Cron defaultValue test suite', () => {
       const setValue = jest.fn()
       const onError = jest.fn()
 
-      const { getByTestId, queryByTestId } = render(
+      render(
         <Cron
           value={defaultValue}
           setValue={setValue}
@@ -600,70 +600,72 @@ describe('Cron defaultValue test suite', () => {
       // Check period dropdown
 
       if (periodSelect) {
-        expect(getByTestId('select-period')).toBeVisible()
-        expect(getByTestId('select-period').textContent).toContain(periodSelect)
+        expect(screen.getByTestId('select-period')).toBeVisible()
+        expect(screen.getByTestId('select-period').textContent).toContain(
+          periodSelect
+        )
       } else {
-        expect(queryByTestId(/select-period/i)).toBeNull()
+        expect(screen.queryByTestId(/select-period/i)).toBeNull()
       }
 
       //
       // Check months dropdown
 
       if (monthsSelect) {
-        expect(queryByTestId('custom-select-months')).toBeVisible()
-        expect(getByTestId('custom-select-months').textContent).toContain(
-          monthsSelect
-        )
+        expect(screen.queryByTestId('custom-select-months')).toBeVisible()
+        expect(
+          screen.getByTestId('custom-select-months').textContent
+        ).toContain(monthsSelect)
       } else {
-        expect(queryByTestId(/custom-select-months/i)).toBeNull()
+        expect(screen.queryByTestId(/custom-select-months/i)).toBeNull()
       }
 
       //
       // Check month days dropdown
 
       if (monthDaysSelect) {
-        expect(queryByTestId('custom-select-month-days')).toBeVisible()
-        expect(getByTestId('custom-select-month-days').textContent).toContain(
-          monthDaysSelect
-        )
+        expect(screen.queryByTestId('custom-select-month-days')).toBeVisible()
+        expect(
+          screen.getByTestId('custom-select-month-days').textContent
+        ).toContain(monthDaysSelect)
       } else {
-        expect(queryByTestId(/custom-select-month-days/i)).toBeNull()
+        expect(screen.queryByTestId(/custom-select-month-days/i)).toBeNull()
       }
 
       //
       // Check week days dropdown
 
       if (weekDaysSelect) {
-        expect(queryByTestId('custom-select-week-days')).toBeVisible()
-        expect(getByTestId('custom-select-week-days').textContent).toContain(
-          weekDaysSelect
-        )
+        expect(screen.queryByTestId('custom-select-week-days')).toBeVisible()
+        expect(
+          screen.getByTestId('custom-select-week-days').textContent
+        ).toContain(weekDaysSelect)
       } else {
-        expect(queryByTestId(/custom-select-week-days/i)).toBeNull()
+        expect(screen.queryByTestId(/custom-select-week-days/i)).toBeNull()
       }
 
       //
       // Check hours dropdown
 
       if (hoursSelect) {
-        expect(queryByTestId('custom-select-hours')).toBeVisible()
-        expect(getByTestId('custom-select-hours').textContent).toContain(
+        expect(screen.queryByTestId('custom-select-hours')).toBeVisible()
+        expect(screen.getByTestId('custom-select-hours').textContent).toContain(
           hoursSelect
         )
       } else {
-        expect(queryByTestId(/custom-select-hours/i)).toBeNull()
+        expect(screen.queryByTestId(/custom-select-hours/i)).toBeNull()
       }
 
       //
       // Check minutes dropdown
 
       if (minutesSelect) {
-        expect(queryByTestId('custom-select-minutes')).toBeVisible()
-        expect(getByTestId('custom-select-minutes').textContent).toContain(
-          minutesSelect
-        )
+        expect(screen.queryByTestId('custom-select-minutes')).toBeVisible()
+        expect(
+          screen.getByTestId('custom-select-minutes').textContent
+        ).toContain(minutesSelect)
       } else {
-        expect(queryByTestId(/custom-select-minutes/i)).toBeNull()
+        expect(screen.queryByTestId(/custom-select-minutes/i)).toBeNull()
       }
     }
   )
