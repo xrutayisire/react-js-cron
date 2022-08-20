@@ -532,6 +532,28 @@ describe('Cron defaultValue test suite', () => {
       hoursSelect: undefined,
       minutesSelect: undefined,
     },
+    {
+      title: 'custom multiple ranges with one interval',
+      defaultValue: '* 2-10,19-23/2 * * *',
+      expectedValue: '* 2-10,19,21,23 * * *',
+      periodSelect: 'day',
+      monthsSelect: undefined,
+      monthDaysSelect: undefined,
+      weekDaysSelect: undefined,
+      hoursSelect: '2-10,19,21,23',
+      minutesSelect: 'every minute',
+    },
+    {
+      title: 'custom multiple ranges with two intervals',
+      defaultValue: '* 2-6/2,19-23/2 * * *',
+      expectedValue: '* 2,4,6,19,21,23 * * *',
+      periodSelect: 'day',
+      monthsSelect: undefined,
+      monthDaysSelect: undefined,
+      weekDaysSelect: undefined,
+      hoursSelect: '2,4,6,19,21,23',
+      minutesSelect: 'every minute',
+    },
   ]
 
   test.each(cases)(

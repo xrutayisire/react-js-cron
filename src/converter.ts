@@ -313,49 +313,56 @@ function parsePartString(str: string, unit: Unit) {
     return []
   }
 
-  const stringParts = str.split('/')
+  const values = sort(
+    dedup(
+      fixSunday(
+        replaceAlternatives(str, unit.min, unit.alt)
+          .split(',')
+          .map((value) => {
+            const valueParts = value.split('/')
 
-  if (stringParts.length > 2) {
-    throw new Error(`Invalid value "${unit.type}"`)
-  }
+            if (valueParts.length > 2) {
+              throw new Error(`Invalid value "${str} for "${unit.type}"`)
+            }
 
-  const rangeString = replaceAlternatives(stringParts[0], unit.min, unit.alt)
-  let parsedValues: number[]
+            let parsedValues: number[]
+            const left = valueParts[0]
+            const right = valueParts[1]
 
-  if (rangeString === '*') {
-    parsedValues = range(unit.min, unit.max)
-  } else {
-    parsedValues = sort(
-      dedup(
-        fixSunday(
-          rangeString
-            .split(',')
-            .map((range) => {
-              return parseRange(range, str, unit)
-            })
-            .flat(),
-          unit
-        )
+            if (left === '*') {
+              parsedValues = range(unit.min, unit.max)
+            } else {
+              parsedValues = parseRange(left, str, unit)
+            }
+
+            const step = parseStep(right, unit)
+            const intervalValues = applyInterval(parsedValues, step)
+
+            if (!intervalValues.length) {
+              throw new Error(`Empty interval value "${str}" for ${unit.type}`)
+            }
+
+            return intervalValues
+          })
+          .flat(),
+        unit
       )
     )
+  )
 
-    const value = outOfRange(parsedValues, unit)
+  const value = outOfRange(values, unit)
 
-    if (typeof value !== 'undefined') {
-      throw new Error(`Value "${value}" out of range for ${unit.type}`)
-    }
+  if (typeof value !== 'undefined') {
+    throw new Error(`Value "${value}" out of range for ${unit.type}`)
   }
 
-  const step = parseStep(stringParts[1], unit)
-  const intervalValues = applyInterval(parsedValues, step)
-
-  if (intervalValues.length === unit.total) {
+  // Prevent to return full array
+  // If all values are selected we don't want any selection visible
+  if (values.length === unit.total) {
     return []
-  } else if (intervalValues.length === 0) {
-    throw new Error(`Empty interval value "${str}" for ${unit.type}`)
   }
 
-  return intervalValues
+  return values
 }
 
 /**
