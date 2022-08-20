@@ -1,5 +1,9 @@
 ## Changelog
 
+#### 2.1.1
+
+- Fix issue [#30](https://github.com/xrutayisire/react-js-cron/issues/30): "Fix invalid expression parsing with multiple ranges"
+
 #### 2.1.0
 
 - **(New feature)** Issue [#28](https://github.com/xrutayisire/react-js-cron/issues/28): "Add an extra param in setValue function to always know the selected period"
