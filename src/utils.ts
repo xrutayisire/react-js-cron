@@ -76,3 +76,13 @@ export function usePrevious(value: any) {
 
   return ref.current
 }
+
+/**
+ * Convert a string to number but fail if not valid for cron
+ */
+export function convertStringToNumber(str: string) {
+  const parseIntValue = parseInt(str, 10)
+  const numberValue = Number(str)
+
+  return parseIntValue === numberValue ? numberValue : NaN
+}

@@ -1,7 +1,7 @@
 import { MutableRefObject } from 'react'
 
 import { UNITS, SUPPORTED_SHORTCUTS } from './constants'
-import { range, sort, dedup, setError } from './utils'
+import { range, sort, dedup, setError, convertStringToNumber } from './utils'
 import {
   Unit,
   PeriodType,
@@ -338,10 +338,6 @@ function parsePartString(str: string, unit: Unit) {
             const step = parseStep(right, unit)
             const intervalValues = applyInterval(parsedValues, step)
 
-            if (!intervalValues.length) {
-              throw new Error(`Empty interval value "${str}" for ${unit.type}`)
-            }
-
             return intervalValues
           })
           .flat(),
@@ -403,7 +399,7 @@ function parseRange(rangeStr: string, context: string, unit: Unit) {
   const subparts = rangeStr.split('-')
 
   if (subparts.length === 1) {
-    const value = parseInt(subparts[0], 10)
+    const value = convertStringToNumber(subparts[0])
 
     if (isNaN(value)) {
       throw new Error(`Invalid value "${context}" for ${unit.type}`)
@@ -411,8 +407,12 @@ function parseRange(rangeStr: string, context: string, unit: Unit) {
 
     return [value]
   } else if (subparts.length === 2) {
-    const minValue = parseInt(subparts[0], 10)
-    const maxValue = parseInt(subparts[1], 10)
+    const minValue = convertStringToNumber(subparts[0])
+    const maxValue = convertStringToNumber(subparts[1])
+
+    if (isNaN(minValue) || isNaN(maxValue)) {
+      throw new Error(`Invalid value "${context}" for ${unit.type}`)
+    }
 
     // Fix to allow equal min and max range values
     // cf: https://github.com/roccivic/cron-converter/pull/15
@@ -449,7 +449,7 @@ function outOfRange(values: number[], unit: Unit) {
  */
 function parseStep(step: string, unit: Unit) {
   if (typeof step !== 'undefined') {
-    const parsedStep = parseInt(step, 10)
+    const parsedStep = convertStringToNumber(step)
 
     if (isNaN(parsedStep) || parsedStep < 1) {
       throw new Error(`Invalid interval step value "${step}" for ${unit.type}`)
