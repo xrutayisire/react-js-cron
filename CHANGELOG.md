@@ -1,5 +1,9 @@
 ## Changelog
 
+#### 2.1.2
+
+- Fix issue [#31](https://github.com/xrutayisire/react-js-cron/issues/31): "Fix cron parsing accepting incorrect values"
+
 #### 2.1.1
 
 - Fix issue [#30](https://github.com/xrutayisire/react-js-cron/issues/30): "Fix invalid expression parsing with multiple ranges"
