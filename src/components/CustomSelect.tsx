@@ -21,6 +21,7 @@ export default function CustomSelect(props: CustomSelectProps) {
     clockFormat,
     period,
     unit,
+    unitFilter = (_) => true,
     periodicityOnDoubleClick,
     mode,
     ...otherProps
@@ -45,20 +46,22 @@ export default function CustomSelect(props: CustomSelectProps) {
         })
       }
 
-      return [...Array(unit.total)].map((e, index) => {
-        const number = unit.min === 0 ? index : index + 1
+      return [...Array(unit.total)]
+        .map((e, index) => {
+          const number = unit.min === 0 ? index : index + 1
 
-        return {
-          value: number.toString(),
-          label: formatValue(
-            number,
-            unit,
-            humanizeLabels,
-            leadingZero,
-            clockFormat
-          ),
-        }
-      })
+          return {
+            value: number.toString(),
+            label: formatValue(
+              number,
+              unit,
+              humanizeLabels,
+              leadingZero,
+              clockFormat
+            ),
+          }
+        })
+        .filter(unitFilter)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [optionsList, leadingZero, humanizeLabels, clockFormat]

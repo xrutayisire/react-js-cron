@@ -167,7 +167,33 @@ export interface CronProps {
    * Default './locale.ts'
    */
   locale?: Locale
+
+  componentProps?: {
+    year?: { mode?: Mode; clearButton?: boolean }
+    month?: { mode?: Mode; clearButton?: boolean }
+    week?: {
+      mode?: Mode
+      clearButton?: boolean
+      unitFilter: (x: number) => boolean
+    }
+    day?: {
+      mode?: Mode
+      clearButton?: boolean
+      unitFilter: (x: number) => boolean
+    }
+    hour?: {
+      mode?: Mode
+      clearButton?: boolean
+      unitFilter: (x: number) => boolean
+    }
+    minute?: {
+      mode?: Mode
+      clearButton?: boolean
+      unitFilter: (x: number) => boolean
+    }
+  }
 }
+
 export interface Locale {
   everyText?: string
   emptyMonths?: string
@@ -201,26 +227,32 @@ export interface Locale {
   altWeekDays?: string[]
   altMonths?: string[]
 }
+
 export type SetValueFunction = (
   value: string,
   extra: SetValueFunctionExtra
 ) => void
+
 export interface SetValueFunctionExtra {
   selectedPeriod: PeriodType
 }
+
 export type SetValue = SetValueFunction | Dispatch<SetStateAction<string>>
 export type CronError =
   | {
-      type: 'invalid_cron'
-      description: string
-    }
+  type: 'invalid_cron'
+  description: string
+}
   | undefined
 export type OnErrorFunction = (error: CronError) => void
 export type OnError =
   | OnErrorFunction
   | Dispatch<SetStateAction<CronError>>
   | undefined
-export interface ClearButtonProps extends Omit<ButtonProps, 'onClick'> {}
+
+export interface ClearButtonProps extends Omit<ButtonProps, 'onClick'> {
+}
+
 export type ClearButtonAction = 'empty' | 'fill-with-every'
 export type PeriodType =
   | 'year'
@@ -265,39 +297,44 @@ export interface FieldProps {
   period: PeriodType
   periodicityOnDoubleClick: boolean
   mode: Mode
+  unitFilter?: (x: number) => boolean
 }
+
 export interface PeriodProps
-  extends Omit<
-    FieldProps,
-    'value' | 'setValue' | 'period' | 'periodicityOnDoubleClick' | 'mode'
-  > {
+  extends Omit<FieldProps,
+    'value' | 'setValue' | 'period' | 'periodicityOnDoubleClick' | 'mode'> {
   value: PeriodType
   setValue: SetValuePeriod
   shortcuts: Shortcuts
   allowedPeriods: PeriodType[]
 }
+
 export interface MonthsProps extends FieldProps {
   humanizeLabels: boolean
 }
+
 export interface MonthDaysProps extends FieldProps {
   weekDays?: number[]
   leadingZero: LeadingZero
 }
+
 export interface WeekDaysProps extends FieldProps {
   humanizeLabels: boolean
   monthDays?: number[]
 }
+
 export interface HoursProps extends FieldProps {
   leadingZero: LeadingZero
   clockFormat?: ClockFormat
 }
+
 export interface MinutesProps extends FieldProps {
   leadingZero: LeadingZero
   clockFormat?: ClockFormat
 }
+
 export interface CustomSelectProps
-  extends Omit<
-    SelectProps<any>,
+  extends Omit<SelectProps<any>,
     | 'mode'
     | 'tokenSeparators'
     | 'allowClear'
@@ -312,8 +349,7 @@ export interface CustomSelectProps
     | 'dropdownMatchSelectWidth'
     | 'options'
     | 'onSelect'
-    | 'onDeselect'
-  > {
+    | 'onDeselect'> {
   grid?: boolean
   setValue: SetValueNumbersOrUndefined
   optionsList?: string[]
@@ -326,14 +362,15 @@ export interface CustomSelectProps
   clockFormat?: ClockFormat
   period: PeriodType
   unit: Unit
+  unitFilter?: ({ value, label }: { value: string; label: string }) => boolean
   periodicityOnDoubleClick: boolean
   mode: Mode
 }
-export type SetValueNumbersOrUndefined = Dispatch<
-  SetStateAction<number[] | undefined>
->
+
+export type SetValueNumbersOrUndefined = Dispatch<SetStateAction<number[] | undefined>>
 export type SetValuePeriod = Dispatch<SetStateAction<PeriodType>>
 export type SetInternalError = Dispatch<SetStateAction<boolean>>
+
 export interface DefaultLocale {
   everyText: string
   emptyMonths: string
@@ -367,13 +404,16 @@ export interface DefaultLocale {
   altWeekDays: string[]
   altMonths: string[]
 }
+
 export interface Classes {
   [key: string]: boolean
 }
+
 export interface ShortcutsValues {
   name: ShortcutsType
   value: string
 }
+
 export interface Unit {
   type: CronType
   min: number
@@ -381,6 +421,7 @@ export interface Unit {
   total: number
   alt?: string[]
 }
+
 export interface Clicks {
   time: number
   value: number

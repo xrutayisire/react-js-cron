@@ -19,6 +19,7 @@ export default function WeekDays(props: WeekDaysProps) {
     period,
     periodicityOnDoubleClick,
     mode,
+    unitFilter,
   } = props
   const optionsList = locale.weekDays || DEFAULT_LOCALE_EN.weekDays
   const noMonthDays = period === 'week' || !monthDays || monthDays.length === 0
@@ -88,6 +89,7 @@ export default function WeekDays(props: WeekDaysProps) {
           // Issue #3
           alt: locale.altWeekDays || DEFAULT_LOCALE_EN.altWeekDays,
         }}
+        unitFilter={unitFilter}
         setValue={setValue}
         locale={locale}
         className={className}

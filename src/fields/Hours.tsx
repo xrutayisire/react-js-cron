@@ -19,6 +19,7 @@ export default function Hours(props: HoursProps) {
     period,
     periodicityOnDoubleClick,
     mode,
+    unitFilter
   } = props
   const internalClassName = useMemo(
     () =>
@@ -41,6 +42,7 @@ export default function Hours(props: HoursProps) {
         placeholder={locale.emptyHours || DEFAULT_LOCALE_EN.emptyHours}
         value={value}
         unit={UNITS[1]}
+        unitFilter={unitFilter}
         setValue={setValue}
         locale={locale}
         className={className}
