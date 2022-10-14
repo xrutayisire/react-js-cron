@@ -306,6 +306,8 @@ export default function Cron(props: CronProps) {
                 period={periodForRender}
                 periodicityOnDoubleClick={periodicityOnDoubleClick}
                 mode={componentProps?.year?.mode ?? mode}
+                unitFilter={componentProps?.year?.unitFilter ?? undefined}
+                allowClear={componentProps?.year?.allowClear ?? undefined}
               />
             )}
 
@@ -323,6 +325,8 @@ export default function Cron(props: CronProps) {
                 period={periodForRender}
                 periodicityOnDoubleClick={periodicityOnDoubleClick}
                 mode={componentProps?.month?.mode ?? mode}
+                unitFilter={componentProps?.month?.unitFilter ?? undefined}
+                allowClear={componentProps?.month?.allowClear ?? undefined}
               />
             )}
 
@@ -343,6 +347,7 @@ export default function Cron(props: CronProps) {
                 periodicityOnDoubleClick={periodicityOnDoubleClick}
                 mode={componentProps?.week?.mode ?? mode}
                 unitFilter={componentProps?.week?.unitFilter ?? undefined}
+                allowClear={componentProps?.week?.allowClear ?? undefined}
               />
             )}
 
@@ -363,6 +368,7 @@ export default function Cron(props: CronProps) {
                   periodicityOnDoubleClick={periodicityOnDoubleClick}
                   mode={componentProps?.hour?.mode ?? mode}
                   unitFilter={componentProps?.hour?.unitFilter ?? undefined}
+                  allowClear={componentProps?.hour?.allowClear ?? undefined}
                 />
               )}
 
@@ -381,6 +387,7 @@ export default function Cron(props: CronProps) {
                   periodicityOnDoubleClick={periodicityOnDoubleClick}
                   mode={componentProps?.minute?.mode ?? mode}
                   unitFilter={componentProps?.minute?.unitFilter ?? undefined}
+                  allowClear={componentProps?.minute?.allowClear ?? undefined}
                 />
               )}
 

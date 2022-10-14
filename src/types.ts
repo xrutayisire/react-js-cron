@@ -169,26 +169,26 @@ export interface CronProps {
   locale?: Locale
 
   componentProps?: {
-    year?: { mode?: Mode; clearButton?: boolean }
-    month?: { mode?: Mode; clearButton?: boolean }
+    year?: { mode?: Mode; allowClear?: boolean; unitFilter: UnitFilter }
+    month?: { mode?: Mode; allowClear?: boolean; unitFilter: UnitFilter }
     week?: {
       mode?: Mode
-      clearButton?: boolean
+      allowClear?: boolean
       unitFilter: UnitFilter
     }
     day?: {
       mode?: Mode
-      clearButton?: boolean
+      allowClear?: boolean
       unitFilter: UnitFilter
     }
     hour?: {
       mode?: Mode
-      clearButton?: boolean
+      allowClear?: boolean
       unitFilter: UnitFilter
     }
     minute?: {
       mode?: Mode
-      clearButton?: boolean
+      allowClear?: boolean
       unitFilter: UnitFilter
     }
   }
@@ -305,7 +305,8 @@ export interface FieldProps {
   period: PeriodType
   periodicityOnDoubleClick: boolean
   mode: Mode
-  unitFilter?: (x: number) => boolean
+  allowClear?: boolean
+  unitFilter?: UnitFilter
 }
 
 export interface PeriodProps
@@ -345,7 +346,6 @@ export interface CustomSelectProps
   extends Omit<SelectProps<any>,
     | 'mode'
     | 'tokenSeparators'
-    | 'allowClear'
     | 'virtual'
     | 'onClick'
     | 'onBlur'

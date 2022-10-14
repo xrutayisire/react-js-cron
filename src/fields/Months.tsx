@@ -18,6 +18,8 @@ export default function Months(props: MonthsProps) {
     period,
     periodicityOnDoubleClick,
     mode,
+    unitFilter,
+    allowClear,
   } = props
   const optionsList = locale.months || DEFAULT_LOCALE_EN.months
 
@@ -49,6 +51,8 @@ export default function Months(props: MonthsProps) {
           // Issue #3
           alt: locale.altMonths || DEFAULT_LOCALE_EN.altMonths,
         }}
+        unitFilter={unitFilter}
+        allowClear={allowClear}
         setValue={setValue}
         locale={locale}
         className={className}

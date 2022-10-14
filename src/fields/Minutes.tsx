@@ -20,6 +20,7 @@ export default function Minutes(props: MinutesProps) {
     periodicityOnDoubleClick,
     mode,
     unitFilter,
+    allowClear,
   } = props
   const internalClassName = useMemo(
     () =>
@@ -56,6 +57,7 @@ export default function Minutes(props: MinutesProps) {
         }
         value={value}
         unit={UNITS[0]}
+        allowClear={allowClear}
         unitFilter={unitFilter}
         setValue={setValue}
         locale={locale}

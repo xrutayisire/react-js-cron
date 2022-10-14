@@ -24,6 +24,7 @@ export default function CustomSelect(props: CustomSelectProps) {
     unitFilter = (_) => true,
     periodicityOnDoubleClick,
     mode,
+    allowClear = true,
     ...otherProps
   } = props
 
@@ -253,7 +254,7 @@ export default function CustomSelect(props: CustomSelectProps) {
       mode={
         mode === 'single' && !periodicityOnDoubleClick ? undefined : 'multiple'
       }
-      allowClear={!readOnly}
+      allowClear={allowClear && !readOnly}
       virtual={false}
       open={readOnly ? false : undefined}
       value={stringValue}
