@@ -174,25 +174,33 @@ export interface CronProps {
     week?: {
       mode?: Mode
       clearButton?: boolean
-      unitFilter: (x: number) => boolean
+      unitFilter: UnitFilter
     }
     day?: {
       mode?: Mode
       clearButton?: boolean
-      unitFilter: (x: number) => boolean
+      unitFilter: UnitFilter
     }
     hour?: {
       mode?: Mode
       clearButton?: boolean
-      unitFilter: (x: number) => boolean
+      unitFilter: UnitFilter
     }
     minute?: {
       mode?: Mode
       clearButton?: boolean
-      unitFilter: (x: number) => boolean
+      unitFilter: UnitFilter
     }
   }
 }
+
+export type UnitFilter = ({
+  value,
+  label,
+}: {
+  value: string
+  label: string
+}) => boolean
 
 export interface Locale {
   everyText?: string
@@ -362,7 +370,7 @@ export interface CustomSelectProps
   clockFormat?: ClockFormat
   period: PeriodType
   unit: Unit
-  unitFilter?: ({ value, label }: { value: string; label: string }) => boolean
+  unitFilter?: UnitFilter
   periodicityOnDoubleClick: boolean
   mode: Mode
 }
