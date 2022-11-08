@@ -72,6 +72,8 @@ Don't forget to import styles manually:
 
 ```jsx
 import 'react-js-cron/dist/styles.css';
+
+import 'antd/dist/antd.css';
 ```
 
 ## Examples
