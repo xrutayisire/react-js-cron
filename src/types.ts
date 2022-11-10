@@ -174,22 +174,22 @@ export interface CronProps {
     week?: {
       mode?: Mode
       allowClear?: boolean
-      unitFilter: UnitFilter
+      unitFilter?: UnitFilter
     }
     day?: {
       mode?: Mode
       allowClear?: boolean
-      unitFilter: UnitFilter
+      unitFilter?: UnitFilter
     }
     hour?: {
       mode?: Mode
       allowClear?: boolean
-      unitFilter: UnitFilter
+      unitFilter?: UnitFilter
     }
     minute?: {
       mode?: Mode
       allowClear?: boolean
-      unitFilter: UnitFilter
+      unitFilter?: UnitFilter
     }
   }
 }
