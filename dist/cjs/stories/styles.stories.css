@@ -1,0 +1,45 @@
+.sbdocs-content {
+  max-width: 1400px !important;
+}
+.demo-dynamic-settings {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #e6e6e6;
+}
+.demo-dynamic-settings .ant-form-item {
+  margin-right: 16px;
+  margin-bottom: 8px;
+}
+.demo-dynamic-settings p {
+  width: 100%;
+  font-size: 12px;
+}
+.demo-dynamic-settings + div {
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e6e6e6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.demo-dynamic-settings + div p {
+  display: inline;
+  margin: 0;
+}
+
+/* Custom style */
+.my-project-cron-field > span {
+  font-weight: bold;
+}
+.my-project-cron-error .my-project-cron-field > span {
+  color: #ff4d4f;
+}
+.my-project-cron .my-project-cron-select > div:first-child {
+  border-radius: 10px;
+}
+.my-project-cron-select-dropdown
+  .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background-color: #dadada;
+}
+.my-project-cron-clear-button {
+  border-radius: 10px;
+}
