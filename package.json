@@ -24,9 +24,6 @@
   "bugs": {
     "url": "https://github.com/levyitay/react-js-cron-mui/issues"
   },
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/cjs/index.d.ts",
   "scripts": {
     "build": "del dist && yarn build:types",
     "build:babel": "concurrently \"yarn build:babel:esm\" \"yarn build:babel:cjs\"",
