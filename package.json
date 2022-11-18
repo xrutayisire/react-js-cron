@@ -24,11 +24,14 @@
   "bugs": {
     "url": "https://github.com/levyitay/react-js-cron-mui/issues"
   },
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/cjs/index.d.ts",
   "scripts": {
-    "build": "del dist && yarn build:types",
+    "build": "del dist && yarn build:types && yarn build:babel",
     "build:babel": "concurrently \"yarn build:babel:esm\" \"yarn build:babel:cjs\"",
-    "build:babel:cjs": "BABEL_ENV=cjs babel --extensions \".ts,.tsx\" --copy-files src --out-dir dist/cjs --presets=@babel/env",
-    "build:babel:esm": "BABEL_ENV=esm babel --extensions \".ts,.tsx\" --copy-files src --out-dir dist/esm",
+    "build:babel:cjs": "rimraf ./dist/cjs && tsc --outDir dist/cjs",
+    "build:babel:esm": "rimraf ./dist/cjs && tsc --outDir dist/esm",
     "build:types": "tsc",
     "storybook": "start-storybook -p 9009",
     "build-storybook": "build-storybook",
