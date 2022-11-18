@@ -2,7 +2,7 @@
   "name": "react-js-cron-mui",
   "version": "1.0.0",
   "description": "A React cron editor with Material UI a forked repo from Xavier Rutayisire (https://github.com/xrutayisire/react-js-cron)",
-  "author": "Itay Levy (https://github.com/levyitay/)",
+  "author": "Itay Levy (https://github.com/atcg01/)",
   "license": "MIT",
   "keywords": [
     "react",
@@ -16,22 +16,22 @@
     "mui",
     "material-ui"
   ],
-  "homepage": "https://github.com/levyitay/react-js-cron-mui#readme",
+  "homepage": "https://github.com/atcg01/react-js-cron-mui#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/levyitay/react-js-cron-mui.git"
+    "url": "git+https://github.com/atcg01/react-js-cron-mui.git"
   },
   "bugs": {
-    "url": "https://github.com/levyitay/react-js-cron-mui/issues"
+    "url": "https://github.com/atcg01/react-js-cron-mui/issues"
   },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/cjs/index.d.ts",
   "scripts": {
-    "build": "del dist && yarn build:types && yarn build:babel",
+    "build": "del dist && yarn build:babel && yarn build:types",
     "build:babel": "concurrently \"yarn build:babel:esm\" \"yarn build:babel:cjs\"",
-    "build:babel:cjs": "rimraf ./dist/cjs && tsc --outDir dist/cjs",
-    "build:babel:esm": "rimraf ./dist/cjs && tsc --outDir dist/esm",
+    "build:babel:cjs": "cross-env BABEL_ENV=cjs babel --extensions \".ts,.tsx\" --copy-files src --out-dir dist/cjs --presets=@babel/env",
+    "build:babel:esm": "cross-env BABEL_ENV=esm babel --extensions \".ts,.tsx\" --copy-files src --out-dir dist/esm",
     "build:types": "tsc",
     "storybook": "start-storybook -p 9009",
     "build-storybook": "build-storybook",
@@ -54,7 +54,7 @@
     "@storybook/addons": "^6.1.11",
     "@storybook/preset-create-react-app": "^4.1.2",
     "@storybook/react": "^6.5.13",
-    "@types/node": "^14.18.33",
+    "@types/node": "^16.3.1",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
@@ -62,6 +62,7 @@
     "babel-plugin-transform-es2015-modules-umd": "^6.24.1",
     "babel-plugin-typescript-to-proptypes": "^2.0.0",
     "concurrently": "^5.3.0",
+    "cross-env": "^7.0.3",
     "del-cli": "^5.0.0",
     "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.5.0",
@@ -73,8 +74,5 @@
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
     "typescript": "^4.9.3"
-  },
-  "dependencies": {
-    "react-element-to-jsx-string": "^15.0.0"
   }
 }
