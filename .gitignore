@@ -6,9 +6,6 @@
 # testing
 /coverage
 
-# build
-/dist
-
 # storybook
 storybook-static
 
