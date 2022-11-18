@@ -1,5 +1,6 @@
 import React, { useMemo, useCallback } from 'react'
-import { Select, MenuItem } from '@material-ui/core'
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 
 import { CustomSelectProps } from '../types'
 import { DEFAULT_LOCALE_EN } from '../locale'
@@ -19,7 +20,7 @@ export default function CustomSelect(props: CustomSelectProps) {
     clockFormat,
     optionsList,
     unit,
-    ...selectProps,
+    ...selectProps
   } = props
 
   const stringValue = useMemo(() => {
@@ -62,10 +63,10 @@ export default function CustomSelect(props: CustomSelectProps) {
   )
   const localeJSON = JSON.stringify(locale)
   const renderTag = useCallback(
-    (props) => {
+    (props: any) => {
       const value = props
 
-      if (!value || Number(value[0]) === NaN) {
+      if (!value) {
         return <></>
       }
 

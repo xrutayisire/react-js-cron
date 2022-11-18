@@ -1,6 +1,6 @@
 ## ReactJS Cron
 > This package is based on Xavier Rutayisire package (https://github.com/xrutayisire/react-js-cron). Most if not all of the credit should go to him.
-> A React cron editor built with [Material-UI](https://www.npmjs.com/package/@material-ui/core)
+> A React cron editor built with [Material-UI](https://www.npmjs.com/package/@mui/material)
 
 [![npm package](https://img.shields.io/npm/v/react-js-cron-mui/latest.svg)](https://www.npmjs.com/package/react-js-cron-mui)
 [![MIT License Badge](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/levyitay/react-js-cron-mui/blob/master/LICENSE.md)

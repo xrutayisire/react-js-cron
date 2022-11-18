@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
-import { Select, MenuItem } from '@material-ui/core'
+import { Select, MenuItem } from '@mui/material'
 
 import { PeriodProps } from '../types'
 import { DEFAULT_LOCALE_EN } from '../locale'
@@ -54,7 +54,7 @@ export default function Period(props: PeriodProps) {
   }
 
   const handleChange = useCallback(
-    (event) => {
+    (event:any) => {
       if (!readOnly) {
         setValue(event.target.value)
       }

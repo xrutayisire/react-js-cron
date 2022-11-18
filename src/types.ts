@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react'
-import {ButtonProps,SelectProps} from '@material-ui/core'
+import { ButtonProps, SelectProps } from '@mui/material'
 // External props
 
 export interface CronProps {
@@ -166,16 +166,16 @@ export type SetValueFunction = (value: string) => void
 export type SetValue = SetValueFunction | Dispatch<SetStateAction<string>>
 export type CronError =
   | {
-      type: 'invalid_cron'
-      description: string
-    }
+    type: 'invalid_cron'
+    description: string
+  }
   | undefined
 export type OnErrorFunction = (error: CronError) => void
 export type OnError =
   | OnErrorFunction
   | Dispatch<SetStateAction<CronError>>
   | undefined
-export interface ClearButtonProps extends Omit<ButtonProps, 'onClick'> {}
+export interface ClearButtonProps extends Omit<ButtonProps, 'onClick'> { }
 export type ClearButtonAction = 'empty' | 'fill-with-every' | string
 export type PeriodType =
   | 'year'
