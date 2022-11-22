@@ -1,6 +1,5 @@
-import { SelectProps } from 'antd/lib/select'
+import { ButtonProps, SelectProps } from 'antd'
 import { Dispatch, SetStateAction } from 'react'
-import { ButtonProps } from 'antd/lib/button'
 
 // External props
 
