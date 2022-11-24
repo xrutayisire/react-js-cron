@@ -1,16 +1,21 @@
 ## Changelog
 
+#### 3.0.0
+
+- **(Important)** Issue [#40](https://github.com/xrutayisire/react-js-cron/issues/40): Antd v5 compatibility
+- **(Breaking change!)** Fix issue [#35](https://github.com/xrutayisire/react-js-cron/issues/35): react-js-cron now only support antd >= v4.23.0, change antd props dropdownClassName
+
 #### 2.1.2
 
-- Fix issue [#31](https://github.com/xrutayisire/react-js-cron/issues/31): "Fix cron parsing accepting incorrect values"
+- Fix issue [#31](https://github.com/xrutayisire/react-js-cron/issues/31): Fix cron parsing accepting incorrect values
 
 #### 2.1.1
 
-- Fix issue [#30](https://github.com/xrutayisire/react-js-cron/issues/30): "Fix invalid expression parsing with multiple ranges"
+- Fix issue [#30](https://github.com/xrutayisire/react-js-cron/issues/30): Fix invalid expression parsing with multiple ranges
 
 #### 2.1.0
 
-- **(New feature)** Issue [#28](https://github.com/xrutayisire/react-js-cron/issues/28): "Add an extra param in setValue function to always know the selected period"
+- **(New feature)** Issue [#28](https://github.com/xrutayisire/react-js-cron/issues/28): Add an extra param in setValue function to always know the selected period
 
 #### 2.0.0
 
@@ -21,32 +26,32 @@
 
 #### 1.4.0
 
-- **(New feature)** Issue [#22](https://github.com/xrutayisire/react-js-cron/issues/22): "Add the possibility to choose a single selection mode"
+- **(New feature)** Issue [#22](https://github.com/xrutayisire/react-js-cron/issues/22): Add the possibility to choose a single selection mode
 
 #### 1.3.1
 
 - Fix disabled mode broken since antd 13.0
-- Fix issue [#15](https://github.com/xrutayisire/react-js-cron/issues/15): "Fix double setValue function call that prevents changing value"
+- Fix issue [#15](https://github.com/xrutayisire/react-js-cron/issues/15): Fix double setValue function call that prevents changing value
 
 #### 1.3.0
 
-- **(New feature)** Issue [#12](https://github.com/xrutayisire/react-js-cron/issues/12): "Add the possibility to deactivate the double click feature"
+- **(New feature)** Issue [#12](https://github.com/xrutayisire/react-js-cron/issues/12): Add the possibility to deactivate the double click feature
 - Fix antd automatic tree-shaking not working in many cases (Missing Select import)
 - Fix to allow equal min and max range values
 
 #### 1.2.1
 
-- Fix issue [#6](https://github.com/xrutayisire/react-js-cron/issues/6): "Display problem for Selects with antd 4.10.0"
+- Fix issue [#6](https://github.com/xrutayisire/react-js-cron/issues/6): Display problem for Selects with antd 4.10.0
 - Fix placeholder color that should not be gray but black as the value
 
 #### 1.2.0
 
-- **(New feature)** Issue [#3](https://github.com/xrutayisire/react-js-cron/issues/3): "Add the possibility to translate alternative labels"
+- **(New feature)** Issue [#3](https://github.com/xrutayisire/react-js-cron/issues/3): Add the possibility to translate alternative labels
 - Fix typo in README
 
 #### 1.1.1
 
-- Fix issue [#2](https://github.com/xrutayisire/react-js-cron/issues/2): "antd Select cannot work when using Cron component"
+- Fix issue [#2](https://github.com/xrutayisire/react-js-cron/issues/2): antd Select cannot work when using Cron component
 - Add dependencies version in README
 - Add link in README to story for clear button action management
 
@@ -57,7 +62,7 @@
 - **(Breaking change!)** Fix period change not handling new value, changing
   period now change the value
 - Add the possibility to choose clear button action, empty or fill-with-every
-- Fix issue [#1](https://github.com/xrutayisire/react-js-cron/issues/1) "Styling of popovers breaks with latest antd version"
+- Fix issue [#1](https://github.com/xrutayisire/react-js-cron/issues/1) Styling of popovers breaks with latest antd version
 - Fix a problem with the onBlur function not triggered by Select component
 - Fix antd automatic tree-shaking not working in many cases
 
