@@ -1,28 +1,27 @@
 /* eslint-disable */
-import React, { useState, useMemo } from 'react'
+import { InfoCircleOutlined } from '@ant-design/icons'
 import {
   Input as AntdInput,
+  Button,
   Divider,
-  Table,
   Form,
   Radio,
-  Switch,
-  Button,
   Select,
+  Switch,
+  Table,
 } from 'antd'
-import { InfoCircleOutlined } from '@ant-design/icons'
+import React, { useMemo, useState } from 'react'
 
-import Cron, { CronError, AllowEmpty, ClockFormat, PeriodType } from '../index'
+import Cron, { AllowEmpty, ClockFormat, CronError, PeriodType } from '../index'
+import '../styles.css'
+import { ClearButtonAction, CronType, Mode } from '../types'
 import {
-  FRENCH_LOCALE,
   ENGLISH_VARIANT_LOCALE,
+  FRENCH_LOCALE,
   NO_PREFIX_SUFFIX_LOCALE,
 } from './constants.stories'
-import { useCronReducer } from './utils.stories'
-import { ClearButtonAction, CronType, Mode } from '../types'
-
-import '../styles.css'
 import './styles.stories.css'
+import { useCronReducer } from './utils.stories'
 
 export default {
   title: 'ReactJS Cron',

@@ -1,10 +1,10 @@
-import React, { useMemo, useCallback, useRef } from 'react'
 import Select from 'antd/lib/select'
+import React, { useCallback, useMemo, useRef } from 'react'
 
-import { CustomSelectProps, Clicks } from '../types'
+import { formatValue, parsePartArray, partToString } from '../converter'
 import { DEFAULT_LOCALE_EN } from '../locale'
+import { Clicks, CustomSelectProps } from '../types'
 import { classNames, sort } from '../utils'
-import { parsePartArray, partToString, formatValue } from '../converter'
 
 export default function CustomSelect(props: CustomSelectProps) {
   const {

@@ -1,4 +1,4 @@
-import 'antd/dist/antd.css'
+import 'antd/dist/reset.css'
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },

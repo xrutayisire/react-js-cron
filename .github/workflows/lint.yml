@@ -8,7 +8,7 @@ jobs:
     name: Lint code
     steps:
       - uses: actions/checkout@v3
-      - name: Install requirements
-        run: npm ci --legacy-peer-deps
+      - name: Install dependencies
+        run: yarn --immutable
       - name: Run lint and prettier
-        run: npm run lint:ci & npm run prettier:ci
+        run: yarn format

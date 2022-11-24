@@ -1,8 +1,8 @@
-import React, { useCallback, useMemo } from 'react'
 import Select, { BaseOptionType } from 'antd/lib/select'
+import React, { useCallback, useMemo } from 'react'
 
-import { PeriodProps, PeriodType } from '../types'
 import { DEFAULT_LOCALE_EN } from '../locale'
+import { PeriodProps, PeriodType } from '../types'
 import { classNames } from '../utils'
 
 export default function Period(props: PeriodProps) {

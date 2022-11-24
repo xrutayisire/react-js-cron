@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react'
 
 import CustomSelect from '../components/CustomSelect'
-import { MonthDaysProps } from '../types'
-import { DEFAULT_LOCALE_EN } from '../locale'
-import { classNames } from '../utils'
 import { UNITS } from '../constants'
+import { DEFAULT_LOCALE_EN } from '../locale'
+import { MonthDaysProps } from '../types'
+import { classNames } from '../utils'
 
 export default function MonthDays(props: MonthDaysProps) {
   const {

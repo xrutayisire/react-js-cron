@@ -37,4 +37,7 @@ Thank you for your contribution! 😄
 
 - [ ] Demo in storybook is updated/provided or not needed
 - [ ] TypeScript definition is updated/provided or not needed
+- [ ] Tests are updated and passed without a decrease in coverage
+- [ ] Format (lint & prettier) script passed
+- [ ] Build script is working
 - [ ] README API section is updated or not needed

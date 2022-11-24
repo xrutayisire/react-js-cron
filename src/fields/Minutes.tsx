@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react'
 
 import CustomSelect from '../components/CustomSelect'
-import { MinutesProps } from '../types'
-import { DEFAULT_LOCALE_EN } from '../locale'
-import { classNames } from '../utils'
 import { UNITS } from '../constants'
+import { DEFAULT_LOCALE_EN } from '../locale'
+import { MinutesProps } from '../types'
+import { classNames } from '../utils'
 
 export default function Minutes(props: MinutesProps) {
   const {

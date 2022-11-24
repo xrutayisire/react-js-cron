@@ -1,20 +1,20 @@
 import { MutableRefObject } from 'react'
 
-import { UNITS, SUPPORTED_SHORTCUTS } from './constants'
-import { range, sort, dedup, setError, convertStringToNumber } from './utils'
+import { SUPPORTED_SHORTCUTS, UNITS } from './constants'
 import {
-  Unit,
-  PeriodType,
-  LeadingZero,
-  ClockFormat,
-  SetInternalError,
-  OnError,
   AllowEmpty,
+  ClockFormat,
+  LeadingZero,
   Locale,
-  Shortcuts,
+  OnError,
+  PeriodType,
+  SetInternalError,
   SetValueNumbersOrUndefined,
   SetValuePeriod,
+  Shortcuts,
+  Unit,
 } from './types'
+import { convertStringToNumber, dedup, range, setError, sort } from './utils'
 
 /**
  * Set values from cron string

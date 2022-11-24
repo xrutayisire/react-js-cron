@@ -1,17 +1,18 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "module": "commonjs",
-    "rootDir": "src",
-    "outDir": "dist/cjs",
-    "jsx": "react-jsx",
     "declaration": true,
     "emitDeclarationOnly": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "ESNext",
+    "moduleResolution": "node",
     "noImplicitAny": true,
-    "strictNullChecks": true,
+    "outDir": "dist/esm",
     "removeComments": true,
-    "esModuleInterop": true
+    "rootDir": "src",
+    "strictNullChecks": true,
+    "target": "es5"
   },
   "include": ["./src/**/*"],
   "exclude": ["node_modules"]

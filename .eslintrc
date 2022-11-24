@@ -8,11 +8,11 @@
       "jsx": true
     }
   },
-  "plugins": ["@typescript-eslint", "react-hooks"],
+  "plugins": ["@typescript-eslint", "react-hooks", "file-progress"],
   "extends": [
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "prettier"
   ],
   "settings": {
     "react": {
@@ -20,22 +20,23 @@
     }
   },
   "rules": {
+    "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/interface-name-prefix": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }
     ],
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/interface-name-prefix": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-non-null-assertion": "off",
-    "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/no-use-before-define": "off",
-    "@typescript-eslint/no-empty-interface": "off",
+    "file-progress/activate": "warn",
+    "react-hooks/exhaustive-deps": "error",
+    "react-hooks/rules-of-hooks": "error",
     "react/display-name": "off",
     "react/prop-types": "off",
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "error",
     "react/react-in-jsx-scope": "off"
   }
 }

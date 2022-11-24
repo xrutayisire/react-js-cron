@@ -8,7 +8,7 @@ jobs:
     name: Build package
     steps:
       - uses: actions/checkout@v3
-      - name: Install requirements
-        run: npm ci --legacy-peer-deps
+      - name: Install dependencies
+        run: yarn --immutable
       - name: Run build
-        run: npm run build
+        run: yarn build

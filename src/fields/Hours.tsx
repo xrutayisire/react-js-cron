@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react'
 
 import CustomSelect from '../components/CustomSelect'
-import { HoursProps } from '../types'
-import { DEFAULT_LOCALE_EN } from '../locale'
-import { classNames } from '../utils'
 import { UNITS } from '../constants'
+import { DEFAULT_LOCALE_EN } from '../locale'
+import { HoursProps } from '../types'
+import { classNames } from '../utils'
 
 export default function Hours(props: HoursProps) {
   const {

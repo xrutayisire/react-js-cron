@@ -8,10 +8,10 @@ jobs:
     name: Unit tests
     steps:
       - uses: actions/checkout@v3
-      - name: Install requirements
-        run: npm ci --legacy-peer-deps
+      - name: Install dependencies
+        run: yarn --immutable
       - name: Run tests and collect coverage
-        run: npm run test:ci
+        run: yarn test --coverage --forceExit --detectOpenHandles
       - name: Upload coverage reports to Codecov
         run: |
           curl -Os https://uploader.codecov.io/latest/linux/codecov

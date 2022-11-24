@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react'
 
-import { WeekDaysProps } from '../types'
 import CustomSelect from '../components/CustomSelect'
-import { DEFAULT_LOCALE_EN } from '../locale'
-import { classNames } from '../utils'
 import { UNITS } from '../constants'
+import { DEFAULT_LOCALE_EN } from '../locale'
+import { WeekDaysProps } from '../types'
+import { classNames } from '../utils'
 
 export default function WeekDays(props: WeekDaysProps) {
   const {

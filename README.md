@@ -38,8 +38,9 @@ react-js-cron is written in TypeScript with complete definitions
 ## Installation
 
 Be sure that you have these dependencies on your project:
-* react (>=16.8.0)
-* antd (>=4.6.0)
+
+- react (>=16.8.0)
+- antd (>=5.0.0)
 
 ```bash
 # NPM
@@ -49,29 +50,25 @@ npm install react-js-cron
 yarn add react-js-cron
 ```
 
+If you need a support of antd v4 (>=4.6.0), use react-js-cron v2.1.2.
+
 ## Usage
 
 ```jsx
-import { Cron } from 'react-js-cron';
-
-import 'react-js-cron/dist/styles.css';
+import { Cron } from 'react-js-cron'
+import 'react-js-cron/dist/styles.css'
 
 export function App() {
-  const [value, setValue] = useState('30 5 * * 1,6');
+  const [value, setValue] = useState('30 5 * * 1,6')
 
-  return (
-    <Cron
-      value={value}
-      setValue={setValue}
-    />
-  );
+  return <Cron value={value} setValue={setValue} />
 }
 ```
 
 Don't forget to import styles manually:
 
 ```jsx
-import 'react-js-cron/dist/styles.css';
+import 'react-js-cron/dist/styles.css'
 ```
 
 ## Examples
@@ -105,7 +102,7 @@ CronProps {
   /**
    * Cron value, the component is by design a controlled component.
    * The first value will be the default value.
-   * 
+   *
    * required
    */
   value: string
@@ -113,10 +110,10 @@ CronProps {
   /**
    * Set the cron value, similar to onChange.
    * The naming tells you that you have to set the value by yourself.
-   * 
+   *
    * required
    */
-  setValue: 
+  setValue:
     | (value: string, extra: { selectedPeriod }) => void
     | Dispatch<SetStateAction<string>>
 
@@ -128,28 +125,28 @@ CronProps {
 
   /**
    * Humanize the labels in the cron component, SUN-SAT and JAN-DEC.
-   * 
+   *
    * Default: true
    */
   humanizeLabels?: boolean
 
   /**
    * Humanize the value, SUN-SAT and JAN-DEC.
-   * 
+   *
    * Default: false
    */
   humanizeValue?: boolean
 
   /**
    * Add a "0" before numbers lower than 10.
-   * 
+   *
    * Default: false
    */
   leadingZero?: boolean | ['month-days', 'hours', 'minutes']
 
   /**
    * Define the default period when the default value is empty.
-   * 
+   *
    * Default: 'day'
    */
   defaultPeriod?: 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'reboot'
@@ -160,24 +157,24 @@ CronProps {
    * Default: false
    */
   disabled?: boolean
-  
+
   /**
    * Make the cron component read-only.
-   * 
+   *
    * Default: false
    */
   readOnly?: boolean
 
   /**
    * Define if empty should trigger an error.
-   * 
+   *
    * Default: 'for-default-value'
    */
   allowEmpty?: 'always' | 'never' | 'for-default-value'
 
   /**
    * Support cron shortcuts.
-   * 
+   *
    * Default: ['@yearly', '@annually', '@monthly', '@weekly', '@daily', '@midnight', '@hourly']
    */
   shortcuts?: boolean | ['@yearly', '@annually', '@monthly', '@weekly', '@daily', '@midnight', '@hourly', '@reboot']
@@ -189,7 +186,7 @@ CronProps {
 
   /**
    * Display the clear button.
-   * 
+   *
    * Default: true
    */
   clearButton?: boolean
@@ -208,7 +205,7 @@ CronProps {
 
   /**
    * Display error style (red border and background).
-   * 
+   *
    * Display: true
    */
   displayError?: boolean
@@ -216,7 +213,7 @@ CronProps {
   /**
    * Triggered when the cron component detects an error with the value.
    */
-  onError?: 
+  onError?:
     | (error: {
       type: 'invalid_cron'
       description: string
@@ -315,9 +312,8 @@ CronProps {
     altMonths?: string[]
   }
 }
-````
+```
 
 ## License
 
 MIT © [xrutayisire](https://github.com/xrutayisire)
-  
