@@ -1,0 +1,23 @@
+name: Storybook
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  storybook:
+    runs-on: ubuntu-latest
+    name: Build Storybook
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: yarn --immutable
+      - name: Run build-storybook
+        run: yarn build-storybook
+      - name: Force push to gh-pages branch
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          force: true

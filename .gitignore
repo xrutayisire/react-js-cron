@@ -23,6 +23,7 @@ package-lock.json
 !/.github/
 !/.storybook/
 !/.yarn/
+!/docs/
 !/src/
 
 ## dot-files
