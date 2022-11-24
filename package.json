@@ -29,7 +29,7 @@
   },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
-  "types": "dist/esm/index.d.ts",
+  "types": "dist/cjs/index.d.ts",
   "packageManager": "yarn@3.3.0",
   "scripts": {
     "build": "run-s build:del build:babel build:types build:styles",
@@ -59,7 +59,7 @@
     "@ant-design/cssinjs": "1.0.2"
   },
   "peerDependencies": {
-    "antd": ">=5.0.0",
+    "antd": ">=4.23.0",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },

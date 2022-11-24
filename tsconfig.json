@@ -8,7 +8,7 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "noImplicitAny": true,
-    "outDir": "dist/esm",
+    "outDir": "dist/cjs",
     "removeComments": true,
     "rootDir": "src",
     "strictNullChecks": true,
