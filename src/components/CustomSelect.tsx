@@ -222,7 +222,7 @@ export default function CustomSelect(props: CustomSelectProps) {
     [className]
   )
 
-  const dropdownClassNames = useMemo(
+  const popupClassName = useMemo(
     () =>
       classNames({
         'react-js-cron-select-dropdown': true,
@@ -257,7 +257,7 @@ export default function CustomSelect(props: CustomSelectProps) {
       onClear={onClear}
       tagRender={renderTag}
       className={internalClassName}
-      dropdownClassName={dropdownClassNames}
+      popupClassName={popupClassName}
       options={options}
       showSearch={false}
       showArrow={!readOnly}

@@ -101,7 +101,7 @@ export default function Period(props: PeriodProps) {
     [className, locale.prefixPeriod]
   )
 
-  const dropdownClassName = useMemo(
+  const popupClassName = useMemo(
     () =>
       classNames({
         'react-js-cron-select-dropdown': true,
@@ -125,7 +125,7 @@ export default function Period(props: PeriodProps) {
         onChange={handleChange}
         options={options}
         className={selectClassName}
-        dropdownClassName={dropdownClassName}
+        popupClassName={popupClassName}
         disabled={disabled}
         showArrow={!readOnly}
         open={readOnly ? false : undefined}
