@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "declaration": true,
+    "declarationDir": "types",
     "emitDeclarationOnly": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
@@ -8,7 +9,7 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "noImplicitAny": true,
-    "outDir": "dist/cjs",
+    "outDir": "dist",
     "removeComments": true,
     "rootDir": "src",
     "strictNullChecks": true,
