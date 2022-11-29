@@ -39,7 +39,7 @@ react-js-cron is written in TypeScript with complete definitions
 
 Be sure that you have these dependencies on your project:
 
-- react (>=16.8.0)
+- react (>=17.0.0)
 - antd (>=4.23.0)
 
 ```bash
