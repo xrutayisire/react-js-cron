@@ -1,9 +1,14 @@
 ## Changelog
 
-#### 3.0.0
+#### 3.0.1
 
 - **(Important)** Issue [#40](https://github.com/xrutayisire/react-js-cron/issues/40): Antd v5 compatibility
 - **(Breaking change!)** Fix issue [#35](https://github.com/xrutayisire/react-js-cron/issues/35): react-js-cron now only support antd >= v4.23.0, change antd props dropdownClassName
+- Fix issue [#41](https://github.com/xrutayisire/react-js-cron/issues/41): Fix broken build with react-js-cron v3.0.0
+
+#### 3.0.0
+
+❌ Do not use this release, broken build ❌
 
 #### 2.1.2
 
