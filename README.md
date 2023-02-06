@@ -63,6 +63,21 @@ export function App() {
 }
 ```
 
+```jsx
+import { convertor } from 'react-js-cron'
+
+const converted = getCronStringFromValues('day',
+                [],
+                [],
+                [],
+                [hours],
+                [minutes],
+                false
+            );
+
+const 
+```
+
 Don't forget to import styles manually:
 
 ```jsx
