@@ -66,12 +66,12 @@ export function App() {
 ```jsx
 import { convertor } from 'react-js-cron'
 
-const converted = getCronStringFromValues('day',
+const converted = convertor.getCronStringFromValues('day',
                 [],
                 [],
                 [],
-                [hours],
-                [minutes],
+                [5],
+                [5],
                 false
             );
 
