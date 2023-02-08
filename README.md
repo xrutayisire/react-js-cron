@@ -75,7 +75,6 @@ const converted = convertor.getCronStringFromValues('day',
                 false
             );
 
-const 
 ```
 
 Don't forget to import styles manually:
