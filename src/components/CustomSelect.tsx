@@ -1,5 +1,5 @@
 import Select from 'antd/lib/select'
-import React, { useCallback, useMemo, useRef } from 'react'
+import React, { MouseEvent, useCallback, useMemo, useRef } from 'react'
 
 import { formatValue, parsePartArray, partToString } from '../converter'
 import { DEFAULT_LOCALE_EN } from '../locale'
@@ -25,6 +25,8 @@ export default function CustomSelect(props: CustomSelectProps) {
     mode,
     ...otherProps
   } = props
+
+  const { onMouseDown, ...selectProps } = otherProps;
 
   const stringValue = useMemo(() => {
     if (value && Array.isArray(value)) {
@@ -85,9 +87,8 @@ export default function CustomSelect(props: CustomSelectProps) {
       return (
         <div>
           {testEveryValue[1]
-            ? `${locale.everyText || DEFAULT_LOCALE_EN.everyText} ${
-                testEveryValue[1]
-              }`
+            ? `${locale.everyText || DEFAULT_LOCALE_EN.everyText} ${testEveryValue[1]
+            }`
             : cronValue}
         </div>
       )
@@ -177,7 +178,7 @@ export default function CustomSelect(props: CustomSelectProps) {
             periodicityOnDoubleClick &&
             clicks.length > 1 &&
             clicks[clicks.length - 1].time - clicks[clicks.length - 2].time <
-              doubleClickTimeout
+            doubleClickTimeout
           ) {
             if (
               clicks[clicks.length - 1].value ===
@@ -211,6 +212,13 @@ export default function CustomSelect(props: CustomSelectProps) {
       setValue([])
     }
   }, [setValue, readOnly])
+
+  const onMouseDownCallback = useCallback((e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    if (onMouseDown) {
+      onMouseDown(e);
+    }
+  }, [onMouseDown])
 
   const internalClassName = useMemo(
     () =>
@@ -268,17 +276,18 @@ export default function CustomSelect(props: CustomSelectProps) {
       disabled={disabled}
       dropdownAlign={
         (unit.type === 'minutes' || unit.type === 'hours') &&
-        period !== 'day' &&
-        period !== 'hour'
+          period !== 'day' &&
+          period !== 'hour'
           ? {
-              // Usage: https://github.com/yiminghe/dom-align
-              // Set direction to left to prevent dropdown to overlap window
-              points: ['tr', 'br'],
-            }
+            // Usage: https://github.com/yiminghe/dom-align
+            // Set direction to left to prevent dropdown to overlap window
+            points: ['tr', 'br'],
+          }
           : undefined
       }
       data-testid={`custom-select-${unit.type}`}
-      {...otherProps}
+      onMouseDown={onMouseDownCallback}
+      {...selectProps}
     />
   )
 }

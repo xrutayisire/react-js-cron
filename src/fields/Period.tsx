@@ -1,5 +1,5 @@
 import Select, { BaseOptionType } from 'antd/lib/select'
-import React, { useCallback, useMemo } from 'react'
+import React, { MouseEvent, useCallback, useMemo } from 'react'
 
 import { DEFAULT_LOCALE_EN } from '../locale'
 import { PeriodProps, PeriodType } from '../types'
@@ -80,6 +80,10 @@ export default function Period(props: PeriodProps) {
     [setValue, readOnly]
   )
 
+  const onMouseDown = useCallback((e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+  }, [])
+
   const internalClassName = useMemo(
     () =>
       classNames({
@@ -130,6 +134,7 @@ export default function Period(props: PeriodProps) {
         showArrow={!readOnly}
         open={readOnly ? false : undefined}
         data-testid='select-period'
+        onMouseDown={onMouseDown}
       />
     </div>
   )
