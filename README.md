@@ -63,24 +63,34 @@ export function App() {
 }
 ```
 
-```jsx
-import { convertor } from 'react-js-cron'
-
-const converted = convertor.getCronStringFromValues('day',
-                [],
-                [],
-                [],
-                [5],
-                [5],
-                false
-            );
-
-```
-
 Don't forget to import styles manually:
 
 ```jsx
 import 'react-js-cron/dist/styles.css'
+```
+
+## Converter
+
+If you want to use the converter used internally you can import it in your project:
+
+```jsx
+import { converter } from 'react-js-cron'
+
+const cronString = converter.getCronStringFromValues(
+  'day', // period: 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'reboot'
+  [], // months: number[] | undefined
+  [],  // monthDays: number[] | undefined
+  [], // weekDays: number[] | undefined
+  [2], // hours: number[] | undefined
+  [1], // minutes: number[] | undefined
+  false // humanizeValue?: boolean
+)
+
+console.log('cron string:', converted)
+```
+
+```
+cron string: '1 2 * * *'
 ```
 
 ## Examples
