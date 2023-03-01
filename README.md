@@ -323,6 +323,19 @@ CronProps {
     altWeekDays?: string[]
     altMonths?: string[]
   }
+
+  /**
+   * Provides an interface to override select props for each of the different
+   * field types.
+   */
+  customSelectProps?: {
+    hours: SelectProps,
+    "month-days": SelectProps,
+    "week-days": SelectProps,
+    minutes: SelectProps,
+    months: SelectProps,
+    period: SelectProps,
+  }
 }
 ```
 
