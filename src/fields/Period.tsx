@@ -15,6 +15,7 @@ export default function Period(props: PeriodProps) {
     readOnly,
     shortcuts,
     allowedPeriods,
+    selectProps,
   } = props
   const options: BaseOptionType[] = []
 
@@ -130,6 +131,7 @@ export default function Period(props: PeriodProps) {
         showArrow={!readOnly}
         open={readOnly ? false : undefined}
         data-testid='select-period'
+        {...selectProps}
       />
     </div>
   )

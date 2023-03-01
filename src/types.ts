@@ -167,6 +167,12 @@ export interface CronProps {
    * Default './locale.ts'
    */
   locale?: Locale
+
+  /**
+   * Provides an interface to override select props for each of the different
+   * field types.
+   */
+  customSelectProps?: Record<CronType, Omit<SelectProps, "mode">>
 }
 export interface Locale {
   everyText?: string
@@ -211,16 +217,16 @@ export interface SetValueFunctionExtra {
 export type SetValue = SetValueFunction | Dispatch<SetStateAction<string>>
 export type CronError =
   | {
-      type: 'invalid_cron'
-      description: string
-    }
+    type: 'invalid_cron'
+    description: string
+  }
   | undefined
 export type OnErrorFunction = (error: CronError) => void
 export type OnError =
   | OnErrorFunction
   | Dispatch<SetStateAction<CronError>>
   | undefined
-export interface ClearButtonProps extends Omit<ButtonProps, 'onClick'> {}
+export interface ClearButtonProps extends Omit<ButtonProps, 'onClick'> { }
 export type ClearButtonAction = 'empty' | 'fill-with-every'
 export type PeriodType =
   | 'year'
@@ -265,6 +271,7 @@ export interface FieldProps {
   period: PeriodType
   periodicityOnDoubleClick: boolean
   mode: Mode
+  selectProps?: Omit<SelectProps, "mode">
 }
 export interface PeriodProps
   extends Omit<

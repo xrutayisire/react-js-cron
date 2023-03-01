@@ -59,6 +59,14 @@ export default function Cron(props: CronProps) {
       'minute',
       'reboot',
     ],
+    customSelectProps = {
+      hours: {},
+      "month-days": {},
+      "week-days": {},
+      minutes: {},
+      months: {},
+      period: {},
+    },
   } = props
   const internalValueRef = useRef<string>(value)
   const defaultPeriodRef = useRef<PeriodType>(defaultPeriod)
@@ -285,6 +293,7 @@ export default function Cron(props: CronProps) {
           readOnly={readOnly}
           shortcuts={shortcuts}
           allowedPeriods={allowedPeriods}
+          selectProps={customSelectProps.period}
         />
       )}
 
@@ -305,6 +314,7 @@ export default function Cron(props: CronProps) {
                 period={periodForRender}
                 periodicityOnDoubleClick={periodicityOnDoubleClick}
                 mode={mode}
+                selectProps={customSelectProps.months}
               />
             )}
 
@@ -322,6 +332,7 @@ export default function Cron(props: CronProps) {
                 period={periodForRender}
                 periodicityOnDoubleClick={periodicityOnDoubleClick}
                 mode={mode}
+                selectProps={customSelectProps['month-days']}
               />
             )}
 
@@ -341,6 +352,7 @@ export default function Cron(props: CronProps) {
                 period={periodForRender}
                 periodicityOnDoubleClick={periodicityOnDoubleClick}
                 mode={mode}
+                selectProps={customSelectProps['week-days']}
               />
             )}
 
@@ -360,6 +372,7 @@ export default function Cron(props: CronProps) {
                   period={periodForRender}
                   periodicityOnDoubleClick={periodicityOnDoubleClick}
                   mode={mode}
+                  selectProps={customSelectProps.hours}
                 />
               )}
 
@@ -377,6 +390,7 @@ export default function Cron(props: CronProps) {
                   clockFormat={clockFormat}
                   periodicityOnDoubleClick={periodicityOnDoubleClick}
                   mode={mode}
+                  selectProps={customSelectProps.minutes}
                 />
               )}
 
