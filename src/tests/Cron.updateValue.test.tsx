@@ -1,4 +1,4 @@
-import { render, screen, waitFor, act } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import Cron from '../Cron'
@@ -50,14 +50,10 @@ describe('Cron update value test suite', () => {
     render(<Cron value={value} setValue={setValue} />)
 
     // Open minute dropdown
-    await waitFor(() =>
-      user.click(screen.getByText('1,4'))
-    )
+    await waitFor(() => user.click(screen.getByText('1,4')))
 
     // Select another minute value
-    await waitFor(() =>
-      user.click(screen.getByText('59'))
-    )
+    await waitFor(() => user.click(screen.getByText('59')))
 
     // Check dropdowns values
     await waitFor(() =>
@@ -67,9 +63,7 @@ describe('Cron update value test suite', () => {
     )
 
     // Select another minute value
-    await waitFor(() =>
-      user.click(screen.getByText('8'))
-    )
+    await waitFor(() => user.click(screen.getByText('8')))
 
     // Check dropdowns values
     await waitFor(() =>
