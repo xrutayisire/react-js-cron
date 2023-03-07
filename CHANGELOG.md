@@ -1,5 +1,9 @@
 ## Changelog
 
+#### 3.1.0
+
+- Export convertor
+
 #### 3.0.1
 
 - **(Important)** Issue [#40](https://github.com/xrutayisire/react-js-cron/issues/40): Antd v5 compatibility
