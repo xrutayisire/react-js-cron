@@ -1,4 +1,4 @@
-import Select from 'antd/lib/select'
+import { Select } from 'antd'
 import React, { useCallback, useMemo, useRef } from 'react'
 
 import { formatValue, parsePartArray, partToString } from '../converter'

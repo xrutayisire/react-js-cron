@@ -3,13 +3,16 @@ import { InfoCircleOutlined } from '@ant-design/icons'
 import {
   Input as AntdInput,
   Button,
+  ConfigProvider,
   Divider,
   Form,
   Radio,
   Select,
   Switch,
   Table,
+  theme,
 } from 'antd'
+import { ThemeConfig } from 'antd/es/config-provider/context'
 import React, { useMemo, useState } from 'react'
 
 import Cron, { AllowEmpty, ClockFormat, CronError, PeriodType } from '../index'
@@ -1797,6 +1800,46 @@ export function CustomStyle() {
           Don&apos;t forget to import antd default style
         </span>
       </div>
+    </div>
+  )
+}
+
+export function ChangeTheme() {
+  const options = useMemo<Record<string, ThemeConfig>>(
+    () => ({
+      default: { algorithm: [theme.defaultAlgorithm] },
+      dark: { algorithm: [theme.darkAlgorithm] },
+    }),
+    []
+  )
+
+  const [values, dispatchValues] = useCronReducer('30 14 22 * *')
+  const [currentTheme, setCurrentTheme] = useState<string>('default')
+
+  return (
+    <div>
+      <p>Choose theme algorithm:</p>
+      <Select<string> value={currentTheme} onChange={setCurrentTheme}>
+        {Object.entries(options).map(([label]) => (
+          <Select.Option key={label} value={label}>
+            {label}
+          </Select.Option>
+        ))}
+      </Select>
+
+      <Divider />
+
+      <ConfigProvider theme={options[currentTheme]}>
+        <Cron
+          value={values.cronValue}
+          setValue={(newValue: string) => {
+            dispatchValues({
+              type: 'set_values',
+              value: newValue,
+            })
+          }}
+        />
+      </ConfigProvider>
     </div>
   )
 }
