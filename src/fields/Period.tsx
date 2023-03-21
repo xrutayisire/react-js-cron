@@ -1,4 +1,5 @@
-import Select, { BaseOptionType } from 'antd/lib/select'
+import { Select } from 'antd'
+import { BaseOptionType } from 'antd/es/select'
 import React, { useCallback, useMemo } from 'react'
 
 import { DEFAULT_LOCALE_EN } from '../locale'
