@@ -1,8 +1,12 @@
 ## Changelog
 
+#### 3.2.0
+
+- Add themes support for antd v5 with ConfigProvider (@nefedov-dm)
+
 #### 3.1.0
 
-- Export convertor
+- Export converter (@useafterfree)
 
 #### 3.0.1
 
