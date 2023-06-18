@@ -262,7 +262,7 @@ export default function CustomSelect(props: CustomSelectProps) {
       showSearch={false}
       showArrow={!readOnly}
       menuItemSelectedIcon={null}
-      dropdownMatchSelectWidth={false}
+      popupMatchSelectWidth={false}
       onSelect={onOptionClick}
       onDeselect={onOptionClick}
       disabled={disabled}
