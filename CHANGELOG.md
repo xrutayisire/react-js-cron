@@ -1,5 +1,11 @@
 ## Changelog
 
+`react-js-cron` follows [Semantic Versioning 2.0.0](http://semver.org/).
+
+#### 4.0.0
+
+- **(Breaking change!)** Fix issue [#55](https://github.com/xrutayisire/react-js-cron/issues/55): react-js-cron now only support antd >= v5.5.0, change antd Select property "dropdownMatchSelectWidth" to "popupMatchSelectWidth"
+
 #### 3.2.0
 
 - Add themes support for antd v5 with ConfigProvider (@nefedov-dm)
