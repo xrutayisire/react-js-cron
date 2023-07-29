@@ -20,7 +20,7 @@ export default function MonthDays(props: MonthDaysProps) {
     periodicityOnDoubleClick,
     mode,
     unitFilter,
-    allowClear
+    allowClear,
   } = props
   const noWeekDays = !weekDays || weekDays.length === 0
 

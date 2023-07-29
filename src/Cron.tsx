@@ -59,7 +59,7 @@ export default function Cron(props: CronProps) {
       'minute',
       'reboot',
     ],
-    componentProps,
+    timefieldProps,
   } = props
   const internalValueRef = useRef<string>(value)
   const defaultPeriodRef = useRef<PeriodType>(defaultPeriod)
@@ -305,9 +305,9 @@ export default function Cron(props: CronProps) {
                 readOnly={readOnly}
                 period={periodForRender}
                 periodicityOnDoubleClick={periodicityOnDoubleClick}
-                mode={componentProps?.year?.mode ?? mode}
-                unitFilter={componentProps?.year?.unitFilter ?? undefined}
-                allowClear={componentProps?.year?.allowClear ?? undefined}
+                mode={timefieldProps?.year?.mode ?? mode}
+                unitFilter={timefieldProps?.year?.unitFilter ?? undefined}
+                allowClear={timefieldProps?.year?.allowClear ?? undefined}
               />
             )}
 
@@ -324,9 +324,9 @@ export default function Cron(props: CronProps) {
                 leadingZero={leadingZero}
                 period={periodForRender}
                 periodicityOnDoubleClick={periodicityOnDoubleClick}
-                mode={componentProps?.month?.mode ?? mode}
-                unitFilter={componentProps?.month?.unitFilter ?? undefined}
-                allowClear={componentProps?.month?.allowClear ?? undefined}
+                mode={timefieldProps?.month?.mode ?? mode}
+                unitFilter={timefieldProps?.month?.unitFilter ?? undefined}
+                allowClear={timefieldProps?.month?.allowClear ?? undefined}
               />
             )}
 
@@ -345,9 +345,9 @@ export default function Cron(props: CronProps) {
                 readOnly={readOnly}
                 period={periodForRender}
                 periodicityOnDoubleClick={periodicityOnDoubleClick}
-                mode={componentProps?.week?.mode ?? mode}
-                unitFilter={componentProps?.week?.unitFilter ?? undefined}
-                allowClear={componentProps?.week?.allowClear ?? undefined}
+                mode={timefieldProps?.week?.mode ?? mode}
+                unitFilter={timefieldProps?.week?.unitFilter ?? undefined}
+                allowClear={timefieldProps?.week?.allowClear ?? undefined}
               />
             )}
 
@@ -366,9 +366,9 @@ export default function Cron(props: CronProps) {
                   clockFormat={clockFormat}
                   period={periodForRender}
                   periodicityOnDoubleClick={periodicityOnDoubleClick}
-                  mode={componentProps?.hour?.mode ?? mode}
-                  unitFilter={componentProps?.hour?.unitFilter ?? undefined}
-                  allowClear={componentProps?.hour?.allowClear ?? undefined}
+                  mode={timefieldProps?.hour?.mode ?? mode}
+                  unitFilter={timefieldProps?.hour?.unitFilter ?? undefined}
+                  allowClear={timefieldProps?.hour?.allowClear ?? undefined}
                 />
               )}
 
@@ -385,9 +385,9 @@ export default function Cron(props: CronProps) {
                   leadingZero={leadingZero}
                   clockFormat={clockFormat}
                   periodicityOnDoubleClick={periodicityOnDoubleClick}
-                  mode={componentProps?.minute?.mode ?? mode}
-                  unitFilter={componentProps?.minute?.unitFilter ?? undefined}
-                  allowClear={componentProps?.minute?.allowClear ?? undefined}
+                  mode={timefieldProps?.minute?.mode ?? mode}
+                  unitFilter={timefieldProps?.minute?.unitFilter ?? undefined}
+                  allowClear={timefieldProps?.minute?.allowClear ?? undefined}
                 />
               )}
 

@@ -1,3 +1,4 @@
+import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 
 import Cron from '../Cron'
@@ -9,6 +10,7 @@ import {
   LeadingZero,
   PeriodType,
   Shortcuts,
+  TimeFieldProps,
 } from '../types'
 
 describe('Cron defaultValue test suite', () => {
@@ -36,6 +38,8 @@ describe('Cron defaultValue test suite', () => {
     weekDaysSelect: string | undefined
     hoursSelect: string | undefined
     minutesSelect: string | undefined
+    timeFieldProps?: TimeFieldProps
+    periodicityOnDoubleClick?: boolean
     error?: CronError
   }[] = [
     {
@@ -708,6 +712,74 @@ describe('Cron defaultValue test suite', () => {
       hoursSelect: undefined,
       minutesSelect: '10',
     },
+    {
+      title:
+        'if single mode is working on month select when periodicityDouble check is false',
+      defaultValue: '0 1 3-5 5 */2',
+      periodSelect: 'year',
+      monthsSelect: 'MAY',
+      monthDaysSelect: '3',
+      weekDaysSelect: 'every 2',
+      hoursSelect: '1',
+      minutesSelect: '0',
+      periodicityOnDoubleClick: false,
+      timeFieldProps: {
+        month: {
+          mode: 'single',
+        },
+      },
+    },
+    {
+      title:
+        'if single mode is working on weekdays select when periodicityDouble check is false',
+      defaultValue: '0 1 3-5 5 */2',
+      periodSelect: 'year',
+      monthsSelect: 'MAY',
+      monthDaysSelect: '3',
+      weekDaysSelect: 'Sunday',
+      hoursSelect: '1',
+      minutesSelect: '0',
+      periodicityOnDoubleClick: false,
+      timeFieldProps: {
+        week: {
+          mode: 'single',
+        },
+      },
+    },
+    {
+      title:
+        'if single mode is working on hour select when periodicityDouble check is false',
+      defaultValue: '0 1 3-5 5 */2',
+      periodSelect: 'year',
+      monthsSelect: 'MAY',
+      monthDaysSelect: '3-5',
+      weekDaysSelect: 'every 2',
+      hoursSelect: '1',
+      minutesSelect: '0',
+      periodicityOnDoubleClick: false,
+      timeFieldProps: {
+        hour: {
+          mode: 'single',
+        },
+      },
+    },
+    {
+      title:
+        'if single mode is working on minute select when periodicityDouble check is false',
+      defaultValue: '0 1 3-5 5 */2',
+      periodSelect: 'year',
+      monthsSelect: 'MAY',
+      monthDaysSelect: '3-5',
+      weekDaysSelect: 'every 2',
+      hoursSelect: '1',
+      minutesSelect: '0',
+      periodicityOnDoubleClick: false,
+      timeFieldProps: {
+        minute: {
+          mode: 'single',
+        },
+      },
+    },
   ]
 
   test.each(cases)(
@@ -730,6 +802,8 @@ describe('Cron defaultValue test suite', () => {
       weekDaysSelect,
       hoursSelect,
       minutesSelect,
+      timeFieldProps,
+      periodicityOnDoubleClick = true,
       error,
     }) => {
       const setValue = jest.fn()
@@ -746,8 +820,10 @@ describe('Cron defaultValue test suite', () => {
           humanizeValue={humanizeValue}
           leadingZero={leadingZero}
           clockFormat={clockFormat}
+          periodicityOnDoubleClick={periodicityOnDoubleClick}
           allowedDropdowns={allowedDropdowns}
           defaultPeriod={defaultPeriod}
+          timefieldProps={timeFieldProps}
         />
       )
 
@@ -842,6 +918,41 @@ describe('Cron defaultValue test suite', () => {
         ).toContain(minutesSelect)
       } else {
         expect(screen.queryByTestId(/custom-select-minutes/i)).toBeNull()
+      }
+
+      if (timeFieldProps) {
+        if (timeFieldProps.month) {
+          const monthDaysSelect = screen.getByTestId('custom-select-month-days')
+          if (timeFieldProps.month.mode === 'single') {
+            expect(monthDaysSelect).toHaveClass('ant-select-single')
+          } else {
+            expect(monthDaysSelect).toHaveClass('ant-select-multiple')
+          }
+        }
+        if (timeFieldProps.week) {
+          const weekSelect = screen.getByTestId('custom-select-week-days')
+          if (timeFieldProps.week.mode === 'single') {
+            expect(weekSelect).toHaveClass('ant-select-single')
+          } else {
+            expect(weekSelect).toHaveClass('ant-select-multiple')
+          }
+        }
+        if (timeFieldProps.hour) {
+          const hoursSelect = screen.getByTestId('custom-select-hours')
+          if (timeFieldProps.hour.mode === 'single') {
+            expect(hoursSelect).toHaveClass('ant-select-single')
+          } else {
+            expect(hoursSelect).toHaveClass('ant-select-multiple')
+          }
+        }
+        if (timeFieldProps.minute) {
+          const minuteSelect = screen.getByTestId('custom-select-minutes')
+          if (timeFieldProps.minute.mode === 'single') {
+            expect(minuteSelect).toHaveClass('ant-select-single')
+          } else {
+            expect(minuteSelect).toHaveClass('ant-select-multiple')
+          }
+        }
       }
     }
   )

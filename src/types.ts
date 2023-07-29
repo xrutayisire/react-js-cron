@@ -168,30 +168,11 @@ export interface CronProps {
    */
   locale?: Locale
 
-  componentProps?: {
-    year?: { mode?: Mode; allowClear?: boolean; unitFilter: UnitFilter }
-    month?: { mode?: Mode; allowClear?: boolean; unitFilter: UnitFilter }
-    week?: {
-      mode?: Mode
-      allowClear?: boolean
-      unitFilter?: UnitFilter
-    }
-    day?: {
-      mode?: Mode
-      allowClear?: boolean
-      unitFilter?: UnitFilter
-    }
-    hour?: {
-      mode?: Mode
-      allowClear?: boolean
-      unitFilter?: UnitFilter
-    }
-    minute?: {
-      mode?: Mode
-      allowClear?: boolean
-      unitFilter?: UnitFilter
-    }
-  }
+  /**
+   * Set mode, unit filter(show intervals of available options based on any condition) and control whether each interval
+   * can be cleared or not on all or any of the time units (months, month days, week days, hours, minutes).
+   */
+  timefieldProps?: TimeFieldProps
 }
 
 export type UnitFilter = ({
@@ -248,9 +229,9 @@ export interface SetValueFunctionExtra {
 export type SetValue = SetValueFunction | Dispatch<SetStateAction<string>>
 export type CronError =
   | {
-  type: 'invalid_cron'
-  description: string
-}
+      type: 'invalid_cron'
+      description: string
+    }
   | undefined
 export type OnErrorFunction = (error: CronError) => void
 export type OnError =
@@ -258,8 +239,7 @@ export type OnError =
   | Dispatch<SetStateAction<CronError>>
   | undefined
 
-export interface ClearButtonProps extends Omit<ButtonProps, 'onClick'> {
-}
+export interface ClearButtonProps extends Omit<ButtonProps, 'onClick'> {}
 
 export type ClearButtonAction = 'empty' | 'fill-with-every'
 export type PeriodType =
@@ -310,8 +290,10 @@ export interface FieldProps {
 }
 
 export interface PeriodProps
-  extends Omit<FieldProps,
-    'value' | 'setValue' | 'period' | 'periodicityOnDoubleClick' | 'mode'> {
+  extends Omit<
+    FieldProps,
+    'value' | 'setValue' | 'period' | 'periodicityOnDoubleClick' | 'mode'
+  > {
   value: PeriodType
   setValue: SetValuePeriod
   shortcuts: Shortcuts
@@ -343,7 +325,8 @@ export interface MinutesProps extends FieldProps {
 }
 
 export interface CustomSelectProps
-  extends Omit<SelectProps<any>,
+  extends Omit<
+    SelectProps<any>,
     | 'mode'
     | 'tokenSeparators'
     | 'virtual'
@@ -357,7 +340,8 @@ export interface CustomSelectProps
     | 'dropdownMatchSelectWidth'
     | 'options'
     | 'onSelect'
-    | 'onDeselect'> {
+    | 'onDeselect'
+  > {
   grid?: boolean
   setValue: SetValueNumbersOrUndefined
   optionsList?: string[]
@@ -375,7 +359,9 @@ export interface CustomSelectProps
   mode: Mode
 }
 
-export type SetValueNumbersOrUndefined = Dispatch<SetStateAction<number[] | undefined>>
+export type SetValueNumbersOrUndefined = Dispatch<
+  SetStateAction<number[] | undefined>
+>
 export type SetValuePeriod = Dispatch<SetStateAction<PeriodType>>
 export type SetInternalError = Dispatch<SetStateAction<boolean>>
 
@@ -433,4 +419,19 @@ export interface Unit {
 export interface Clicks {
   time: number
   value: number
+}
+
+export interface TimeFieldProps {
+  year?: ModeUnitFilterAndAllowClear
+  month?: ModeUnitFilterAndAllowClear
+  week?: ModeUnitFilterAndAllowClear
+  day?: ModeUnitFilterAndAllowClear
+  hour?: ModeUnitFilterAndAllowClear
+  minute?: ModeUnitFilterAndAllowClear
+}
+
+type ModeUnitFilterAndAllowClear = {
+  mode?: Mode
+  allowClear?: boolean
+  unitFilter?: UnitFilter
 }
