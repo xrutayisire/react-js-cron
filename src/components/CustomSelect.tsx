@@ -23,6 +23,8 @@ export default function CustomSelect(props: CustomSelectProps) {
     unit,
     periodicityOnDoubleClick,
     mode,
+    allowClear,
+    filterOption = () => true,
     ...otherProps
   } = props
 
@@ -45,20 +47,22 @@ export default function CustomSelect(props: CustomSelectProps) {
         })
       }
 
-      return [...Array(unit.total)].map((e, index) => {
-        const number = unit.min === 0 ? index : index + 1
+      return [...Array(unit.total)]
+        .map((e, index) => {
+          const number = unit.min === 0 ? index : index + 1
 
-        return {
-          value: number.toString(),
-          label: formatValue(
-            number,
-            unit,
-            humanizeLabels,
-            leadingZero,
-            clockFormat
-          ),
-        }
-      })
+          return {
+            value: number.toString(),
+            label: formatValue(
+              number,
+              unit,
+              humanizeLabels,
+              leadingZero,
+              clockFormat
+            ),
+          }
+        })
+        .filter(filterOption)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [optionsList, leadingZero, humanizeLabels, clockFormat]
@@ -250,7 +254,7 @@ export default function CustomSelect(props: CustomSelectProps) {
       mode={
         mode === 'single' && !periodicityOnDoubleClick ? undefined : 'multiple'
       }
-      allowClear={!readOnly}
+      allowClear={allowClear ?? !readOnly}
       virtual={false}
       open={readOnly ? false : undefined}
       value={stringValue}

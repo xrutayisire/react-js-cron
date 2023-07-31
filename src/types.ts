@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction } from 'react'
 
 export interface CronProps {
   /**
-   * Cron value, the component is by design a controled component.
+   * Cron value, the component is by design a controlled component.
    * The first value will be the default value.
    *
    * required
@@ -69,6 +69,13 @@ export interface CronProps {
   readOnly?: boolean
 
   /**
+   * Show clear button for each dropdown.
+   *
+   * Default: true
+   */
+  allowClear?: boolean
+
+  /**
    * Define if empty should trigger an error.
    *
    * Default: 'for-default-value'
@@ -84,6 +91,8 @@ export interface CronProps {
 
   /**
    * Define the clock format.
+   *
+   * Default: undefined
    */
   clockFormat?: ClockFormat
 
@@ -127,7 +136,7 @@ export interface CronProps {
   periodicityOnDoubleClick?: boolean
 
   /**
-   * Define if it's possible to select only one or multiple values for each select.
+   * Define if it's possible to select only one or multiple values for each dropdowns.
    *
    * Even in single mode, if you want to disable the double click on a dropdown option that
    * automatically select / unselect a periodicity, set 'periodicityOnDoubleClick'
@@ -155,6 +164,54 @@ export interface CronProps {
   allowedPeriods?: PeriodType[]
 
   /**
+   * Define specific configuration that is used for each dropdown specifically.
+   * Configuring a dropdown will override any global configuration for the same property.
+   *
+   * Configuration available:
+   *
+   * // See global configuration
+   * // For 'months' and 'week-days'
+   * humanizeLabels?: boolean
+   *
+   * // See global configuration
+   * // For 'months' and 'week-days'
+   * humanizeValue?: boolean
+   *
+   * // See global configuration
+   * // For 'month-days', 'hours' and 'minutes'
+   * leadingZero?: boolean
+   *
+   * // See global configuration
+   * For 'period', 'months', 'month-days', 'week-days', 'hours' and 'minutes'
+   * disabled?: boolean
+   *
+   * // See global configuration
+   * For 'period', 'months', 'month-days', 'week-days', 'hours' and 'minutes'
+   * readOnly?: boolean
+   *
+   * // See global configuration
+   * // For 'period', 'months', 'month-days', 'week-days', 'hours' and 'minutes'
+   * allowClear?: boolean
+   *
+   * // See global configuration
+   * // For 'months', 'month-days', 'week-days', 'hours' and 'minutes'
+   * periodicityOnDoubleClick?: boolean
+   *
+   * // See global configuration
+   * // For 'months', 'month-days', 'week-days', 'hours' and 'minutes'
+   * mode?: Mode
+   *
+   * // The function will receive one argument, an object with value and label.
+   * // If the function returns true, the option will be included in the filtered set.
+   * // Otherwise, it will be excluded.
+   * // For 'months', 'month-days', 'week-days', 'hours' and 'minutes'
+   * filterOption?: FilterOption
+   *
+   * Default: undefined
+   */
+  dropdownsConfig?: DropdownsConfig
+
+  /**
    * Change the component language.
    * Can also be used to remove prefix and suffix.
    *
@@ -164,7 +221,7 @@ export interface CronProps {
    * The order of the 'locale' properties 'weekDays', 'months', 'altMonths'
    * and 'altWeekDays' is important! The index will be used as value.
    *
-   * Default './locale.ts'
+   * Default './src/locale.ts'
    */
   locale?: Locale
 }
@@ -252,6 +309,25 @@ export type ShortcutsType =
   | '@reboot'
 export type Shortcuts = boolean | ShortcutsType[]
 export type Mode = 'multiple' | 'single'
+export type DropdownConfig = {
+  humanizeLabels?: boolean
+  humanizeValue?: boolean
+  leadingZero?: boolean
+  disabled?: boolean
+  readOnly?: boolean
+  allowClear?: boolean
+  periodicityOnDoubleClick?: boolean
+  mode?: Mode
+  filterOption?: FilterOption
+}
+export type DropdownsConfig = {
+  'period'?: Pick<DropdownConfig, 'disabled' | 'readOnly' | 'allowClear'>
+  'months'?: Omit<DropdownConfig, 'leadingZero'>
+  'month-days'?: Omit<DropdownConfig, 'humanizeLabels' | 'humanizeValue'>
+  'week-days'?: Omit<DropdownConfig, 'leadingZero'>
+  'hours'?: Omit<DropdownConfig, 'humanizeLabels' | 'humanizeValue'>
+  'minutes'?: Omit<DropdownConfig, 'humanizeLabels' | 'humanizeValue'>
+}
 
 // Internal props
 
@@ -265,11 +341,18 @@ export interface FieldProps {
   period: PeriodType
   periodicityOnDoubleClick: boolean
   mode: Mode
+  allowClear?: boolean
+  filterOption?: FilterOption
 }
 export interface PeriodProps
   extends Omit<
     FieldProps,
-    'value' | 'setValue' | 'period' | 'periodicityOnDoubleClick' | 'mode'
+    | 'value'
+    | 'setValue'
+    | 'period'
+    | 'periodicityOnDoubleClick'
+    | 'mode'
+    | 'filterOption'
   > {
   value: PeriodType
   setValue: SetValuePeriod
@@ -300,7 +383,6 @@ export interface CustomSelectProps
     SelectProps<any>,
     | 'mode'
     | 'tokenSeparators'
-    | 'allowClear'
     | 'virtual'
     | 'onClick'
     | 'onBlur'
@@ -313,6 +395,7 @@ export interface CustomSelectProps
     | 'options'
     | 'onSelect'
     | 'onDeselect'
+    | 'filterOption'
   > {
   grid?: boolean
   setValue: SetValueNumbersOrUndefined
@@ -328,6 +411,7 @@ export interface CustomSelectProps
   unit: Unit
   periodicityOnDoubleClick: boolean
   mode: Mode
+  filterOption?: FilterOption
 }
 export type SetValueNumbersOrUndefined = Dispatch<
   SetStateAction<number[] | undefined>
@@ -385,3 +469,11 @@ export interface Clicks {
   time: number
   value: number
 }
+
+export type FilterOption = ({
+  value,
+  label,
+}: {
+  value: string
+  label: string
+}) => boolean

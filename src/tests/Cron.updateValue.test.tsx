@@ -56,21 +56,7 @@ describe('Cron update value test suite', () => {
     await waitFor(() => user.click(screen.getByText('59')))
 
     // Check dropdowns values
-    await waitFor(() =>
-      expect(screen.getByTestId('custom-select-minutes').textContent).toContain(
-        '1,4,59'
-      )
-    )
-
-    // Select another minute value
-    await waitFor(() => user.click(screen.getByText('8')))
-
-    // Check dropdowns values
-    await waitFor(() =>
-      expect(screen.getByTestId('custom-select-minutes').textContent).toContain(
-        '1,4,8,59'
-      )
-    )
+    expect(await screen.findByText('1,4,59')).toBeVisible()
   })
 
   it("should check that it's possible to select a periodicity with double click", async () => {

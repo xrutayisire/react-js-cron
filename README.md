@@ -188,6 +188,13 @@ CronProps {
   readOnly?: boolean
 
   /**
+   * Show clear button for each dropdown.
+   *
+   * Default: true
+   */
+  allowClear?: boolean
+
+  /**
    * Define if empty should trigger an error.
    *
    * Default: 'for-default-value'
@@ -203,6 +210,8 @@ CronProps {
 
   /**
    * Define the clock format.
+   *
+   * Default: undefined
    */
   clockFormat?: '12-hour-clock' | '24-hour-clock'
 
@@ -255,7 +264,7 @@ CronProps {
   periodicityOnDoubleClick?: boolean
 
   /**
-   * Define if it's possible to select only one or multiple values for each select.
+   * Define if it's possible to select only one or multiple values for each dropdown.
    *
    * Even in single mode, if you want to disable the double click on a dropdown option that
    * automatically select / unselect a periodicity, set 'periodicityOnDoubleClick'
@@ -288,6 +297,137 @@ CronProps {
    * Default: ['year', 'month', 'week', 'day', 'hour', 'minute', 'reboot']
    */
   allowedPeriods?: ['year', 'month', 'week', 'day', 'hour', 'minute', 'reboot']
+
+  /**
+   * Define a configuration that is used for each dropdown specifically.
+   * Configuring a dropdown will override any global configuration for the same property.
+   *
+   * Configurations available:
+   *
+   * // See global configuration
+   * // For 'months' and 'week-days'
+   * humanizeLabels?: boolean
+   *
+   * // See global configuration
+   * // For 'months' and 'week-days'
+   * humanizeValue?: boolean
+   *
+   * // See global configuration
+   * // For 'month-days', 'hours' and 'minutes'
+   * leadingZero?: boolean
+   *
+   * // See global configuration
+   * For 'period', 'months', 'month-days', 'week-days', 'hours' and 'minutes'
+   * disabled?: boolean
+   *
+   * // See global configuration
+   * For 'period', 'months', 'month-days', 'week-days', 'hours' and 'minutes'
+   * readOnly?: boolean
+   *
+   * // See global configuration
+   * // For 'period', 'months', 'month-days', 'week-days', 'hours' and 'minutes'
+   * allowClear?: boolean
+   *
+   * // See global configuration
+   * // For 'months', 'month-days', 'week-days', 'hours' and 'minutes'
+   * periodicityOnDoubleClick?: boolean
+   *
+   * // See global configuration
+   * // For 'months', 'month-days', 'week-days', 'hours' and 'minutes'
+   * mode?: Mode
+   *
+   * // The function will receive one argument, an object with value and label.
+   * // If the function returns true, the option will be included in the filtered set.
+   * // Otherwise, it will be excluded.
+   * // For 'months', 'month-days', 'week-days', 'hours' and 'minutes'
+   * filterOption?: FilterOption
+   *
+   * Default: undefined
+   */
+  dropdownsConfig?: {
+    'period'?: {
+      disabled?: boolean
+      readOnly?: boolean
+      allowClear?: boolean
+    }
+    'months'?: {
+      humanizeLabels?: boolean
+      humanizeValue?: boolean
+      disabled?: boolean
+      readOnly?: boolean
+      allowClear?: boolean
+      periodicityOnDoubleClick?: boolean
+      mode?: 'multiple' | 'single'
+      filterOption?: ({
+          value,
+          label,
+        }: {
+          value: string
+          label: string
+        }) => boolean
+    }
+    'month-days'?: {
+      leadingZero?: boolean
+      disabled?: boolean
+      readOnly?: boolean
+      allowClear?: boolean
+      periodicityOnDoubleClick?: boolean
+      mode?: 'multiple' | 'single'
+      filterOption?: ({
+          value,
+          label,
+        }: {
+          value: string
+          label: string
+        }) => boolean
+    }
+    'week-days'?: {
+      humanizeLabels?: boolean
+      humanizeValue?: boolean
+      disabled?: boolean
+      readOnly?: boolean
+      allowClear?: boolean
+      periodicityOnDoubleClick?: boolean
+      mode?: 'multiple' | 'single'
+      filterOption?: ({
+          value,
+          label,
+        }: {
+          value: string
+          label: string
+        }) => boolean
+    }
+    'hours'?: {
+      leadingZero?: boolean
+      disabled?: boolean
+      readOnly?: boolean
+      allowClear?: boolean
+      periodicityOnDoubleClick?: boolean
+      mode?: 'multiple' | 'single'
+      filterOption?: ({
+          value,
+          label,
+        }: {
+          value: string
+          label: string
+        }) => boolean
+    }
+    'minutes'?: {
+      leadingZero?: boolean
+      disabled?: boolean
+      readOnly?: boolean
+      allowClear?: boolean
+      periodicityOnDoubleClick?: boolean
+      mode?: 'multiple' | 'single'
+      filterOption?: ({
+          value,
+          label,
+        }: {
+          value: string
+          label: string
+        }) => boolean
+    }
+  }
 
   /**
    * Change the component language.

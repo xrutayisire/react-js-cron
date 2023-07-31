@@ -19,6 +19,8 @@ export default function Minutes(props: MinutesProps) {
     period,
     periodicityOnDoubleClick,
     mode,
+    allowClear,
+    filterOption,
   } = props
   const internalClassName = useMemo(
     () =>
@@ -65,6 +67,8 @@ export default function Minutes(props: MinutesProps) {
         period={period}
         periodicityOnDoubleClick={periodicityOnDoubleClick}
         mode={mode}
+        allowClear={allowClear}
+        filterOption={filterOption}
       />
 
       {period === 'hour' && locale.suffixMinutesForHourPeriod !== '' && (

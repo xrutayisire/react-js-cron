@@ -1709,6 +1709,62 @@ export function NoPrefixAndSuffix() {
   )
 }
 
+export function DropdownsConfig() {
+  const defaultValue = '8 5 2,3 6 1,6'
+  const [value, setValue] = useState(defaultValue)
+
+  return (
+    <div>
+      <p>Default value: {defaultValue}</p>
+      <p>Value: {value}</p>
+      <p>&quot;period&quot; allowClear: false</p>
+      <p>&quot;months&quot; periodicityOnDoubleClick: false</p>
+      <p>&quot;months&quot; mode: &quot;single&quot;</p>
+      <p>&quot;month-days&quot; disabled: true</p>
+      <p>&quot;week-days&quot; humanizeLabels: false</p>
+      <p>&quot;week-days&quot; humanizeValue: true</p>
+      <p>&quot;hours&quot; readOnly: true</p>
+      <p>&quot;minutes&quot; leadingZero: true</p>
+      <p>&quot;minutes&quot; filterOption: 0, 1, 2, 3, 4, 5, 6, 6, 8, 9</p>
+
+      <Cron
+        value={value}
+        setValue={setValue}
+        dropdownsConfig={{
+          'period': {
+            allowClear: false,
+          },
+          'months': {
+            periodicityOnDoubleClick: false,
+            mode: 'single',
+          },
+          'month-days': {
+            disabled: true,
+          },
+          'week-days': {
+            humanizeLabels: false,
+            humanizeValue: true,
+          },
+          'hours': {
+            readOnly: true,
+          },
+          'minutes': {
+            leadingZero: true,
+            filterOption: ({ value }) => Number(value) < 10,
+          },
+        }}
+      />
+
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          You can configure each dropdown individually
+        </span>
+      </div>
+    </div>
+  )
+}
+
 export function CustomStyle() {
   const defaultValue = '30 14 22 * *'
   const [values, dispatchValues] = useCronReducer(defaultValue)

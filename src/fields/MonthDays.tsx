@@ -19,6 +19,8 @@ export default function MonthDays(props: MonthDaysProps) {
     period,
     periodicityOnDoubleClick,
     mode,
+    allowClear,
+    filterOption,
   } = props
   const noWeekDays = !weekDays || weekDays.length === 0
 
@@ -73,6 +75,8 @@ export default function MonthDays(props: MonthDaysProps) {
         period={period}
         periodicityOnDoubleClick={periodicityOnDoubleClick}
         mode={mode}
+        allowClear={allowClear}
+        filterOption={filterOption}
       />
     </div>
   ) : null
