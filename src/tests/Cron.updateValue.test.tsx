@@ -231,4 +231,42 @@ describe('Cron update value test suite', () => {
       expect(onError).toHaveBeenNthCalledWith(3, undefined)
     })
   })
+
+  it("should check that it's not possible to update value when it's readOnly mode", async () => {
+    const user = userEvent.setup()
+    const value = '1,4 * * * *'
+    const setValue = jest.fn()
+
+    render(<Cron value={value} setValue={setValue} readOnly />)
+
+    // Open minute dropdown
+    await waitFor(() => user.click(screen.getByText('1,4')))
+
+    // Check dropdown is not visible
+    await waitFor(() => {
+      expect(screen.queryByText('59')).not.toBeInTheDocument()
+    })
+
+    // Check dropdowns values still the sane
+    expect(await screen.findByText('1,4')).toBeVisible()
+  })
+
+  it("should check that it's not possible to update value when it's disabled mode", async () => {
+    const user = userEvent.setup()
+    const value = '1,4 * * * *'
+    const setValue = jest.fn()
+
+    render(<Cron value={value} setValue={setValue} disabled />)
+
+    // Open minute dropdown
+    await waitFor(() => user.click(screen.getByText('1,4')))
+
+    // Check dropdown is not visible
+    await waitFor(() => {
+      expect(screen.queryByText('59')).not.toBeInTheDocument()
+    })
+
+    // Check dropdowns values still the sane
+    expect(await screen.findByText('1,4')).toBeVisible()
+  })
 })

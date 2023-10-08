@@ -264,7 +264,7 @@ export default function CustomSelect(props: CustomSelectProps) {
       popupClassName={popupClassName}
       options={options}
       showSearch={false}
-      showArrow={!readOnly}
+      suffixIcon={readOnly ? null : undefined}
       menuItemSelectedIcon={null}
       popupMatchSelectWidth={false}
       onSelect={onOptionClick}

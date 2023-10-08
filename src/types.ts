@@ -389,7 +389,7 @@ export interface CustomSelectProps
     | 'tagRender'
     | 'dropdownRender'
     | 'showSearch'
-    | 'showArrow'
+    | 'suffixIcon'
     | 'onChange'
     | 'dropdownMatchSelectWidth'
     | 'options'
