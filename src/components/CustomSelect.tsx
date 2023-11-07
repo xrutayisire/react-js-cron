@@ -44,7 +44,7 @@ export default function CustomSelect(props: CustomSelectProps) {
             value: number.toString(),
             label: option,
           }
-        })
+        }).filter(filterOption)
       }
 
       return [...Array(unit.total)]
