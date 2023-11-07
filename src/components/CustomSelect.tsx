@@ -37,14 +37,16 @@ export default function CustomSelect(props: CustomSelectProps) {
   const options = useMemo(
     () => {
       if (optionsList) {
-        return optionsList.map((option, index) => {
-          const number = unit.min === 0 ? index : index + 1
+        return optionsList
+          .map((option, index) => {
+            const number = unit.min === 0 ? index : index + 1
 
-          return {
-            value: number.toString(),
-            label: option,
-          }
-        }).filter(filterOption)
+            return {
+              value: number.toString(),
+              label: option,
+            }
+          })
+          .filter(filterOption)
       }
 
       return [...Array(unit.total)]
