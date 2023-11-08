@@ -303,8 +303,7 @@ describe('Cron update value test suite', () => {
         if (i < 58) {
           expect(screen.getByText(i)).toBeVisible()
         } else {
-          expect(screen.queryByText(58)).not.toBeInTheDocument()
-          expect(screen.queryByText(59)).not.toBeInTheDocument()
+          expect(screen.queryByText(i)).not.toBeInTheDocument()
         }
       }
     })
