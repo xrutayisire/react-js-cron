@@ -2,6 +2,10 @@
 
 `react-js-cron` follows [Semantic Versioning 2.0.0](http://semver.org/).
 
+#### 5.0.1
+
+- Fix `dropdownsConfig` `filterOption` prop not working for months and week-days.
+
 #### 5.0.0
 
 - **(Breaking change!)** Fix issue [#60](https://github.com/xrutayisire/react-js-cron/issues/60): react-js-cron now only support antd >= v5.8.0, use "suffixIcon" instead of deprecated "showArrow" for Select component
