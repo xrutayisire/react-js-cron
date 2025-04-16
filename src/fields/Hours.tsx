@@ -21,6 +21,7 @@ export default function Hours(props: HoursProps) {
     mode,
     allowClear,
     filterOption,
+    getPopupContainer,
   } = props
   const internalClassName = useMemo(
     () =>
@@ -55,6 +56,7 @@ export default function Hours(props: HoursProps) {
         mode={mode}
         allowClear={allowClear}
         filterOption={filterOption}
+        getPopupContainer={getPopupContainer}
       />
     </div>
   )

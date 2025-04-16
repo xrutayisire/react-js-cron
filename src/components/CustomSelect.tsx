@@ -25,6 +25,7 @@ export default function CustomSelect(props: CustomSelectProps) {
     mode,
     allowClear,
     filterOption = () => true,
+    getPopupContainer,
     ...otherProps
   } = props
 
@@ -284,6 +285,7 @@ export default function CustomSelect(props: CustomSelectProps) {
           : undefined
       }
       data-testid={`custom-select-${unit.type}`}
+      getPopupContainer={getPopupContainer}
       {...otherProps}
     />
   )

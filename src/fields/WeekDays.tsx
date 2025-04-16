@@ -21,6 +21,7 @@ export default function WeekDays(props: WeekDaysProps) {
     mode,
     allowClear,
     filterOption,
+    getPopupContainer,
   } = props
   const optionsList = locale.weekDays || DEFAULT_LOCALE_EN.weekDays
   const noMonthDays = period === 'week' || !monthDays || monthDays.length === 0
@@ -101,6 +102,7 @@ export default function WeekDays(props: WeekDaysProps) {
         mode={mode}
         allowClear={allowClear}
         filterOption={filterOption}
+        getPopupContainer={getPopupContainer}
       />
     </div>
   ) : null

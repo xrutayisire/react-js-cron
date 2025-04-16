@@ -224,6 +224,14 @@ export interface CronProps {
    * Default './src/locale.ts'
    */
   locale?: Locale
+
+  /*
+   * Define the container for the dropdowns.
+   * By default, the dropdowns will be rendered in the body.
+   * This is useful when you want to render the dropdowns in a specific
+   * container, for example, when using a modal or a specific layout.
+  */
+  getPopupContainer?: () => HTMLElement
 }
 export interface Locale {
   everyText?: string
@@ -342,7 +350,8 @@ export interface FieldProps {
   periodicityOnDoubleClick: boolean
   mode: Mode
   allowClear?: boolean
-  filterOption?: FilterOption
+  filterOption?: FilterOption,
+  getPopupContainer?: () => HTMLElement
 }
 export interface PeriodProps
   extends Omit<
@@ -358,6 +367,7 @@ export interface PeriodProps
   setValue: SetValuePeriod
   shortcuts: Shortcuts
   allowedPeriods: PeriodType[]
+  getPopupContainer?: () => HTMLElement
 }
 export interface MonthsProps extends FieldProps {
   humanizeLabels: boolean
@@ -412,6 +422,7 @@ export interface CustomSelectProps
   periodicityOnDoubleClick: boolean
   mode: Mode
   filterOption?: FilterOption
+  getPopupContainer?: () => HTMLElement
 }
 export type SetValueNumbersOrUndefined = Dispatch<
   SetStateAction<number[] | undefined>

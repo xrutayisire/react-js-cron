@@ -20,6 +20,7 @@ export default function Months(props: MonthsProps) {
     mode,
     allowClear,
     filterOption,
+    getPopupContainer,
   } = props
   const optionsList = locale.months || DEFAULT_LOCALE_EN.months
 
@@ -62,6 +63,7 @@ export default function Months(props: MonthsProps) {
         mode={mode}
         allowClear={allowClear}
         filterOption={filterOption}
+        getPopupContainer={getPopupContainer}
       />
     </div>
   )

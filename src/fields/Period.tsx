@@ -17,6 +17,7 @@ export default function Period(props: PeriodProps) {
     shortcuts,
     allowedPeriods,
     allowClear,
+    getPopupContainer,
   } = props
   const options: BaseOptionType[] = []
 
@@ -133,6 +134,7 @@ export default function Period(props: PeriodProps) {
         open={readOnly ? false : undefined}
         data-testid='select-period'
         allowClear={allowClear}
+        getPopupContainer={getPopupContainer}
       />
     </div>
   )

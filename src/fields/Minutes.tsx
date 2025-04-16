@@ -21,6 +21,7 @@ export default function Minutes(props: MinutesProps) {
     mode,
     allowClear,
     filterOption,
+    getPopupContainer,
   } = props
   const internalClassName = useMemo(
     () =>
@@ -69,6 +70,7 @@ export default function Minutes(props: MinutesProps) {
         mode={mode}
         allowClear={allowClear}
         filterOption={filterOption}
+        getPopupContainer={getPopupContainer}
       />
 
       {period === 'hour' && locale.suffixMinutesForHourPeriod !== '' && (
