@@ -225,7 +225,7 @@ export interface CronProps {
    */
   locale?: Locale
 
-  /*
+  /**
    * Define the container for the dropdowns.
    * By default, the dropdowns will be rendered in the body.
    * This is useful when you want to render the dropdowns in a specific

@@ -473,6 +473,14 @@ CronProps {
     altWeekDays?: string[]
     altMonths?: string[]
   }
+
+  /**
+   * Define the container for the dropdowns.
+   * By default, the dropdowns will be rendered in the body.
+   * This is useful when you want to render the dropdowns in a specific
+   * container, for example, when using a modal or a specific layout.
+   */
+  getPopupContainer?: () => HTMLElement
 }
 ```
 
