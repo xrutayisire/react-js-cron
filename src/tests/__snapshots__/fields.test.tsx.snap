@@ -9,7 +9,7 @@ exports[`Fields <Hours /> matches the original snapshot 1`] = `
       at
     </span>
     <div
-      class="ant-select ant-select-outlined react-js-cron-select react-js-cron-custom-select css-dev-only-do-not-override-1a3rktk ant-select-multiple ant-select-allow-clear ant-select-show-arrow"
+      class="ant-select ant-select-outlined react-js-cron-select react-js-cron-custom-select css-dev-only-do-not-override-1261szd ant-select-multiple ant-select-allow-clear ant-select-show-arrow"
       data-testid="custom-select-hours"
     >
       <div
@@ -101,7 +101,7 @@ exports[`Fields <Minutes /> matches the original snapshot 1`] = `
       :
     </span>
     <div
-      class="ant-select ant-select-outlined react-js-cron-select react-js-cron-custom-select css-dev-only-do-not-override-1a3rktk ant-select-multiple ant-select-allow-clear ant-select-show-arrow"
+      class="ant-select ant-select-outlined react-js-cron-select react-js-cron-custom-select css-dev-only-do-not-override-1261szd ant-select-multiple ant-select-allow-clear ant-select-show-arrow"
       data-testid="custom-select-minutes"
     >
       <div
@@ -193,7 +193,7 @@ exports[`Fields <MonthDays /> matches the original snapshot 1`] = `
       on
     </span>
     <div
-      class="ant-select ant-select-outlined react-js-cron-select react-js-cron-custom-select css-dev-only-do-not-override-1a3rktk ant-select-multiple ant-select-allow-clear ant-select-show-arrow"
+      class="ant-select ant-select-outlined react-js-cron-select react-js-cron-custom-select css-dev-only-do-not-override-1261szd ant-select-multiple ant-select-allow-clear ant-select-show-arrow"
       data-testid="custom-select-month-days"
     >
       <div
@@ -285,7 +285,7 @@ exports[`Fields <Months /> matches the original snapshot 1`] = `
       in
     </span>
     <div
-      class="ant-select ant-select-outlined react-js-cron-select react-js-cron-custom-select css-dev-only-do-not-override-1a3rktk ant-select-multiple ant-select-allow-clear ant-select-show-arrow"
+      class="ant-select ant-select-outlined react-js-cron-select react-js-cron-custom-select css-dev-only-do-not-override-1261szd ant-select-multiple ant-select-allow-clear ant-select-show-arrow"
       data-testid="custom-select-months"
     >
       <div
@@ -377,7 +377,7 @@ exports[`Fields <Period /> matches the original snapshot 1`] = `
       Every
     </span>
     <div
-      class="ant-select ant-select-outlined react-js-cron-select css-dev-only-do-not-override-1a3rktk ant-select-single ant-select-show-arrow"
+      class="ant-select ant-select-outlined react-js-cron-select css-dev-only-do-not-override-1261szd ant-select-single ant-select-show-arrow"
       data-testid="select-period"
     >
       <div
@@ -454,7 +454,7 @@ exports[`Fields <WeekDays /> matches the original snapshot 1`] = `
       on
     </span>
     <div
-      class="ant-select ant-select-outlined react-js-cron-select react-js-cron-custom-select css-dev-only-do-not-override-1a3rktk ant-select-multiple ant-select-allow-clear ant-select-show-arrow"
+      class="ant-select ant-select-outlined react-js-cron-select react-js-cron-custom-select css-dev-only-do-not-override-1261szd ant-select-multiple ant-select-allow-clear ant-select-show-arrow"
       data-testid="custom-select-week-days"
     >
       <div
