@@ -2,6 +2,10 @@
 
 `react-js-cron` follows [Semantic Versioning 2.0.0](http://semver.org/).
 
+#### 5.1.1
+
+- Fix issue [#71](https://github.com/xrutayisire/react-js-cron/issues/71): Fix empty space in each field with no selection
+
 #### 5.1.0
 
 - **(New feature)** Issue [#75](https://github.com/xrutayisire/react-js-cron/issues/75): Add `getPopupContainer` from antd to Select component.
