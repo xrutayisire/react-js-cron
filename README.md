@@ -40,7 +40,7 @@ react-js-cron is written in TypeScript with complete definitions
 Be sure that you have these dependencies on your project:
 
 - react (>=17.0.0)
-- antd (>=5.8.0)
+- antd (>=5.23.0)
 
 ```bash
 # NPM
@@ -79,7 +79,7 @@ import { converter } from 'react-js-cron'
 const cronString = converter.getCronStringFromValues(
   'day', // period: 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'reboot'
   [], // months: number[] | undefined
-  [],  // monthDays: number[] | undefined
+  [], // monthDays: number[] | undefined
   [], // weekDays: number[] | undefined
   [2], // hours: number[] | undefined
   [1], // minutes: number[] | undefined

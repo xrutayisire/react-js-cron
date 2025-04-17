@@ -1,3 +1,21 @@
+.react-js-cron-select .ant-select-selection-wrap {
+  position: relative;
+  align-items: center;
+}
+
+/* Absolute position only when there are one child, meaning when no items are selected. */
+.react-js-cron-select
+  .ant-select-selection-overflow:has(> :nth-child(-n + 1):last-child) {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Center placeholder vertically. */
+.react-js-cron-select .ant-select-selection-placeholder {
+  margin-top: -2px;
+}
+
 .react-js-cron {
   display: flex;
   align-items: flex-start;
