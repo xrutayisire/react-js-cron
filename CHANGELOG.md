@@ -2,6 +2,10 @@
 
 `react-js-cron` follows [Semantic Versioning 2.0.0](http://semver.org/).
 
+#### 5.1.0
+
+- **(New feature)** Issue [#75](https://github.com/xrutayisire/react-js-cron/issues/75): Add `getPopupContainer` from antd to Select component.
+
 #### 5.0.1
 
 - Fix `dropdownsConfig` `filterOption` prop not working for months and week-days.
