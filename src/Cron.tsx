@@ -61,6 +61,7 @@ export default function Cron(props: CronProps) {
     ],
     allowClear,
     dropdownsConfig,
+    getPopupContainer,
   } = props
   const internalValueRef = useRef<string>(value)
   const defaultPeriodRef = useRef<PeriodType>(defaultPeriod)
@@ -292,6 +293,7 @@ export default function Cron(props: CronProps) {
           shortcuts={shortcuts}
           allowedPeriods={allowedPeriods}
           allowClear={dropdownsConfig?.period?.allowClear ?? allowClear}
+          getPopupContainer={getPopupContainer}
         />
       )}
 
@@ -319,6 +321,7 @@ export default function Cron(props: CronProps) {
                 mode={dropdownsConfig?.months?.mode ?? mode}
                 allowClear={dropdownsConfig?.months?.allowClear ?? allowClear}
                 filterOption={dropdownsConfig?.months?.filterOption}
+                getPopupContainer={getPopupContainer}
               />
             )}
 
@@ -345,6 +348,7 @@ export default function Cron(props: CronProps) {
                   dropdownsConfig?.['month-days']?.allowClear ?? allowClear
                 }
                 filterOption={dropdownsConfig?.['month-days']?.filterOption}
+                getPopupContainer={getPopupContainer}
               />
             )}
 
@@ -374,6 +378,7 @@ export default function Cron(props: CronProps) {
                   dropdownsConfig?.['week-days']?.allowClear ?? allowClear
                 }
                 filterOption={dropdownsConfig?.['week-days']?.filterOption}
+                getPopupContainer={getPopupContainer}
               />
             )}
 
@@ -400,6 +405,7 @@ export default function Cron(props: CronProps) {
                   mode={dropdownsConfig?.hours?.mode ?? mode}
                   allowClear={dropdownsConfig?.hours?.allowClear ?? allowClear}
                   filterOption={dropdownsConfig?.hours?.filterOption}
+                  getPopupContainer={getPopupContainer}
                 />
               )}
 
@@ -426,6 +432,7 @@ export default function Cron(props: CronProps) {
                     dropdownsConfig?.minutes?.allowClear ?? allowClear
                   }
                   filterOption={dropdownsConfig?.minutes?.filterOption}
+                  getPopupContainer={getPopupContainer}
                 />
               )}
 
