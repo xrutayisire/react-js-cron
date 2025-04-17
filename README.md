@@ -79,7 +79,7 @@ import { converter } from 'react-js-cron'
 const cronString = converter.getCronStringFromValues(
   'day', // period: 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'reboot'
   [], // months: number[] | undefined
-  [],  // monthDays: number[] | undefined
+  [], // monthDays: number[] | undefined
   [], // weekDays: number[] | undefined
   [2], // hours: number[] | undefined
   [1], // minutes: number[] | undefined
