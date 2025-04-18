@@ -71,7 +71,7 @@ import 'react-js-cron/dist/styles.css'
 
 ## Converter
 
-If you want to use the converter used internally you can import it in your project:
+If you want to use the converter that react-js-cron uses internally, you can import it into your project:
 
 ```jsx
 import { converter } from 'react-js-cron'
@@ -98,33 +98,27 @@ The converter can also be helpful for parsing a string. Note that Sunday is repr
 ```jsx
 import { converter } from 'react-js-cron'
 
-const [
-  minutes, 
-  hours, 
-  daysOfMonth, 
-  months, 
-  daysOfWeek
-] = converter.parseCronString('0 2,14 * * 1-5');
+const [minutes, hours, daysOfMonth, months, daysOfWeek] =
+  converter.parseCronString('0 2,14 * * 1-5')
 
-console.log('parsed cron:', { 
-  minutes, 
-  hours, 
-  daysOfMonth, 
-  months, 
-  daysOfWeek
+console.log('parsed cron:', {
+  minutes,
+  hours,
+  daysOfMonth,
+  months,
+  daysOfWeek,
 })
 ```
 
 ```
-parsed cron: { 
-  minutes: [0], 
-  hours: [2, 14], 
-  daysOfMonth: [], 
-  months: [], 
+parsed cron: {
+  minutes: [0],
+  hours: [2, 14],
+  daysOfMonth: [],
+  months: [],
   daysOfWeek: [1, 2, 3, 4, 5]
 }
 ```
-
 
 ## Examples
 
