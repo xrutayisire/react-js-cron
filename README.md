@@ -93,6 +93,39 @@ console.log('cron string:', converted)
 cron string: '1 2 * * *'
 ```
 
+The converter can also be helpful for parsing a string. Note that Sunday is represented as 0 in the output array but can be either 0 or 7 in the cron expression.
+
+```jsx
+import { converter } from 'react-js-cron'
+
+const [
+  minutes, 
+  hours, 
+  daysOfMonth, 
+  months, 
+  daysOfWeek
+] = converter.parseCronString('0 2,14 * * 1-5');
+
+console.log('parsed cron:', { 
+  minutes, 
+  hours, 
+  daysOfMonth, 
+  months, 
+  daysOfWeek
+})
+```
+
+```
+parsed cron: { 
+  minutes: [0], 
+  hours: [2, 14], 
+  daysOfMonth: [], 
+  months: [], 
+  daysOfWeek: [1, 2, 3, 4, 5]
+}
+```
+
+
 ## Examples
 
 Learn more with [dynamic settings](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--dynamic-settings).
