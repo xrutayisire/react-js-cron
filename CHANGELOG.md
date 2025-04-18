@@ -4,19 +4,19 @@
 
 #### 5.2.0
 
-- **(New feature)** Export converter `parseCronString` function to allow third party use.
+- **(New feature)** Export converter `parseCronString` function to allow third party use (@idpaterson)
 
 #### 5.1.1
 
-- Fix issue [#71](https://github.com/xrutayisire/react-js-cron/issues/71): Fix empty space in each field with no selection
+- Fix issue [#71](https://github.com/xrutayisire/react-js-cron/issues/71): Fix empty space in each field with no selection (@iyapici-wallix)
 
 #### 5.1.0
 
-- **(New feature)** Issue [#75](https://github.com/xrutayisire/react-js-cron/issues/75): Add `getPopupContainer` from antd to Select component.
+- **(New feature)** Issue [#75](https://github.com/xrutayisire/react-js-cron/issues/75): Add `getPopupContainer` from antd to Select component (@silannisik)
 
 #### 5.0.1
 
-- Fix `dropdownsConfig` `filterOption` prop not working for months and week-days.
+- Fix `dropdownsConfig` `filterOption` prop not working for months and week-days
 
 #### 5.0.0
 
