@@ -2,7 +2,7 @@
 
 `react-js-cron` follows [Semantic Versioning 2.0.0](http://semver.org/).
 
-#### 5.2.0
+### 5.2.0
 
 - **(New feature)** Export converter `parseCronString` function to allow third party use (@idpaterson)
 

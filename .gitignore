@@ -30,4 +30,5 @@ package-lock.json
 !/.npmignore
 !/.oxfmtrc.json
 !/.oxlintrc.json
+!/.release-please-manifest.json
 !/.yarnrc.yml
