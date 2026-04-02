@@ -31,7 +31,7 @@ export default function Hours(props: HoursProps) {
         [`${className}-field`]: !!className,
         [`${className}-hours`]: !!className,
       }),
-    [className]
+    [className],
   )
 
   return (

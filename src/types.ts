@@ -268,7 +268,7 @@ export interface Locale {
 }
 export type SetValueFunction = (
   value: string,
-  extra: SetValueFunctionExtra
+  extra: SetValueFunctionExtra,
 ) => void
 export interface SetValueFunctionExtra {
   selectedPeriod: PeriodType
@@ -353,16 +353,15 @@ export interface FieldProps {
   filterOption?: FilterOption
   getPopupContainer?: () => HTMLElement
 }
-export interface PeriodProps
-  extends Omit<
-    FieldProps,
-    | 'value'
-    | 'setValue'
-    | 'period'
-    | 'periodicityOnDoubleClick'
-    | 'mode'
-    | 'filterOption'
-  > {
+export interface PeriodProps extends Omit<
+  FieldProps,
+  | 'value'
+  | 'setValue'
+  | 'period'
+  | 'periodicityOnDoubleClick'
+  | 'mode'
+  | 'filterOption'
+> {
   value: PeriodType
   setValue: SetValuePeriod
   shortcuts: Shortcuts
@@ -388,25 +387,24 @@ export interface MinutesProps extends FieldProps {
   leadingZero: LeadingZero
   clockFormat?: ClockFormat
 }
-export interface CustomSelectProps
-  extends Omit<
-    SelectProps<any>,
-    | 'mode'
-    | 'tokenSeparators'
-    | 'virtual'
-    | 'onClick'
-    | 'onBlur'
-    | 'tagRender'
-    | 'dropdownRender'
-    | 'showSearch'
-    | 'suffixIcon'
-    | 'onChange'
-    | 'dropdownMatchSelectWidth'
-    | 'options'
-    | 'onSelect'
-    | 'onDeselect'
-    | 'filterOption'
-  > {
+export interface CustomSelectProps extends Omit<
+  SelectProps<any>,
+  | 'mode'
+  | 'tokenSeparators'
+  | 'virtual'
+  | 'onClick'
+  | 'onBlur'
+  | 'tagRender'
+  | 'dropdownRender'
+  | 'showSearch'
+  | 'suffixIcon'
+  | 'onChange'
+  | 'popupMatchSelectWidth'
+  | 'options'
+  | 'onSelect'
+  | 'onDeselect'
+  | 'filterOption'
+> {
   grid?: boolean
   setValue: SetValueNumbersOrUndefined
   optionsList?: string[]

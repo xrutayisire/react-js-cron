@@ -1,17 +1,24 @@
 name: Unit tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [master]
+  pull_request:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     name: Unit tests
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - run: corepack enable
       - name: Install dependencies
         run: yarn --immutable
       - name: Run tests and collect coverage
-        run: yarn test --coverage --forceExit --detectOpenHandles
+        run: yarn test:coverage
       - name: Upload coverage reports to Codecov
         run: |
           curl -Os https://uploader.codecov.io/latest/linux/codecov

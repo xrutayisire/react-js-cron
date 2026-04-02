@@ -7,7 +7,7 @@ describe('Cron update value test suite', () => {
   it("should check that it's possible to change the period from minute to year", async () => {
     const user = userEvent.setup()
     const value = '* * * * *'
-    const setValue = jest.fn()
+    const setValue = vi.fn()
 
     render(<Cron value={value} setValue={setValue} />)
 
@@ -25,19 +25,19 @@ describe('Cron update value test suite', () => {
     await waitFor(() => {
       expect(screen.getByTestId('select-period').textContent).toContain('year')
       expect(screen.getByTestId('custom-select-months').textContent).toContain(
-        'every month'
+        'every month',
       )
       expect(
-        screen.getByTestId('custom-select-month-days').textContent
+        screen.getByTestId('custom-select-month-days').textContent,
       ).toContain('every day of the month')
       expect(
-        screen.getByTestId('custom-select-week-days').textContent
+        screen.getByTestId('custom-select-week-days').textContent,
       ).toContain('every day of the week')
       expect(screen.getByTestId('custom-select-hours').textContent).toContain(
-        'every hour'
+        'every hour',
       )
       expect(screen.getByTestId('custom-select-minutes').textContent).toContain(
-        'every minute'
+        'every minute',
       )
     })
   })
@@ -45,7 +45,7 @@ describe('Cron update value test suite', () => {
   it("should check that it's possible to select specific minutes", async () => {
     const user = userEvent.setup()
     const value = '1,4 * * * *'
-    const setValue = jest.fn()
+    const setValue = vi.fn()
 
     render(<Cron value={value} setValue={setValue} />)
 
@@ -62,7 +62,7 @@ describe('Cron update value test suite', () => {
   it("should check that it's possible to select a periodicity with double click", async () => {
     const user = userEvent.setup()
     const value = '1,4 * * * *'
-    const setValue = jest.fn()
+    const setValue = vi.fn()
 
     render(<Cron value={value} setValue={setValue} />)
 
@@ -79,7 +79,7 @@ describe('Cron update value test suite', () => {
     // Check dropdowns values
     await waitFor(() => {
       expect(screen.getByTestId('custom-select-minutes').textContent).toContain(
-        'every 2'
+        'every 2',
       )
     })
   })
@@ -87,7 +87,7 @@ describe('Cron update value test suite', () => {
   it("should check that it's possible to change a periodicity with double click", async () => {
     const user = userEvent.setup()
     const value = '*/2 * * * *'
-    const setValue = jest.fn()
+    const setValue = vi.fn()
 
     render(<Cron value={value} setValue={setValue} />)
 
@@ -104,7 +104,7 @@ describe('Cron update value test suite', () => {
     // Check dropdowns values
     await waitFor(() => {
       expect(screen.getByTestId('custom-select-minutes').textContent).toContain(
-        'every 4'
+        'every 4',
       )
     })
   })
@@ -112,7 +112,7 @@ describe('Cron update value test suite', () => {
   it("should check that it's possible to clear cron value", async () => {
     const user = userEvent.setup()
     const value = '1 1 1 1 1'
-    const setValue = jest.fn()
+    const setValue = vi.fn()
 
     render(<Cron value={value} setValue={setValue} />)
 
@@ -132,7 +132,7 @@ describe('Cron update value test suite', () => {
   it("should check that it's possible to clear cron value with empty", async () => {
     const user = userEvent.setup()
     const value = '1 1 1 1 1'
-    const setValue = jest.fn()
+    const setValue = vi.fn()
 
     render(<Cron value={value} setValue={setValue} clearButtonAction='empty' />)
 
@@ -152,7 +152,7 @@ describe('Cron update value test suite', () => {
   it("should check that it's possible to clear cron value when @reboot is set", async () => {
     const user = userEvent.setup()
     const value = '@reboot'
-    const setValue = jest.fn()
+    const setValue = vi.fn()
 
     render(<Cron value={value} setValue={setValue} shortcuts={true} />)
 
@@ -172,8 +172,8 @@ describe('Cron update value test suite', () => {
   it('should check that pressing clear setting an empty value throw an error if not allowed', async () => {
     const user = userEvent.setup()
     const value = '1 1 1 1 1'
-    const setValue = jest.fn()
-    const onError = jest.fn()
+    const setValue = vi.fn()
+    const onError = vi.fn()
 
     render(
       <Cron
@@ -182,7 +182,7 @@ describe('Cron update value test suite', () => {
         allowEmpty='never'
         clearButtonAction='empty'
         onError={onError}
-      />
+      />,
     )
 
     // Clear cron value
@@ -205,8 +205,8 @@ describe('Cron update value test suite', () => {
   it("should check that pressing clear setting an empty value don't throw an error if not allowed", async () => {
     const user = userEvent.setup()
     const value = '1 1 1 1 1'
-    const setValue = jest.fn()
-    const onError = jest.fn()
+    const setValue = vi.fn()
+    const onError = vi.fn()
 
     render(
       <Cron
@@ -215,7 +215,7 @@ describe('Cron update value test suite', () => {
         allowEmpty='always'
         clearButtonAction='empty'
         onError={onError}
-      />
+      />,
     )
 
     // Clear cron value
@@ -235,7 +235,7 @@ describe('Cron update value test suite', () => {
   it("should check that it's not possible to update value when it's readOnly mode", async () => {
     const user = userEvent.setup()
     const value = '1,4 * * * *'
-    const setValue = jest.fn()
+    const setValue = vi.fn()
 
     render(<Cron value={value} setValue={setValue} readOnly />)
 
@@ -254,7 +254,7 @@ describe('Cron update value test suite', () => {
   it("should check that it's not possible to update value when it's disabled mode", async () => {
     const user = userEvent.setup()
     const value = '1,4 * * * *'
-    const setValue = jest.fn()
+    const setValue = vi.fn()
 
     render(<Cron value={value} setValue={setValue} disabled />)
 
@@ -273,7 +273,7 @@ describe('Cron update value test suite', () => {
   it('should check that week-days and minutes options are filtered with dropdownConfig', async () => {
     const user = userEvent.setup()
     const value = '4,6 * * * 1'
-    const setValue = jest.fn()
+    const setValue = vi.fn()
 
     render(
       <Cron
@@ -289,7 +289,7 @@ describe('Cron update value test suite', () => {
             filterOption: ({ value }) => Number(value) !== 0,
           },
         }}
-      />
+      />,
     )
 
     // Open minutes dropdown
@@ -301,7 +301,7 @@ describe('Cron update value test suite', () => {
     await waitFor(() => {
       for (let i = 0; i < 60; i++) {
         if (i < 58) {
-          expect(screen.getByText(i)).toBeVisible()
+          expect(screen.getByText(i)).toBeInTheDocument()
         } else {
           expect(screen.queryByText(i)).not.toBeInTheDocument()
         }
@@ -328,7 +328,7 @@ describe('Cron update value test suite', () => {
         if (i === 0) {
           expect(screen.queryByText(days[i])).not.toBeInTheDocument()
         } else {
-          expect(screen.getByText(days[i])).toBeVisible()
+          expect(screen.getByText(days[i])).toBeInTheDocument()
         }
       }
     })

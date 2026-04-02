@@ -1,0 +1,29 @@
+name: Publish to npm
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          registry-url: 'https://registry.npmjs.org'
+      - run: corepack enable
+      - name: Install dependencies
+        run: yarn --immutable
+      - name: Run lint and prettier
+        run: yarn format
+      - name: Run tests
+        run: yarn test:coverage
+      - name: Build package
+        run: yarn build
+      - name: Publish to npm
+        run: npm publish --provenance --access public

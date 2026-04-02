@@ -32,7 +32,7 @@ export default function Months(props: MonthsProps) {
         [`${className}-field`]: !!className,
         [`${className}-months`]: !!className,
       }),
-    [className]
+    [className],
   )
 
   return (

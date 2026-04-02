@@ -20,7 +20,7 @@ describe('Fields', () => {
         readOnly={false}
         periodicityOnDoubleClick
         leadingZero
-      />
+      />,
     )
 
     expect(asFragment()).toMatchSnapshot()
@@ -37,7 +37,7 @@ describe('Fields', () => {
         readOnly={false}
         periodicityOnDoubleClick
         leadingZero
-      />
+      />,
     )
 
     expect(asFragment()).toMatchSnapshot()
@@ -54,7 +54,7 @@ describe('Fields', () => {
         readOnly={false}
         periodicityOnDoubleClick
         leadingZero
-      />
+      />,
     )
 
     expect(asFragment()).toMatchSnapshot()
@@ -71,7 +71,7 @@ describe('Fields', () => {
         readOnly={false}
         periodicityOnDoubleClick
         humanizeLabels
-      />
+      />,
     )
 
     expect(asFragment()).toMatchSnapshot()
@@ -95,7 +95,7 @@ describe('Fields', () => {
           'reboot',
         ]}
         shortcuts
-      />
+      />,
     )
 
     expect(asFragment()).toMatchSnapshot()
@@ -112,7 +112,7 @@ describe('Fields', () => {
         period='week'
         humanizeLabels
         periodicityOnDoubleClick
-      />
+      />,
     )
 
     expect(asFragment()).toMatchSnapshot()

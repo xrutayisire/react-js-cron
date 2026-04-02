@@ -31,7 +31,7 @@ export default function Minutes(props: MinutesProps) {
         [`${className}-field`]: !!className,
         [`${className}-minutes`]: !!className,
       }),
-    [className]
+    [className],
   )
 
   return (

@@ -1,5 +1,5 @@
 import { Select } from 'antd'
-import { BaseOptionType } from 'antd/es/select'
+import type { BaseOptionType } from 'antd/es/select'
 import React, { useCallback, useMemo } from 'react'
 
 import { DEFAULT_LOCALE_EN } from '../locale'
@@ -80,7 +80,7 @@ export default function Period(props: PeriodProps) {
         setValue(newValue)
       }
     },
-    [setValue, readOnly]
+    [setValue, readOnly],
   )
 
   const internalClassName = useMemo(
@@ -91,7 +91,7 @@ export default function Period(props: PeriodProps) {
         [`${className}-field`]: !!className,
         [`${className}-period`]: !!className,
       }),
-    [className]
+    [className],
   )
 
   const selectClassName = useMemo(
@@ -101,7 +101,7 @@ export default function Period(props: PeriodProps) {
         'react-js-cron-select-no-prefix': locale.prefixPeriod === '',
         [`${className}-select`]: !!className,
       }),
-    [className, locale.prefixPeriod]
+    [className, locale.prefixPeriod],
   )
 
   const popupClassName = useMemo(
@@ -112,7 +112,7 @@ export default function Period(props: PeriodProps) {
         [`${className}-select-dropdown`]: !!className,
         [`${className}-select-dropdown-period`]: !!className,
       }),
-    [className]
+    [className],
   )
 
   return (
@@ -128,7 +128,7 @@ export default function Period(props: PeriodProps) {
         onChange={handleChange}
         options={options}
         className={selectClassName}
-        popupClassName={popupClassName}
+        classNames={{ popup: { root: popupClassName } }}
         disabled={disabled}
         suffixIcon={readOnly ? null : undefined}
         open={readOnly ? false : undefined}

@@ -1,0 +1,9 @@
+{
+  "plugins": ["react", "typescript"],
+  "rules": {
+    "typescript/no-explicit-any": "off"
+  },
+  "categories": {
+    "correctness": "error"
+  }
+}
