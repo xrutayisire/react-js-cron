@@ -35,7 +35,7 @@ export default function WeekDays(props: WeekDaysProps) {
         [`${className}-field`]: !!className,
         [`${className}-week-days`]: !!className,
       }),
-    [className, noMonthDays]
+    [className, noMonthDays],
   )
 
   const localeJSON = JSON.stringify(locale)
@@ -48,7 +48,7 @@ export default function WeekDays(props: WeekDaysProps) {
       return locale.emptyWeekDaysShort || DEFAULT_LOCALE_EN.emptyWeekDaysShort
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [noMonthDays, localeJSON]
+    [noMonthDays, localeJSON],
   )
 
   const displayWeekDays =

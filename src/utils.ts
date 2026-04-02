@@ -56,12 +56,13 @@ export function classNames(classes: Classes) {
  * Handle onError prop to set the error
  */
 export function setError(onError: OnError, locale: Locale) {
-  onError &&
+  if (onError) {
     onError({
       type: 'invalid_cron',
       description:
         locale.errorInvalidCron || DEFAULT_LOCALE_EN.errorInvalidCron,
     })
+  }
 }
 
 /**

@@ -35,9 +35,11 @@ export function setValuesFromCronString(
   setMonthDays: SetValueNumbersOrUndefined,
   setMonths: SetValueNumbersOrUndefined,
   setWeekDays: SetValueNumbersOrUndefined,
-  setPeriod: SetValuePeriod
+  setPeriod: SetValuePeriod,
 ) {
-  onError && onError(undefined)
+  if (onError) {
+    onError(undefined)
+  }
   setInternalError(false)
 
   let error = false
@@ -68,7 +70,7 @@ export function setValuesFromCronString(
 
       // Convert a shortcut to a valid cron string
       const shortcutObject = SUPPORTED_SHORTCUTS.find(
-        (supportedShortcut) => supportedShortcut.name === cronString
+        (supportedShortcut) => supportedShortcut.name === cronString,
       )
 
       if (shortcutObject) {
@@ -86,7 +88,7 @@ export function setValuesFromCronString(
       setMonthDays(cronParts[2])
       setMonths(cronParts[3])
       setWeekDays(cronParts[4])
-    } catch (err) {
+    } catch {
       // Specific errors are not handle (yet)
       error = true
     }
@@ -109,7 +111,7 @@ export function getCronStringFromValues(
   hours: number[] | undefined,
   minutes: number[] | undefined,
   humanizeValue: boolean | undefined,
-  dropdownsConfig: DropdownsConfig | undefined
+  dropdownsConfig: DropdownsConfig | undefined,
 ) {
   if (period === 'reboot') {
     return '@reboot'
@@ -129,7 +131,7 @@ export function getCronStringFromValues(
   const parsedArray = parseCronArray(
     [newMinutes, newHours, newMonthDays, newMonths, newWeekDays],
     humanizeValue,
-    dropdownsConfig
+    dropdownsConfig,
   )
 
   return cronToString(parsedArray)
@@ -143,7 +145,7 @@ export function partToString(
   unit: Unit,
   humanize?: boolean,
   leadingZero?: LeadingZero,
-  clockFormat?: ClockFormat
+  clockFormat?: ClockFormat,
 ) {
   let retval = ''
 
@@ -161,13 +163,13 @@ export function partToString(
           unit,
           humanize,
           leadingZero,
-          clockFormat
+          clockFormat,
         )}-${formatValue(
           getMax(cronPart),
           unit,
           humanize,
           leadingZero,
-          clockFormat
+          clockFormat,
         )}/${step}`
       }
     } else {
@@ -179,13 +181,13 @@ export function partToString(
               unit,
               humanize,
               leadingZero,
-              clockFormat
+              clockFormat,
             )}-${formatValue(
               range[1],
               unit,
               humanize,
               leadingZero,
-              clockFormat
+              clockFormat,
             )}`
           }
 
@@ -205,7 +207,7 @@ export function formatValue(
   unit: Unit,
   humanize?: boolean,
   leadingZero?: LeadingZero,
-  clockFormat?: ClockFormat
+  clockFormat?: ClockFormat,
 ) {
   let cronPartString = value.toString()
   const { type, alt, min } = unit
@@ -259,7 +261,7 @@ export function parsePartArray(arr: number[], unit: Unit) {
 function parseCronArray(
   cronArr: number[][],
   humanizeValue: boolean | undefined,
-  dropdownsConfig: DropdownsConfig | undefined
+  dropdownsConfig: DropdownsConfig | undefined,
 ) {
   return cronArr.map((partArr, idx) => {
     const unit = UNITS[idx]
@@ -270,7 +272,7 @@ function parseCronArray(
     return partToString(
       parsedArray,
       unit,
-      dropdownOption?.humanizeValue ?? humanizeValue
+      dropdownOption?.humanizeValue ?? humanizeValue,
     )
   })
 }
@@ -355,9 +357,9 @@ function parsePartString(str: string, unit: Unit) {
             return intervalValues
           })
           .flat(),
-        unit
-      )
-    )
+        unit,
+      ),
+    ),
   )
 
   const value = outOfRange(values, unit)
@@ -432,7 +434,7 @@ function parseRange(rangeStr: string, context: string, unit: Unit) {
     // cf: https://github.com/roccivic/cron-converter/pull/15
     if (maxValue < minValue) {
       throw new Error(
-        `Max range is less than min range in "${rangeStr}" for ${unit.type}`
+        `Max range is less than min range in "${rangeStr}" for ${unit.type}`,
       )
     }
 

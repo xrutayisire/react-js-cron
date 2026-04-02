@@ -12,19 +12,21 @@ import {
   Table,
   theme,
 } from 'antd'
-import { ThemeConfig } from 'antd/es/config-provider/context'
+import type { ThemeConfig } from 'antd'
 import React, { useMemo, useState } from 'react'
 
 import Cron, { AllowEmpty, ClockFormat, CronError, PeriodType } from '../index'
+
 import '../styles.css'
 import { ClearButtonAction, CronType, Mode } from '../types'
 import {
   ENGLISH_VARIANT_LOCALE,
   FRENCH_LOCALE,
   NO_PREFIX_SUFFIX_LOCALE,
-} from './constants.stories'
+} from './constants'
+
 import './styles.stories.css'
-import { useCronReducer } from './utils.stories'
+import { useCronReducer } from './utils'
 
 export default {
   title: 'ReactJS Cron',
@@ -129,7 +131,7 @@ export function DynamicSettings() {
     'minutes',
   ]
   const [allowedDropdowns, setAllowedDropdowns] = useState<CronType[]>(
-    defaultAllowedDropdowns
+    defaultAllowedDropdowns,
   )
   const defaultAllowedPeriods: PeriodType[] = [
     'year',
@@ -141,7 +143,7 @@ export function DynamicSettings() {
     'reboot',
   ]
   const [allowedPeriods, setAllowedPeriods] = useState<PeriodType[]>(
-    defaultAllowedPeriods
+    defaultAllowedPeriods,
   )
 
   const transformedLocale = useMemo(() => {
@@ -209,7 +211,7 @@ export function DynamicSettings() {
             onChange={() => setReadOnly((prevValue) => !prevValue)}
           />
         </Form.Item>
-        <Form.Item label='Humainze labels'>
+        <Form.Item label='Humanize labels'>
           <Switch
             checked={humanizeLabels}
             onChange={() => setHumanizeLabels((prevValue) => !prevValue)}
@@ -1725,7 +1727,7 @@ export function DropdownsConfig() {
       <p>&quot;week-days&quot; humanizeValue: true</p>
       <p>&quot;hours&quot; readOnly: true</p>
       <p>&quot;minutes&quot; leadingZero: true</p>
-      <p>&quot;minutes&quot; filterOption: 0, 1, 2, 3, 4, 5, 6, 6, 8, 9</p>
+      <p>&quot;minutes&quot; filterOption: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9</p>
 
       <Cron
         value={value}
@@ -1866,7 +1868,7 @@ export function ChangeTheme() {
       default: { algorithm: [theme.defaultAlgorithm] },
       dark: { algorithm: [theme.darkAlgorithm] },
     }),
-    []
+    [],
   )
 
   const [values, dispatchValues] = useCronReducer('30 14 22 * *')

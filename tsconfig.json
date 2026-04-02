@@ -7,13 +7,13 @@
     "jsx": "react-jsx",
     "lib": ["dom", "dom.iterable", "esnext"],
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "noImplicitAny": true,
     "outDir": "dist",
     "removeComments": true,
     "rootDir": "src",
     "strictNullChecks": true,
-    "target": "es5"
+    "target": "es2022"
   },
   "include": ["./src/**/*"],
   "exclude": ["node_modules"]

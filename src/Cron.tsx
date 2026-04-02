@@ -92,11 +92,11 @@ export default function Cron(props: CronProps) {
         setMonthDays,
         setMonths,
         setWeekDays,
-        setPeriod
+        setPeriod,
       )
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [],
   )
 
   useEffect(
@@ -116,12 +116,12 @@ export default function Cron(props: CronProps) {
           setMonthDays,
           setMonths,
           setWeekDays,
-          setPeriod
+          setPeriod,
         )
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [value, internalValueRef, localeJSON, allowEmpty, shortcuts]
+    [value, internalValueRef, localeJSON, allowEmpty, shortcuts],
   )
 
   useEffect(
@@ -142,13 +142,15 @@ export default function Cron(props: CronProps) {
           hours,
           minutes,
           humanizeValue,
-          dropdownsConfig
+          dropdownsConfig,
         )
 
         setValue(cron, { selectedPeriod })
         internalValueRef.current = cron
 
-        onError && onError(undefined)
+        if (onError) {
+          onError(undefined)
+        }
         setInternalError(false)
       } else if (valueCleared) {
         setValueCleared(false)
@@ -165,7 +167,7 @@ export default function Cron(props: CronProps) {
       humanizeValue,
       valueCleared,
       dropdownsConfig,
-    ]
+    ],
   )
 
   const handleClear = useCallback(
@@ -196,7 +198,7 @@ export default function Cron(props: CronProps) {
           undefined,
           undefined,
           undefined,
-          undefined
+          undefined,
         )
 
         newValue = cron
@@ -211,12 +213,14 @@ export default function Cron(props: CronProps) {
         setInternalError(true)
         setError(onError, locale)
       } else {
-        onError && onError(undefined)
+        if (onError) {
+          onError(undefined)
+        }
         setInternalError(false)
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [period, setValue, onError, clearButtonAction]
+    [period, setValue, onError, clearButtonAction],
   )
 
   const internalClassName = useMemo(
@@ -231,7 +235,7 @@ export default function Cron(props: CronProps) {
         [`${className}-disabled`]: disabled && !!className,
         [`${className}-read-only`]: readOnly && !!className,
       }),
-    [className, error, displayError, disabled, readOnly]
+    [className, error, displayError, disabled, readOnly],
   )
 
   const { className: clearButtonClassNameProp, ...otherClearButtonProps } =
@@ -243,7 +247,7 @@ export default function Cron(props: CronProps) {
         [`${className}-clear-button`]: !!className,
         [`${clearButtonClassNameProp}`]: !!clearButtonClassNameProp,
       }),
-    [className, clearButtonClassNameProp]
+    [className, clearButtonClassNameProp],
   )
 
   const otherClearButtonPropsJSON = JSON.stringify(otherClearButtonProps)
@@ -275,7 +279,7 @@ export default function Cron(props: CronProps) {
       disabled,
       otherClearButtonPropsJSON,
       handleClear,
-    ]
+    ],
   )
 
   const periodForRender = period || defaultPeriodRef.current
