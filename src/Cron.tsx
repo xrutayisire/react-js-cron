@@ -75,6 +75,7 @@ export default function Cron(props: CronProps) {
   const [valueCleared, setValueCleared] = useState<boolean>(false)
   const previousValueCleared = usePrevious(valueCleared)
   const localeJSON = JSON.stringify(locale)
+  const dropdownsConfigJSON = JSON.stringify(dropdownsConfig)
 
   useEffect(
     () => {
@@ -166,7 +167,7 @@ export default function Cron(props: CronProps) {
       minutes,
       humanizeValue,
       valueCleared,
-      dropdownsConfig,
+      dropdownsConfigJSON,
     ],
   )
 
