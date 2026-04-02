@@ -31,6 +31,7 @@ describe('Cron defaultValue test suite', () => {
     clockFormat?: ClockFormat
     allowedDropdowns?: CronType[]
     defaultPeriod?: PeriodType
+    allowedPeriods?: PeriodType[]
     periodSelect: PeriodType | undefined
     monthsSelect: string | undefined
     monthDaysSelect: string | undefined
@@ -248,15 +249,52 @@ describe('Cron defaultValue test suite', () => {
       minutesSelect: 'every minute',
     },
     {
-      title: 'that default period is ignored when default value is not empty',
+      title:
+        'that default period is respected when value is compatible with it',
       defaultValue: '* * * * *',
       defaultPeriod: 'year',
-      periodSelect: 'minute',
+      periodSelect: 'year',
+      monthsSelect: 'every month',
+      monthDaysSelect: 'every day of the month',
+      weekDaysSelect: 'every day of the week',
+      hoursSelect: 'every hour',
+      minutesSelect: 'every minute',
+    },
+    {
+      title:
+        'that default period week is respected for ambiguous daily cron expression',
+      defaultValue: '10 10 * * *',
+      defaultPeriod: 'week',
+      periodSelect: 'week',
       monthsSelect: undefined,
       monthDaysSelect: undefined,
-      weekDaysSelect: undefined,
-      hoursSelect: undefined,
-      minutesSelect: undefined,
+      weekDaysSelect: 'every day of the week',
+      hoursSelect: '10',
+      minutesSelect: '10',
+    },
+    {
+      title:
+        'that default period is ignored when value is not compatible with it',
+      defaultValue: '10 10 * * 1',
+      defaultPeriod: 'day',
+      periodSelect: 'week',
+      monthsSelect: undefined,
+      monthDaysSelect: undefined,
+      weekDaysSelect: 'MON',
+      hoursSelect: '10',
+      minutesSelect: '10',
+    },
+    {
+      title:
+        'that allowedPeriods is respected when detected period is not allowed',
+      defaultValue: '10 10 * * *',
+      allowedPeriods: ['week', 'month', 'year'],
+      periodSelect: 'week',
+      monthsSelect: undefined,
+      monthDaysSelect: undefined,
+      weekDaysSelect: 'every day of the week',
+      hoursSelect: '10',
+      minutesSelect: '10',
     },
     {
       title:
@@ -746,6 +784,7 @@ describe('Cron defaultValue test suite', () => {
       clockFormat,
       allowedDropdowns,
       defaultPeriod,
+      allowedPeriods,
       periodSelect,
       monthsSelect,
       monthDaysSelect,
@@ -771,6 +810,7 @@ describe('Cron defaultValue test suite', () => {
           clockFormat={clockFormat}
           allowedDropdowns={allowedDropdowns}
           defaultPeriod={defaultPeriod}
+          allowedPeriods={allowedPeriods}
           dropdownsConfig={dropdownsConfig}
         />,
       )

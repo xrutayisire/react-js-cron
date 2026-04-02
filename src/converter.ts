@@ -36,6 +36,8 @@ export function setValuesFromCronString(
   setMonths: SetValueNumbersOrUndefined,
   setWeekDays: SetValueNumbersOrUndefined,
   setPeriod: SetValuePeriod,
+  defaultPeriod?: PeriodType,
+  allowedPeriods?: PeriodType[],
 ) {
   if (onError) {
     onError(undefined)
@@ -80,7 +82,11 @@ export function setValuesFromCronString(
 
     try {
       const cronParts = parseCronString(cronString)
-      const period = getPeriodFromCronParts(cronParts)
+      const period = getPeriodFromCronParts(
+        cronParts,
+        defaultPeriod,
+        allowedPeriods,
+      )
 
       setPeriod(period)
       setMinutes(cronParts[0])
@@ -285,21 +291,75 @@ function cronToString(parts: string[]) {
 }
 
 /**
- * Find the period from cron parts
+ * Period hierarchy from most specific to most broad.
+ * A cron expression with minimum period P is compatible with any period >= P.
  */
-function getPeriodFromCronParts(cronParts: number[][]): PeriodType {
+const PERIOD_ORDER: PeriodType[] = [
+  'minute',
+  'hour',
+  'day',
+  'week',
+  'month',
+  'year',
+]
+
+function getPeriodRank(period: PeriodType): number {
+  const rank = PERIOD_ORDER.indexOf(period)
+  return rank === -1 ? -1 : rank
+}
+
+/**
+ * Find the period from cron parts, respecting defaultPeriod and allowedPeriods
+ * when the cron expression is ambiguous (compatible with multiple periods).
+ */
+function getPeriodFromCronParts(
+  cronParts: number[][],
+  defaultPeriod?: PeriodType,
+  allowedPeriods?: PeriodType[],
+): PeriodType {
+  // Determine the minimum compatible period from the cron fields
+  let minPeriod: PeriodType
   if (cronParts[3].length > 0) {
-    return 'year'
+    minPeriod = 'year'
   } else if (cronParts[2].length > 0) {
-    return 'month'
+    minPeriod = 'month'
   } else if (cronParts[4].length > 0) {
-    return 'week'
+    minPeriod = 'week'
   } else if (cronParts[1].length > 0) {
-    return 'day'
+    minPeriod = 'day'
   } else if (cronParts[0].length > 0) {
-    return 'hour'
+    minPeriod = 'hour'
+  } else {
+    minPeriod = 'minute'
   }
-  return 'minute'
+
+  const minRank = getPeriodRank(minPeriod)
+
+  // If defaultPeriod is explicitly provided and compatible, prefer it
+  if (defaultPeriod) {
+    const defaultRank = getPeriodRank(defaultPeriod)
+
+    if (
+      defaultRank >= minRank &&
+      (!allowedPeriods || allowedPeriods.includes(defaultPeriod))
+    ) {
+      return defaultPeriod
+    }
+  }
+
+  // Find the smallest allowed period that is compatible (rank >= minRank)
+  if (allowedPeriods) {
+    for (let i = minRank; i < PERIOD_ORDER.length; i++) {
+      if (allowedPeriods.includes(PERIOD_ORDER[i])) {
+        return PERIOD_ORDER[i]
+      }
+    }
+  } else {
+    return minPeriod
+  }
+
+  // Fallback: use minPeriod even if not allowed (edge case)
+  return minPeriod
 }
 
 /**

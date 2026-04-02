@@ -48,7 +48,9 @@ export interface CronProps {
   leadingZero?: LeadingZero
 
   /**
-   * Define the default period when the default value is empty.
+   * Define the default period when the value is empty.
+   * When set and the cron value is ambiguous (compatible with multiple periods),
+   * this period will be preferred over the auto-detected one.
    *
    * Default: 'day'
    */
