@@ -23,7 +23,7 @@ export default function Cron(props: CronProps) {
     displayError = true,
     onError,
     className,
-    defaultPeriod = 'day',
+    defaultPeriod,
     allowEmpty = 'for-default-value',
     humanizeLabels = true,
     humanizeValue = false,
@@ -64,7 +64,8 @@ export default function Cron(props: CronProps) {
     getPopupContainer,
   } = props
   const internalValueRef = useRef<string>(value)
-  const defaultPeriodRef = useRef<PeriodType>(defaultPeriod)
+  const effectiveDefaultPeriod = defaultPeriod ?? 'day'
+  const defaultPeriodRef = useRef<PeriodType>(effectiveDefaultPeriod)
   const [period, setPeriod] = useState<PeriodType | undefined>()
   const [monthDays, setMonthDays] = useState<number[] | undefined>()
   const [months, setMonths] = useState<number[] | undefined>()
@@ -94,6 +95,8 @@ export default function Cron(props: CronProps) {
         setMonths,
         setWeekDays,
         setPeriod,
+        defaultPeriod,
+        allowedPeriods,
       )
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -118,6 +121,8 @@ export default function Cron(props: CronProps) {
           setMonths,
           setWeekDays,
           setPeriod,
+          defaultPeriod,
+          allowedPeriods,
         )
       }
     },

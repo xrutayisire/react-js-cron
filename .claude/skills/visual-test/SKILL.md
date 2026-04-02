@@ -15,11 +15,16 @@ Compare the local Storybook running on this branch against the production deploy
 
 ## Setup
 
-1. Check if local Storybook is already running on port 9009. If not, start it:
+1. Create (or empty) the screenshots directory at the repository root:
+   ```bash
+   rm -rf <project-root>/screenshots && mkdir -p <project-root>/screenshots
+   ```
+   All screenshots taken during this test must be saved inside `<project-root>/screenshots/`.
+2. Check if local Storybook is already running on port 9009. If not, start it:
    ```bash
    cd <project-root> && yarn storybook &
    ```
-2. Wait for `http://localhost:9009` to respond before proceeding.
+3. Wait for `http://localhost:9009` to respond before proceeding.
 
 ## Test procedure
 
@@ -28,10 +33,10 @@ For **every story** listed below, perform the full comparison cycle:
 ### Comparison cycle (repeat for each story)
 
 1. **Navigate to the production story** at the given URL.
-2. **Take a full-page screenshot** and save it as `prod-<story-slug>.png`.
+2. **Take a full-page screenshot** and save it as `screenshots/prod-<story-slug>.png`.
 3. **Take an accessibility snapshot** of the production page.
 4. **Navigate to the same story locally** at `http://localhost:9009`.
-5. **Take a full-page screenshot** and save it as `local-<story-slug>.png`.
+5. **Take a full-page screenshot** and save it as `screenshots/local-<story-slug>.png`.
 6. **Take an accessibility snapshot** of the local page.
 7. **Compare both screenshots visually.** Report any difference in:
    - Text content (every label, placeholder, value, heading, and button text must be identical)
@@ -85,7 +90,7 @@ Test each of the following stories by navigating to the corresponding Storybook 
 
 ## Interaction tests
 
-After the static visual comparison of all stories, perform the following interaction tests on the **Dynamic Settings** story. For each interaction, perform the action on both production and local, then compare screenshots and snapshots.
+After the static visual comparison of all stories, perform the following interaction tests on the **Dynamic Settings** story. For each interaction, perform the action on both production and local, then compare screenshots and snapshots. Save all interaction screenshots in the `screenshots/` folder using the naming pattern `screenshots/prod-<interaction-slug>.png` and `screenshots/local-<interaction-slug>.png`.
 
 ### Period dropdown
 
@@ -193,3 +198,11 @@ After all checks are complete, provide a summary:
 - Pass/fail verdict
 
 If all checks pass, confirm: **"No visual, textual, or interaction regressions detected. The branch is safe to merge."**
+
+## Cleanup
+
+After the final report is delivered, delete all contents of the screenshots folder:
+```bash
+rm -rf <project-root>/screenshots
+```
+This ensures no screenshot artifacts remain in the repository after the test run.
