@@ -399,7 +399,7 @@ export interface CustomSelectProps extends Omit<
   | 'showSearch'
   | 'suffixIcon'
   | 'onChange'
-  | 'dropdownMatchSelectWidth'
+  | 'popupMatchSelectWidth'
   | 'options'
   | 'onSelect'
   | 'onDeselect'

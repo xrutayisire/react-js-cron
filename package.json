@@ -41,7 +41,8 @@
         "default": "./dist/index.cjs"
       }
     },
-    "./styles.css": "./dist/styles.css"
+    "./styles.css": "./dist/styles.css",
+    "./dist/styles.css": "./dist/styles.css"
   },
   "sideEffects": [
     "**/*.css"
@@ -53,7 +54,7 @@
     "LICENSE.md"
   ],
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=20.0.0"
   },
   "packageManager": "yarn@4.13.0",
   "scripts": {

@@ -54,7 +54,7 @@ yarn add react-js-cron
 
 ```jsx
 import { Cron } from 'react-js-cron'
-import 'react-js-cron/dist/styles.css'
+import 'react-js-cron/styles.css'
 
 export function App() {
   const [value, setValue] = useState('30 5 * * 1,6')
@@ -66,7 +66,7 @@ export function App() {
 Don't forget to import styles manually:
 
 ```jsx
-import 'react-js-cron/dist/styles.css'
+import 'react-js-cron/styles.css'
 ```
 
 ## Converter

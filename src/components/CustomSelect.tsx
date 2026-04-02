@@ -1,5 +1,5 @@
 import { Select } from 'antd'
-import React, { useCallback, useMemo, useRef } from 'react'
+import { useCallback, useMemo, useRef } from 'react'
 
 import { formatValue, parsePartArray, partToString } from '../converter'
 import { DEFAULT_LOCALE_EN } from '../locale'

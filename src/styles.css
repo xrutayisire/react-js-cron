@@ -61,9 +61,6 @@ div.react-js-cron-custom-select .ant-select-content-item-suffix {
 /* antd v6: .ant-select-placeholder replaces .ant-select-selection-placeholder */
 div.react-js-cron-custom-select .ant-select-placeholder {
   position: static;
-  top: 50%;
-  right: auto;
-  left: auto;
   transform: none;
   transition: none;
   opacity: 1;
