@@ -26,6 +26,8 @@ package-lock.json
 !/src/
 
 ## dot-files
+!/.claude/
+!/.mcp.json
 !/.node-version
 !/.npmignore
 !/.oxfmtrc.json
