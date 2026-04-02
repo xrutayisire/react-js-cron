@@ -5,6 +5,7 @@ export default defineConfig({
   format: ['esm', 'cjs'],
   dts: true,
   clean: true,
+  minify: true,
   deps: {
     neverBundle: ['react', 'react-dom', 'antd'],
   },
