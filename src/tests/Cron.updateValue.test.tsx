@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { useState } from 'react'
 
 import Cron from '../Cron'
 
@@ -268,6 +269,39 @@ describe('Cron update value test suite', () => {
 
     // Check dropdowns values still the sane
     expect(await screen.findByText('1,4')).toBeVisible()
+  })
+
+  it('should not cause infinite re-renders when dropdownsConfig is passed as inline object (issue #67)', async () => {
+    const renderCount = { current: 0 }
+
+    function Wrapper() {
+      const [value, setValue] = useState('* * 1 * *')
+      renderCount.current++
+
+      return (
+        <Cron
+          value={value}
+          setValue={setValue}
+          dropdownsConfig={{
+            'month-days': {
+              mode: 'single',
+            },
+          }}
+        />
+      )
+    }
+
+    render(<Wrapper />)
+
+    // Wait for the component to stabilize
+    await waitFor(() => {
+      expect(screen.getByTestId('select-period')).toBeVisible()
+    })
+
+    // Without the fix, renderCount would grow unboundedly.
+    // With the fix, it should stabilize quickly.
+    const countAfterMount = renderCount.current
+    expect(countAfterMount).toBeLessThan(20)
   })
 
   it('should check that week-days and minutes options are filtered with dropdownConfig', async () => {
