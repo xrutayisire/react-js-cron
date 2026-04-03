@@ -267,8 +267,7 @@ export default function Cron(props: CronProps) {
       // (manual dropdown changes) and in setValuesFromCronString (external
       // value changes).
       const hasEmptyError =
-        allowEmpty === 'never' &&
-        (clearButtonAction === 'empty' || isEmptyCron)
+        allowEmpty === 'never' && (clearButtonAction === 'empty' || isEmptyCron)
       const hasPerDropdownError =
         !hasEmptyError &&
         isEmptyCron &&
