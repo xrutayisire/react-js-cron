@@ -34,7 +34,6 @@ jobs:
           node-version: 22
           registry-url: 'https://registry.npmjs.org'
       - run: corepack enable
-      - run: npm install -g npm@latest
       - name: Install dependencies
         run: yarn --immutable
       - name: Run lint and prettier
