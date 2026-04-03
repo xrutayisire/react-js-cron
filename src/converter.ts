@@ -178,6 +178,14 @@ export function partToString(
           clockFormat,
         )}/${step}`
       }
+    } else if (
+      cronPart.length === 2 &&
+      cronPart[1] - cronPart[0] > 1 &&
+      isFullInterval(cronPart, unit, cronPart[1] - cronPart[0])
+    ) {
+      // getStep requires 3+ values, so check 2-element full intervals here
+      // e.g. months [1,7] → */6 instead of 1,7
+      retval = `*/${cronPart[1] - cronPart[0]}`
     } else {
       retval = toRanges(cronPart)
         .map((range: number | number[]) => {
