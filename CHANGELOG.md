@@ -2,6 +2,13 @@
 
 `react-js-cron` follows [Semantic Versioning 2.0.0](http://semver.org/).
 
+## [6.0.3](https://github.com/xrutayisire/react-js-cron/compare/v6.0.2...v6.0.3) (2026-04-03)
+
+
+### Bug Fixes
+
+* **ci:** use Node 24 for npm OIDC trusted publishing ([#96](https://github.com/xrutayisire/react-js-cron/issues/96)) ([e063ea9](https://github.com/xrutayisire/react-js-cron/commit/e063ea901f5113a4abf06830034b64adda2dbb0d))
+
 ## [6.0.2](https://github.com/xrutayisire/react-js-cron/compare/v6.0.1...v6.0.2) (2026-04-03)
 
 
