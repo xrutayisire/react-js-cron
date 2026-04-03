@@ -2,6 +2,13 @@
 
 `react-js-cron` follows [Semantic Versioning 2.0.0](http://semver.org/).
 
+## [6.0.1](https://github.com/xrutayisire/react-js-cron/compare/v6.0.0...v6.0.1) (2026-04-03)
+
+
+### Bug Fixes
+
+* **style:** remove redundant padding-right on custom select content ([#91](https://github.com/xrutayisire/react-js-cron/issues/91)) ([9d9a32d](https://github.com/xrutayisire/react-js-cron/commit/9d9a32d990484a3774064519172ed1052201e377))
+
 ## [6.0.0](https://github.com/xrutayisire/react-js-cron/compare/v5.2.0...v6.0.0) (2026-04-03)
 
 
