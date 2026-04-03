@@ -2,6 +2,57 @@
 
 `react-js-cron` follows [Semantic Versioning 2.0.0](http://semver.org/).
 
+## [6.0.0](https://github.com/xrutayisire/react-js-cron/compare/v5.2.0...v6.0.0) (2026-04-03)
+
+
+### ⚠ BREAKING CHANGES
+
+#### Peer dependency requirements
+
+| Dependency | v5 | v6 |
+|---|---|---|
+| **Ant Design (antd)** | >= 5.8.0 | **>= 6.0.0** |
+| **React** | >= 16.8.0 | **>= 18.0.0** (React 19 supported, **not** required) |
+| **Node.js** | >= 14.0.0 | **>= 20.0.0** |
+
+> **React 19 is not required.** This library works with both React 18 and React 19. You do **not** need to upgrade to React 19 to use react-js-cron v6.
+
+#### `* * * * *` now treated as empty
+
+`* * * * *` is now considered an empty value. With `allowEmpty='never'` or the default `'for-default-value'`, all-wildcard cron values will trigger an error. Set `allowEmpty='always'` to preserve previous behavior. Per-dropdown `allowEmpty` is also now available via `dropdownsConfig`. ([#89](https://github.com/xrutayisire/react-js-cron/issues/89))
+
+#### Migration: import paths
+
+Standard imports are **unaffected** — these work exactly as before:
+```js
+import Cron from 'react-js-cron'
+import { Cron, converter } from 'react-js-cron'
+import 'react-js-cron/styles.css'
+```
+
+If you import directly from `dist/` paths, you must update:
+
+| Old path (v5) | New path (v6) |
+|---|---|
+| `react-js-cron/dist/cjs/index.js` | `react-js-cron/dist/index.cjs` |
+| `react-js-cron/dist/esm/index.js` | `react-js-cron/dist/index.mjs` |
+| `react-js-cron/dist/index.d.ts` | `react-js-cron/dist/index.d.mts` |
+| `react-js-cron/dist/styles.css` | `react-js-cron/dist/styles.css` (unchanged) |
+
+The package now uses an `exports` map, so bundlers will only resolve the declared entry points. Direct `dist/` imports are discouraged — use the package name instead. ([#84](https://github.com/xrutayisire/react-js-cron/issues/84))
+
+### Features
+
+* treat `* * * * *` as empty and add per-dropdown `allowEmpty` in `dropdownsConfig` ([#89](https://github.com/xrutayisire/react-js-cron/issues/89)) ([1b7ba7c](https://github.com/xrutayisire/react-js-cron/commit/1b7ba7c8937adc2e15b901d5efbfd54762c12e3e))
+* v6.0.0 — full dependency modernization ([#84](https://github.com/xrutayisire/react-js-cron/issues/84)) ([ce47fbc](https://github.com/xrutayisire/react-js-cron/commit/ce47fbc91ecb0077d6b3bb68faad229c25f088ed))
+
+
+### Bug Fixes
+
+* **cron:** prevent infinite re-render loop with dropdownsConfig ([#86](https://github.com/xrutayisire/react-js-cron/issues/86)) ([df4965a](https://github.com/xrutayisire/react-js-cron/commit/df4965aa8f0d826c4b1e631dedd0425fdec90a52))
+* respect defaultPeriod and allowedPeriods in period detection ([#87](https://github.com/xrutayisire/react-js-cron/issues/87)) ([41a797d](https://github.com/xrutayisire/react-js-cron/commit/41a797d73675ac708c95b6c7bec2981532ce9651))
+* round-trip */N notation for large step intervals ([#88](https://github.com/xrutayisire/react-js-cron/issues/88)) ([d069ff0](https://github.com/xrutayisire/react-js-cron/commit/d069ff03acfd8bf266823c4621668d33888ef617))
+
 ### 5.2.0
 
 - **(New feature)** Export converter `parseCronString` function to allow third party use (@idpaterson)
