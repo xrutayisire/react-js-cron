@@ -194,7 +194,9 @@ CronProps {
   leadingZero?: boolean | ['month-days', 'hours', 'minutes']
 
   /**
-   * Define the default period when the default value is empty.
+   * Define the default period when the value is empty.
+   * When set and the cron value is ambiguous (compatible with multiple periods),
+   * this period will be preferred over the auto-detected one.
    *
    * Default: 'day'
    */
@@ -357,6 +359,10 @@ CronProps {
    *
    * // See global configuration
    * // For 'months', 'month-days', 'week-days', 'hours' and 'minutes'
+   * allowEmpty?: 'always' | 'never' | 'for-default-value'
+   *
+   * // See global configuration
+   * // For 'months', 'month-days', 'week-days', 'hours' and 'minutes'
    * periodicityOnDoubleClick?: boolean
    *
    * // See global configuration
@@ -383,6 +389,7 @@ CronProps {
       disabled?: boolean
       readOnly?: boolean
       allowClear?: boolean
+      allowEmpty?: 'always' | 'never' | 'for-default-value'
       periodicityOnDoubleClick?: boolean
       mode?: 'multiple' | 'single'
       filterOption?: ({
@@ -398,6 +405,7 @@ CronProps {
       disabled?: boolean
       readOnly?: boolean
       allowClear?: boolean
+      allowEmpty?: 'always' | 'never' | 'for-default-value'
       periodicityOnDoubleClick?: boolean
       mode?: 'multiple' | 'single'
       filterOption?: ({
@@ -414,6 +422,7 @@ CronProps {
       disabled?: boolean
       readOnly?: boolean
       allowClear?: boolean
+      allowEmpty?: 'always' | 'never' | 'for-default-value'
       periodicityOnDoubleClick?: boolean
       mode?: 'multiple' | 'single'
       filterOption?: ({
@@ -429,6 +438,7 @@ CronProps {
       disabled?: boolean
       readOnly?: boolean
       allowClear?: boolean
+      allowEmpty?: 'always' | 'never' | 'for-default-value'
       periodicityOnDoubleClick?: boolean
       mode?: 'multiple' | 'single'
       filterOption?: ({
@@ -444,6 +454,7 @@ CronProps {
       disabled?: boolean
       readOnly?: boolean
       allowClear?: boolean
+      allowEmpty?: 'always' | 'never' | 'for-default-value'
       periodicityOnDoubleClick?: boolean
       mode?: 'multiple' | 'single'
       filterOption?: ({
@@ -495,6 +506,7 @@ CronProps {
     prefixMinutesForHourPeriod?: string
     suffixMinutesForHourPeriod?: string
     errorInvalidCron?: string
+    clearButtonText?: string
     weekDays?: string[]
     months?: string[]
     altWeekDays?: string[]
