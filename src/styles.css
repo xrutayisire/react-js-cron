@@ -38,15 +38,10 @@ div.react-js-cron-error div.react-js-cron-custom-select {
   background: #fff6f6;
 }
 /* antd v6: .ant-select-content replaces .ant-select-selector */
+/* In antd v6 the suffix arrow is a flex sibling, so padding-right is no longer needed */
 div.react-js-cron-select.react-js-cron-custom-select.ant-select
   div.ant-select-content {
   padding-left: 11px;
-  padding-right: 30px;
-}
-.react-js-cron-read-only
-  div.react-js-cron-select.react-js-cron-custom-select.ant-select
-  div.ant-select-content {
-  padding-right: 11px;
 }
 /* antd v6: prevent selected value text from wrapping */
 div.react-js-cron-custom-select .ant-select-content-item {
