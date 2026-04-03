@@ -2,6 +2,14 @@
 
 `react-js-cron` follows [Semantic Versioning 2.0.0](http://semver.org/).
 
+## [6.0.2](https://github.com/xrutayisire/react-js-cron/compare/v6.0.1...v6.0.2) (2026-04-03)
+
+
+### Bug Fixes
+
+* **ci:** remove broken npm self-upgrade from publish job ([#93](https://github.com/xrutayisire/react-js-cron/issues/93)) ([9405227](https://github.com/xrutayisire/react-js-cron/commit/94052271df4098583927632e10e0efd168e0935a))
+* don't error on clear button with default allowEmpty setting ([#95](https://github.com/xrutayisire/react-js-cron/issues/95)) ([677f3ba](https://github.com/xrutayisire/react-js-cron/commit/677f3ba3a6664e9a5c7343434a8b4fc70b4ea623))
+
 ## [6.0.1](https://github.com/xrutayisire/react-js-cron/compare/v6.0.0...v6.0.1) (2026-04-03)
 
 
