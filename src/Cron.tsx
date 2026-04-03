@@ -1,7 +1,11 @@
 import { Button } from 'antd'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { getCronStringFromValues, setValuesFromCronString } from './converter'
+import {
+  getCronStringFromValues,
+  hasDropdownAllowEmptyError,
+  setValuesFromCronString,
+} from './converter'
 import Hours from './fields/Hours'
 import Minutes from './fields/Minutes'
 import MonthDays from './fields/MonthDays'
@@ -64,6 +68,8 @@ export default function Cron(props: CronProps) {
     getPopupContainer,
   } = props
   const internalValueRef = useRef<string>(value)
+  const initialValueRef = useRef<string>(value)
+  const firstRenderRef = useRef(true)
   const effectiveDefaultPeriod = defaultPeriod ?? 'day'
   const defaultPeriodRef = useRef<PeriodType>(effectiveDefaultPeriod)
   const [period, setPeriod] = useState<PeriodType | undefined>()
@@ -76,6 +82,7 @@ export default function Cron(props: CronProps) {
   const [valueCleared, setValueCleared] = useState<boolean>(false)
   const previousValueCleared = usePrevious(valueCleared)
   const localeJSON = JSON.stringify(locale)
+  const shortcutsJSON = JSON.stringify(shortcuts)
   const dropdownsConfigJSON = JSON.stringify(dropdownsConfig)
 
   useEffect(
@@ -97,6 +104,7 @@ export default function Cron(props: CronProps) {
         setPeriod,
         defaultPeriod,
         allowedPeriods,
+        dropdownsConfig,
       )
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -123,11 +131,12 @@ export default function Cron(props: CronProps) {
           setPeriod,
           defaultPeriod,
           allowedPeriods,
+          dropdownsConfig,
         )
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [value, internalValueRef, localeJSON, allowEmpty, shortcuts],
+    [value, internalValueRef, localeJSON, allowEmpty, shortcutsJSON],
   )
 
   useEffect(
@@ -154,10 +163,42 @@ export default function Cron(props: CronProps) {
         setValue(cron, { selectedPeriod })
         internalValueRef.current = cron
 
-        if (onError) {
-          onError(undefined)
+        if (firstRenderRef.current) {
+          initialValueRef.current = cron
+          firstRenderRef.current = false
         }
-        setInternalError(false)
+
+        const isEmptyCron = cron === '* * * * *'
+        const isInitialValue = cron === initialValueRef.current
+        const hasGlobalEmptyError =
+          isEmptyCron &&
+          (allowEmpty === 'never' ||
+            (allowEmpty === 'for-default-value' && !isInitialValue))
+
+        const hasPerDropdownError =
+          !hasGlobalEmptyError &&
+          hasDropdownAllowEmptyError(
+            [
+              minutes ?? [],
+              hours ?? [],
+              monthDays ?? [],
+              months ?? [],
+              weekDays ?? [],
+            ],
+            selectedPeriod,
+            isInitialValue,
+            dropdownsConfig,
+          )
+
+        if (hasGlobalEmptyError || hasPerDropdownError) {
+          setInternalError(true)
+          setError(onError, locale)
+        } else {
+          if (onError) {
+            onError(undefined)
+          }
+          setInternalError(false)
+        }
       } else if (valueCleared) {
         setValueCleared(false)
       }
@@ -172,6 +213,7 @@ export default function Cron(props: CronProps) {
       minutes,
       humanizeValue,
       valueCleared,
+      allowEmpty,
       dropdownsConfigJSON,
     ],
   )
@@ -215,7 +257,23 @@ export default function Cron(props: CronProps) {
 
       setValueCleared(true)
 
-      if (allowEmpty === 'never' && clearButtonAction === 'empty') {
+      const isEmptyCron = newValue === '* * * * *'
+      const isInitialValue = newValue === initialValueRef.current
+      const hasEmptyError =
+        (allowEmpty === 'never' &&
+          (clearButtonAction === 'empty' || isEmptyCron)) ||
+        (allowEmpty === 'for-default-value' && isEmptyCron && !isInitialValue)
+      const hasPerDropdownError =
+        !hasEmptyError &&
+        isEmptyCron &&
+        hasDropdownAllowEmptyError(
+          [[], [], [], [], []],
+          newPeriod,
+          isInitialValue,
+          dropdownsConfig,
+        )
+
+      if (hasEmptyError || hasPerDropdownError) {
         setInternalError(true)
         setError(onError, locale)
       } else {
@@ -226,7 +284,15 @@ export default function Cron(props: CronProps) {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [period, setValue, onError, clearButtonAction],
+    [
+      period,
+      setValue,
+      onError,
+      clearButtonAction,
+      allowEmpty,
+      localeJSON,
+      dropdownsConfigJSON,
+    ],
   )
 
   const internalClassName = useMemo(

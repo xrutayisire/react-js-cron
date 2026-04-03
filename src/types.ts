@@ -326,6 +326,7 @@ export type DropdownConfig = {
   disabled?: boolean
   readOnly?: boolean
   allowClear?: boolean
+  allowEmpty?: AllowEmpty
   periodicityOnDoubleClick?: boolean
   mode?: Mode
   filterOption?: FilterOption
