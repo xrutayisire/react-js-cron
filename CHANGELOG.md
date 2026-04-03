@@ -7,8 +7,39 @@
 
 ### ⚠ BREAKING CHANGES
 
-* treat `* * * * *` as empty and add per-dropdown `allowEmpty` in `dropdownsConfig` ([#89](https://github.com/xrutayisire/react-js-cron/issues/89))
-* v6.0.0 — full dependency modernization ([#84](https://github.com/xrutayisire/react-js-cron/issues/84))
+#### Peer dependency requirements
+
+| Dependency | v5 | v6 |
+|---|---|---|
+| **Ant Design (antd)** | >= 5.8.0 | **>= 6.0.0** |
+| **React** | >= 16.8.0 | **>= 18.0.0** (React 19 supported, **not** required) |
+| **Node.js** | >= 14.0.0 | **>= 20.0.0** |
+
+> **React 19 is not required.** This library works with both React 18 and React 19. You do **not** need to upgrade to React 19 to use react-js-cron v6.
+
+#### `* * * * *` now treated as empty
+
+`* * * * *` is now considered an empty value. With `allowEmpty='never'` or the default `'for-default-value'`, all-wildcard cron values will trigger an error. Set `allowEmpty='always'` to preserve previous behavior. Per-dropdown `allowEmpty` is also now available via `dropdownsConfig`. ([#89](https://github.com/xrutayisire/react-js-cron/issues/89))
+
+#### Migration: import paths
+
+Standard imports are **unaffected** — these work exactly as before:
+```js
+import Cron from 'react-js-cron'
+import { Cron, converter } from 'react-js-cron'
+import 'react-js-cron/styles.css'
+```
+
+If you import directly from `dist/` paths, you must update:
+
+| Old path (v5) | New path (v6) |
+|---|---|
+| `react-js-cron/dist/cjs/index.js` | `react-js-cron/dist/index.cjs` |
+| `react-js-cron/dist/esm/index.js` | `react-js-cron/dist/index.mjs` |
+| `react-js-cron/dist/index.d.ts` | `react-js-cron/dist/index.d.mts` |
+| `react-js-cron/dist/styles.css` | `react-js-cron/dist/styles.css` (unchanged) |
+
+The package now uses an `exports` map, so bundlers will only resolve the declared entry points. Direct `dist/` imports are discouraged — use the package name instead. ([#84](https://github.com/xrutayisire/react-js-cron/issues/84))
 
 ### Features
 
