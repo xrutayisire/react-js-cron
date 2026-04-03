@@ -336,7 +336,7 @@ describe('Cron update value test suite', () => {
     })
   })
 
-  it('should check that pressing clear with fill-with-every throws an error if allowEmpty is for-default-value', async () => {
+  it("should check that pressing clear with fill-with-every doesn't throw an error if allowEmpty is for-default-value", async () => {
     const user = userEvent.setup()
     const value = '1 1 1 1 1'
     const setValue = vi.fn()
@@ -356,15 +356,15 @@ describe('Cron update value test suite', () => {
       user.click(screen.getByText('Clear'))
     })
 
-    // Check that error is raised because * * * * * is empty and not the default value
+    // The clear button is an explicit reset action — it should not trigger
+    // a 'for-default-value' error even though * * * * * is treated as empty.
+    // The 'for-default-value' check only applies to manual dropdown changes
+    // and external value updates, not to the clear button.
     await waitFor(() => {
       expect(setValue).toHaveBeenNthCalledWith(2, '* * * * *', {
         selectedPeriod: 'year',
       })
-      expect(onError).toHaveBeenLastCalledWith({
-        description: 'Invalid cron expression',
-        type: 'invalid_cron',
-      })
+      expect(onError).toHaveBeenLastCalledWith(undefined)
     })
   })
 

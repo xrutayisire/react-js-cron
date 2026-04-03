@@ -259,10 +259,16 @@ export default function Cron(props: CronProps) {
 
       const isEmptyCron = newValue === '* * * * *'
       const isInitialValue = newValue === initialValueRef.current
+      // The 'for-default-value' check is intentionally NOT applied here.
+      // The clear button is an explicit user action to reset, not a value
+      // the user "arrived at" — applying 'for-default-value' would break
+      // the default behavior where clearing always succeeds.
+      // The 'for-default-value' check still applies in the useEffect
+      // (manual dropdown changes) and in setValuesFromCronString (external
+      // value changes).
       const hasEmptyError =
-        (allowEmpty === 'never' &&
-          (clearButtonAction === 'empty' || isEmptyCron)) ||
-        (allowEmpty === 'for-default-value' && isEmptyCron && !isInitialValue)
+        allowEmpty === 'never' &&
+        (clearButtonAction === 'empty' || isEmptyCron)
       const hasPerDropdownError =
         !hasEmptyError &&
         isEmptyCron &&
