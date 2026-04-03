@@ -304,6 +304,161 @@ describe('Cron update value test suite', () => {
     expect(countAfterMount).toBeLessThan(20)
   })
 
+  it('should check that pressing clear with fill-with-every throws an error if allowEmpty is never', async () => {
+    const user = userEvent.setup()
+    const value = '1 1 1 1 1'
+    const setValue = vi.fn()
+    const onError = vi.fn()
+
+    render(
+      <Cron
+        value={value}
+        setValue={setValue}
+        allowEmpty='never'
+        onError={onError}
+      />,
+    )
+
+    // Clear cron value (default clearButtonAction is 'fill-with-every')
+    await waitFor(() => {
+      user.click(screen.getByText('Clear'))
+    })
+
+    // Check that error is raised because * * * * * is empty
+    await waitFor(() => {
+      expect(setValue).toHaveBeenNthCalledWith(2, '* * * * *', {
+        selectedPeriod: 'year',
+      })
+      expect(onError).toHaveBeenLastCalledWith({
+        description: 'Invalid cron expression',
+        type: 'invalid_cron',
+      })
+    })
+  })
+
+  it('should check that pressing clear with fill-with-every throws an error if allowEmpty is for-default-value', async () => {
+    const user = userEvent.setup()
+    const value = '1 1 1 1 1'
+    const setValue = vi.fn()
+    const onError = vi.fn()
+
+    render(
+      <Cron
+        value={value}
+        setValue={setValue}
+        allowEmpty='for-default-value'
+        onError={onError}
+      />,
+    )
+
+    // Clear cron value (default clearButtonAction is 'fill-with-every')
+    await waitFor(() => {
+      user.click(screen.getByText('Clear'))
+    })
+
+    // Check that error is raised because * * * * * is empty and not the default value
+    await waitFor(() => {
+      expect(setValue).toHaveBeenNthCalledWith(2, '* * * * *', {
+        selectedPeriod: 'year',
+      })
+      expect(onError).toHaveBeenLastCalledWith({
+        description: 'Invalid cron expression',
+        type: 'invalid_cron',
+      })
+    })
+  })
+
+  it("should check that pressing clear with fill-with-every doesn't throw an error if allowEmpty is always", async () => {
+    const user = userEvent.setup()
+    const value = '1 1 1 1 1'
+    const setValue = vi.fn()
+    const onError = vi.fn()
+
+    render(
+      <Cron
+        value={value}
+        setValue={setValue}
+        allowEmpty='always'
+        onError={onError}
+      />,
+    )
+
+    // Clear cron value (default clearButtonAction is 'fill-with-every')
+    await waitFor(() => {
+      user.click(screen.getByText('Clear'))
+    })
+
+    // Check that no error is raised
+    await waitFor(() => {
+      expect(setValue).toHaveBeenNthCalledWith(2, '* * * * *', {
+        selectedPeriod: 'year',
+      })
+      expect(onError).toHaveBeenLastCalledWith(undefined)
+    })
+  })
+
+  it('should trigger error when external value changes to * * * * * with allowEmpty never', async () => {
+    const setValue = vi.fn()
+    const onError = vi.fn()
+
+    const { rerender } = render(
+      <Cron
+        value='0 12 * * *'
+        setValue={setValue}
+        allowEmpty='never'
+        onError={onError}
+      />,
+    )
+
+    // Change value externally to all wildcards
+    rerender(
+      <Cron
+        value='* * * * *'
+        setValue={setValue}
+        allowEmpty='never'
+        onError={onError}
+      />,
+    )
+
+    await waitFor(() => {
+      expect(onError).toHaveBeenLastCalledWith({
+        description: 'Invalid cron expression',
+        type: 'invalid_cron',
+      })
+    })
+  })
+
+  it('should trigger error when external value changes to * * * * * with allowEmpty for-default-value', async () => {
+    const setValue = vi.fn()
+    const onError = vi.fn()
+
+    const { rerender } = render(
+      <Cron
+        value='0 12 * * *'
+        setValue={setValue}
+        allowEmpty='for-default-value'
+        onError={onError}
+      />,
+    )
+
+    // Change value externally to all wildcards
+    rerender(
+      <Cron
+        value='* * * * *'
+        setValue={setValue}
+        allowEmpty='for-default-value'
+        onError={onError}
+      />,
+    )
+
+    await waitFor(() => {
+      expect(onError).toHaveBeenLastCalledWith({
+        description: 'Invalid cron expression',
+        type: 'invalid_cron',
+      })
+    })
+  })
+
   it('should check that week-days and minutes options are filtered with dropdownConfig', async () => {
     const user = userEvent.setup()
     const value = '4,6 * * * 1'

@@ -38,6 +38,7 @@ export function setValuesFromCronString(
   setPeriod: SetValuePeriod,
   defaultPeriod?: PeriodType,
   allowedPeriods?: PeriodType[],
+  dropdownsConfig?: DropdownsConfig,
 ) {
   if (onError) {
     onError(undefined)
@@ -94,6 +95,27 @@ export function setValuesFromCronString(
       setMonthDays(cronParts[2])
       setMonths(cronParts[3])
       setWeekDays(cronParts[4])
+
+      // Check if all parts are empty (= * * * * *)
+      const allEmpty = cronParts.every((part) => part.length === 0)
+      if (allEmpty) {
+        if (
+          allowEmpty === 'never' ||
+          (!firstRender && allowEmpty === 'for-default-value')
+        ) {
+          error = true
+        }
+      }
+
+      // Per-dropdown allowEmpty check
+      if (!error) {
+        error = hasDropdownAllowEmptyError(
+          cronParts,
+          period,
+          firstRender,
+          dropdownsConfig,
+        )
+      }
     } catch {
       // Specific errors are not handle (yet)
       error = true
@@ -104,6 +126,56 @@ export function setValuesFromCronString(
     setInternalError(true)
     setError(onError, locale)
   }
+}
+
+/**
+ * Check if any active dropdown has an empty value that should trigger an error
+ * based on its per-dropdown allowEmpty configuration
+ */
+export function hasDropdownAllowEmptyError(
+  cronParts: number[][],
+  period: PeriodType,
+  allowForDefaultValue: boolean,
+  dropdownsConfig?: DropdownsConfig,
+): boolean {
+  if (!dropdownsConfig || period === 'reboot') return false
+
+  const fields: {
+    key: 'minutes' | 'hours' | 'month-days' | 'months' | 'week-days'
+    index: number
+    isActive: boolean
+  }[] = [
+    { key: 'minutes', index: 0, isActive: period !== 'minute' },
+    {
+      key: 'hours',
+      index: 1,
+      isActive: period !== 'minute' && period !== 'hour',
+    },
+    {
+      key: 'month-days',
+      index: 2,
+      isActive: period === 'year' || period === 'month',
+    },
+    { key: 'months', index: 3, isActive: period === 'year' },
+    {
+      key: 'week-days',
+      index: 4,
+      isActive: period === 'year' || period === 'month' || period === 'week',
+    },
+  ]
+
+  return fields.some(({ key, index, isActive }) => {
+    if (!isActive) return false
+
+    const fieldAllowEmpty = dropdownsConfig[key]?.allowEmpty
+    if (!fieldAllowEmpty) return false
+    if (cronParts[index].length !== 0) return false
+
+    return (
+      fieldAllowEmpty === 'never' ||
+      (fieldAllowEmpty === 'for-default-value' && !allowForDefaultValue)
+    )
+  })
 }
 
 /**

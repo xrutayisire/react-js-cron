@@ -801,6 +801,73 @@ describe('Cron defaultValue test suite', () => {
       hoursSelect: undefined,
       minutesSelect: '10',
     },
+    {
+      title:
+        'that * * * * * is not allowed for default value with allowEmpty never',
+      defaultValue: '* * * * *',
+      allowEmpty: 'never',
+      periodSelect: 'minute',
+      monthsSelect: undefined,
+      monthDaysSelect: undefined,
+      weekDaysSelect: undefined,
+      hoursSelect: undefined,
+      minutesSelect: undefined,
+      error: defaultError,
+    },
+    {
+      title: 'that * * * * * is allowed with allowEmpty always',
+      defaultValue: '* * * * *',
+      allowEmpty: 'always',
+      periodSelect: 'minute',
+      monthsSelect: undefined,
+      monthDaysSelect: undefined,
+      weekDaysSelect: undefined,
+      hoursSelect: undefined,
+      minutesSelect: undefined,
+    },
+    {
+      title:
+        'that per-dropdown allowEmpty never triggers error when field is empty',
+      defaultValue: '* * * * 1',
+      dropdownsConfig: {
+        hours: { allowEmpty: 'never' },
+      },
+      periodSelect: 'week',
+      monthsSelect: undefined,
+      monthDaysSelect: undefined,
+      weekDaysSelect: 'MON',
+      hoursSelect: 'every hour',
+      minutesSelect: 'every minute',
+      error: defaultError,
+    },
+    {
+      title:
+        'that per-dropdown allowEmpty for-default-value allows empty for default',
+      defaultValue: '* * * * 1',
+      dropdownsConfig: {
+        hours: { allowEmpty: 'for-default-value' },
+      },
+      periodSelect: 'week',
+      monthsSelect: undefined,
+      monthDaysSelect: undefined,
+      weekDaysSelect: 'MON',
+      hoursSelect: 'every hour',
+      minutesSelect: 'every minute',
+    },
+    {
+      title:
+        'that per-dropdown allowEmpty never does not trigger error when field has value',
+      defaultValue: '0 12 * * 1',
+      dropdownsConfig: {
+        hours: { allowEmpty: 'never' },
+      },
+      periodSelect: 'week',
+      monthsSelect: undefined,
+      monthDaysSelect: undefined,
+      weekDaysSelect: 'MON',
+      hoursSelect: '12',
+      minutesSelect: '0',
+    },
   ]
 
   test.each(cases)(
