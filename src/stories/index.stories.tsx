@@ -1862,6 +1862,75 @@ export function CustomStyle() {
   )
 }
 
+export function ClearButtonCustomColor() {
+  const defaultValue = '30 14 22 * *'
+  const [values, dispatchValues] = useCronReducer(defaultValue)
+  const [error, onError] = useState<CronError>()
+
+  return (
+    <div>
+      <p>antd ConfigProvider scoped to the Cron component</p>
+      <p>theme.components.Button.colorError: #722ed1</p>
+      <p>Error: {error ? error.description : 'undefined'}</p>
+
+      <AntdInput
+        value={values.inputValue}
+        onChange={(event) => {
+          dispatchValues({
+            type: 'set_input_value',
+            value: event.target.value,
+          })
+        }}
+        onBlur={() => {
+          dispatchValues({
+            type: 'set_cron_value',
+            value: values.inputValue,
+          })
+        }}
+      />
+
+      <Divider>OR</Divider>
+
+      <ConfigProvider
+        theme={{
+          components: {
+            Button: {
+              colorError: '#722ed1',
+              colorErrorHover: '#9254de',
+              colorErrorActive: '#531dab',
+            },
+          },
+        }}
+      >
+        <Cron
+          value={values.cronValue}
+          setValue={(newValue: string) => {
+            dispatchValues({
+              type: 'set_values',
+              value: newValue,
+            })
+          }}
+          onError={onError}
+        />
+      </ConfigProvider>
+
+      <div>
+        <InfoCircleOutlined style={{ marginRight: 5 }} />
+        <span style={{ fontSize: 12 }}>
+          The clear button is the only antd Button rendered by the Cron
+          component, so a scoped ConfigProvider recolors it without affecting
+          the rest of the app:
+        </span>
+        <ul>
+          <li>colorError: clear button background</li>
+          <li>colorErrorHover: clear button hover background</li>
+          <li>colorErrorActive: clear button active background</li>
+        </ul>
+      </div>
+    </div>
+  )
+}
+
 export function ChangeTheme() {
   const options = useMemo<Record<string, ThemeConfig>>(
     () => ({

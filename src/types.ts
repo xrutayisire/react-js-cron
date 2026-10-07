@@ -107,6 +107,9 @@ export interface CronProps {
 
   /**
    * antd button props to customize the clear button.
+   *
+   * The default clear button is a danger primary antd button,
+   * these props can override 'type' and 'danger'.
    */
   clearButtonProps?: ClearButtonProps
 
