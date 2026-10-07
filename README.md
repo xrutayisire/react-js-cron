@@ -135,6 +135,7 @@ Learn more with [dynamic settings](https://xrutayisire.github.io/react-js-cron/?
 - [Error management with text and style](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--track-error)
 - ["Clear button" removal](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--no-clear-button)
 - ["Clear button" action](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--clear-button-empty-value)
+- ["Clear button" color customization](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--clear-button-custom-color)
 - [Empty value management](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--empty-never-allowed)
 - [Cron shortcuts](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--shortcuts)
 - [12-hour clock](https://xrutayisire.github.io/react-js-cron/?path=/story/reactjs-cron--twelve-hour-clock)
@@ -253,6 +254,9 @@ CronProps {
 
   /**
    * antd button props to customize the clear button.
+   *
+   * The default clear button is a danger primary antd button,
+   * these props can override 'type' and 'danger'.
    */
   clearButtonProps?: ButtonProps
 
